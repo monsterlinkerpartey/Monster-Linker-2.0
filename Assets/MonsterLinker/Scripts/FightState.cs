@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightManager : MonoBehaviour
+public class FightState : MonoBehaviour
 {
-    public static FightManager Instance;
+    public static FightState Instance;
 
     //TODO: warum benutzt der switch nicht dieses enum? 
     public eArenaState ArenaState;
@@ -26,6 +26,10 @@ public class FightManager : MonoBehaviour
         SwitchState(eArenaState.Intro);
     }
 
+    void GetAllScripts()
+    {
+        //TODO getcomponentinchildren, get each script at the start
+    }
 
     void Update()
     {
@@ -39,7 +43,7 @@ public class FightManager : MonoBehaviour
         {
             case eArenaState.Intro:
                 print("arena state: " + ArenaState);
-                StartCoroutine(Test());
+                //StartCoroutine(Test());
                 break;
             case eArenaState.PlayerInput:
                 break;
@@ -47,7 +51,7 @@ public class FightManager : MonoBehaviour
                 break;
             case eArenaState.AdvantageCheck:
                 print("arena state: " + ArenaState);
-                StartCoroutine(Test2());
+                //StartCoroutine(Test2());
                 break;
             case eArenaState.QTEAttack:
                 break;
