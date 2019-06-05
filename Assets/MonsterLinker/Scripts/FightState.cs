@@ -10,6 +10,10 @@ public class FightState : MonoBehaviour
     public eArenaState ArenaState;
 
     //TODO: List of all scripts in the arena scene
+    public FeralArtCheck feralArtCheck;
+
+    //HACK: for testing temporary feral art loadout
+    public List<FeralArt> LoadedFeralArts = new List<FeralArt>();
 
     void Start()
     {
@@ -23,12 +27,14 @@ public class FightState : MonoBehaviour
             Destroy(gameObject);
         }
         #endregion
+        GetAllScripts();
         SwitchState(eArenaState.Intro);
     }
 
     void GetAllScripts()
     {
         //TODO getcomponentinchildren, get each script at the start
+        feralArtCheck = GetComponentInChildren<FeralArtCheck>();
     }
 
     void Update()
@@ -43,6 +49,7 @@ public class FightState : MonoBehaviour
         {
             case eArenaState.Intro:
                 print("arena state: " + ArenaState);
+                feralArtCheck.FeralArtLoadout(LoadedFeralArts);
                 //StartCoroutine(Test());
                 break;
             case eArenaState.PlayerInput:

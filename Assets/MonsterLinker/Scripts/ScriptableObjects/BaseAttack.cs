@@ -6,8 +6,12 @@ using UnityEngine;
 public class BaseAttack : ScriptableObject
 {
     [Header("Values for GD iterations")]
-    [Tooltip("Basedamage the attack makes")]
-    public float BaseDMG;
+    [Tooltip("Damage the attack makes incl. Multiplier")]
+    public float DMG;
+    [Tooltip("Ragepoints gained by using this attack")]
+    public float RPGain;
+    [Tooltip("Health recovered by using this attack: % of max HP value")]
+    public float HPGain;
 
     [Header("--- No changes after this point---")]
     [Tooltip("Sprite shown in the Input Bar")]

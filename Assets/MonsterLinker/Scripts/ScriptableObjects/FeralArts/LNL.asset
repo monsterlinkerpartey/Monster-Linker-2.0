@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32eeac52b95f9414aa5d46835d18ac12, type: 3}
-  m_Name: LightPunch
+  m_Name: LNL
   m_EditorClassIdentifier: 
   BaseDMG: 0
   FeralArtInput:
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
   - {fileID: 11400000, guid: d0bb3167010b18f4983b506bdb5f923b, type: 2}
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
+  Counter: 0

@@ -24,14 +24,9 @@ public class InputBarHandler : MonoBehaviour
         }
 
         PlayerAttackInput.Add(baseAttack);
-        print("adding " + baseAttack.name);
-
-        //checks for feral arts on every input higher than 3
-        if (PlayerAttackInput.Count >= 3)
-        {
-            print("3 slots, checking for feral art");
-            feralArtCheck.CheckForFeralArt(PlayerAttackInput);
-        }
+        feralArtCheck.CurPlayerInput.Add(baseAttack);
+        print("adding " + baseAttack.name);              
+        feralArtCheck.CheckForFeralArt();
     }
 
     //call this via button to reset input bar list
@@ -41,6 +36,8 @@ public class InputBarHandler : MonoBehaviour
             return;
 
         PlayerAttackInput.Clear();
+        feralArtCheck.CurPlayerInput.Clear();
+        feralArtCheck.ResetStartPosition();
         print("resetting Input bar");
     }            
     
