@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32eeac52b95f9414aa5d46835d18ac12, type: 3}
   m_Name: HHL
   m_EditorClassIdentifier: 
-  BaseDMG: 0
+  DMG: 0
+  RPGain: 0
+  HPGain: 0
   FeralArtInput:
   - {fileID: 11400000, guid: 6bcfc2dad5ac01847859eb8aa9dc16ed, type: 2}
   - {fileID: 11400000, guid: 6bcfc2dad5ac01847859eb8aa9dc16ed, type: 2}
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
-  Counter: 1
+  Counter: 0
