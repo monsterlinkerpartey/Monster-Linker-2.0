@@ -8,6 +8,7 @@ public class InputBarHandler : MonoBehaviour
     public List<BaseAttack> PlayerAttackInput = new List<BaseAttack>();
     public int maxBaseAttackInputSlots = 5; //TODO abfragen vom profil des spielers?
     public FeralArtCheck feralartcheck;
+    public InitiativeCheck initiativecheck;
     public ArenaUIHandler arenaui;
 
     void Start()
@@ -27,6 +28,7 @@ public class InputBarHandler : MonoBehaviour
         {
             print("adding " + baseAttack.name);
             PlayerAttackInput.Add(baseAttack);
+            arenaui.UpdatePlayerInput(PlayerAttackInput);
             //HACK save BAs in the feralart output
             feralartcheck.SaveOutput(baseAttack);
             arenaui.SetConfirmButtonStatus(true);
@@ -35,7 +37,7 @@ public class InputBarHandler : MonoBehaviour
         if (PlayerAttackInput.Count >= maxBaseAttackInputSlots)
         {
             print("input bar full: "+ PlayerAttackInput[0].name+", "+ PlayerAttackInput[1].name +", " + PlayerAttackInput[2].name +", " + PlayerAttackInput[3].name +", " + PlayerAttackInput[4].name);
-            //feralArtCheck.CheckForFeralArt(PlayerAttackInput);
+            //TODO feralArtCheck.CheckForFeralArt(PlayerAttackInput);
         }
     }
 
@@ -47,33 +49,17 @@ public class InputBarHandler : MonoBehaviour
 
         PlayerAttackInput.Clear();
         feralartcheck.ResetAll();
+        arenaui.UpdatePlayerInput(PlayerAttackInput);
         arenaui.SetConfirmButtonStatus(false);
         print("resetting Input bar");
     }     
     
     public void ConfirmInput()
     {
+        initiativecheck.curPlayerInput = PlayerAttackInput;
         GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
         //TODO
-    }
-    
+    }   
 
-    //TODO make own script to handle UI updates
-    //void UIUpdate()
-    //{
-    //    for (int i = 0; i < playerSlots.Length; i++)
-    //    {
-    //        if (i < attacks.Count)
-    //        {
-    //            GlobalManager.Instance.News.text += ("adding combo icon in UI\n");
-    //            playerSlots[i].AddCombo(attacks[i]);
-    //        }
-    //        else
-    //        {
-    //            playerSlots[i].ClearSlot();
-    //        }
-    //    }
-    //}
-    
 }
 

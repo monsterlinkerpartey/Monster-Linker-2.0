@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448c3cea29aa61e4c84a8a35aad986c9, type: 3}
   m_Name: Light
   m_EditorClassIdentifier: 
-  DMG: 0
-  RPGain: 0
-  HPGain: 0
-  DMG: 0
-  RPGain: 0
-  HPGain: 0
-  InputBarIcon: {fileID: 0}
+  DMG: 100
+  RPGain: 5
+  HPGain: 10
+  Speed: 3
+  InputBarIcon: {fileID: 21300000, guid: c6b51304ba33b60498fa7ed211bc35fa, type: 3}
   ButtonSprite: {fileID: 0}
   SlotAnim: {fileID: 0}

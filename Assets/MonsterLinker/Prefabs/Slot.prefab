@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3814161931578945117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c56b1026467b448a685401f7730add, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8dc9387eec91843989e8457f29a37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 4325804857836891968}
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8917974869139229665}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ccdebf49f4782f4392fb346946c7df9, type: 3}
+  m_Script: {fileID: 11500000, guid: a92ae6b0e9a25304a96215011d2f1b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotAnim: {fileID: 0}
+  SlotAnim: {fileID: 5031175442161643908}

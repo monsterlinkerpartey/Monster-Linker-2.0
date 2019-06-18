@@ -10,6 +10,19 @@
     Result
 };
 
+public enum eEnemyState
+{
+    Normal,
+    LowHP
+};
+
+public enum eTurn
+{
+    NextRound,
+    Player,
+    Enemy
+}
+
 public enum eHomeUI
 {
     Title,

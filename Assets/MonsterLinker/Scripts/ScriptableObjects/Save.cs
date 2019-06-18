@@ -14,6 +14,9 @@ public class Save : ScriptableObject
     public List<FeralArt> FALoadout;
     public string LinkerName;
     public string MonsterName;
+    public int MaxHitPoints;
+    [Tooltip("Which arena has the player reached?")]
+    public int Arena = 1;
 
     public bool Write()
     {
@@ -24,5 +27,10 @@ public class Save : ScriptableObject
         Used = true;
         return true;
 
+    }
+
+    public void Reset()
+    {
+        //reset all values for the player to overwrite?
     }
 }
