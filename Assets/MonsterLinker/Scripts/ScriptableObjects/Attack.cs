@@ -12,5 +12,8 @@ public class Attack : ScriptableObject
     [Tooltip("Health recovered by using this attack: % of max HP value")]
     public float HPGain;
     [Tooltip("Speed of the attack")]
-    public int Speed;    
+    public int Speed;
+
+    [Tooltip("For animation or some shit")]
+    public string Animation;
 }

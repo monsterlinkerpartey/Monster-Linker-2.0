@@ -10,10 +10,19 @@ public class TurnChanger : MonoBehaviour
     {
         turns += 1;
 
+        if (turns > 2)
+        {
+            print("both monsters attacked, starting next round");
+            Turn = eTurn.NextRound;
+            turns = 0;
+        }
+
+        print("turn: " + Turn);
+
         switch (Turn)
         {
             case eTurn.NextRound:
-
+                GameStateSwitch.Instance.SwitchState(eGameState.NextRound);
                 break;
             case eTurn.Player:
                 GameStateSwitch.Instance.SwitchState(eGameState.QTEAttack);
@@ -22,7 +31,5 @@ public class TurnChanger : MonoBehaviour
                 GameStateSwitch.Instance.SwitchState(eGameState.QTEBlock);
                 break;
         }
-
-        print("turn: " + Turn);
     }
 }

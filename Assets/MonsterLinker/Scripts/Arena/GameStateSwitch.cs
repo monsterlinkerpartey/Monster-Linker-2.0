@@ -67,6 +67,7 @@ public class GameStateSwitch : MonoBehaviour
         enemystatemachine.arenaui = arenaui;
         enemystatemachine.initiativecheck = initiativecheck;
         initiativecheck.arenaui = arenaui;
+        initiativecheck.turnchanger = turnchanger;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -144,8 +145,7 @@ public class GameStateSwitch : MonoBehaviour
                 enemystatemachine.ClearInput();
                 //Enemy Input Bar ausblenden
                 arenaui.EnemyInputBar.SetActive(false);
-                //Reset Turncounter
-                turnchanger.turn = 0;
+                
 
                 //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
                 //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
