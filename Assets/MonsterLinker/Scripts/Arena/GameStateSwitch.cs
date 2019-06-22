@@ -17,6 +17,7 @@ public class GameStateSwitch : MonoBehaviour
     public EnemyStateMachine enemystatemachine;
     public TurnChanger turnchanger;
     public QTEHandler qtehandler;
+    public ReadQTETimes readqtetimes;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -55,6 +56,7 @@ public class GameStateSwitch : MonoBehaviour
         enemystatemachine = GetComponentInChildren<EnemyStateMachine>();
         turnchanger = GetComponentInChildren<TurnChanger>();
         qtehandler = GetComponentInChildren<QTEHandler>();
+        readqtetimes = GetComponentInChildren<ReadQTETimes>();
     }
 
     void ConnectScripts()
@@ -69,6 +71,7 @@ public class GameStateSwitch : MonoBehaviour
         enemystatemachine.initiativecheck = initiativecheck;
         initiativecheck.arenaui = arenaui;
         initiativecheck.turnchanger = turnchanger;
+        qtehandler.readqtetimes = readqtetimes;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -76,51 +79,57 @@ public class GameStateSwitch : MonoBehaviour
     {
         switch (GameState)
         {
+            ///Blacklist und FA Loadout für Spieler
+            ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
-                //zeigt blacklist und loadout mit änderungsmöglichkeit
                 arenaui.BlackListPanel.SetActive(true);
-                attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, 5); //TODO get enemy attack number
                 enemystatemachine.GetEnemyValues();
-                //enemystatemachine.SetEnemyType(curEnemy);
-                break;
-            case eGameState.Intro:
-                //FA Loadout und allen scripts laden
-                //Arena in cinematischer Cutscene vorstellen
-                feralartcheck.FeralArtLoadout(curProfile.FALoadout);
+                attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, enemystatemachine.maxInputSlots);
                 attackslotspawn.SpawnPlayerSlots();
                 attackslotspawn.SpawnEnemySlots();
+                arenaui.GetAttackSlots();
+                GlobalVars.QTEfailed = false;
+                //enemystatemachine.SetEnemyType(curEnemy);
+                break;
+            ///Arena in cinematischer Cutscene vorstellen
+            ///FA Loadout und alle scripts laden
+            case eGameState.Intro:
                 arenaui.BlackListPanel.SetActive(false);
+                feralartcheck.FeralArtLoadout(curProfile.FALoadout);
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
+            ///Player Input enablen
+            ///Enemy Input laden
+            ///FA Check
             case eGameState.PlayerInput:
-                //Buttons für Eingabe zeigen
-                //Player Input zeigen
-                arenaui.GetAttackSlots();
-                arenaui.PlayerInputPanel.SetActive(true);
+                arenaui.InputPanel.SetActive(true);
                 arenaui.PlayerInputBar.SetActive(true);
                 enemystatemachine.CheckEnemyState();
-                //Enemy Input anhand der StateMachine laden
+                enemystatemachine.SetInput();
                 //-> Input Slot voll: nach FAs checken
                 //-> Input Slot voll: Confirm enablen
                 break;
+            ///Speedwerte vergleichen um Ini festzulegen
             case eGameState.InitiativeCheck:
-                //Enemy Input einblenden
-                arenaui.PlayerInputPanel.SetActive(false);
-                enemystatemachine.SetInput();
-                initiativecheck.GetSpeedValues();
+                arenaui.InputPanel.SetActive(false);
+                arenaui.PlayerInputBar.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
                 arenaui.InitiativeCheck.SetActive(true);
-                initiativecheck.CompareSpeed();
+                initiativecheck.GetSpeedValues();
+                StartCoroutine(initiativecheck.CompareSpeed());
+                //Enemy Input einblenden
                 //Vergleichen der Speedwerte, Turn anzeigen
                 //Int Turn += 1; Bei Turn 2 zu NextRound wechseln
                 break;
             case eGameState.QTEAttack:
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
-                arenaui.PlayerInputPanel.SetActive(true);
-
-                arenaui.AttackQTE.SetActive(true);
+                arenaui.PlayerInputBar.SetActive(true);
+                
                 qtehandler.QTEStateSwitch(eQTEState.Waiting);
+                qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
+
+
                 //Animation der Attacke des Spielers sowie Reaktion des Gegners triggern
                 //QTE zu den Attacken
                 //DMG bei Hit austeilen
@@ -130,7 +139,7 @@ public class GameStateSwitch : MonoBehaviour
                 break;
             case eGameState.QTEBlock:
                 arenaui.InitiativeCheck.SetActive(false);
-                arenaui.PlayerInputPanel.SetActive(true);
+                arenaui.InputPanel.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
 
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
@@ -148,7 +157,10 @@ public class GameStateSwitch : MonoBehaviour
                 enemystatemachine.ClearInput();
                 //Enemy Input Bar ausblenden
                 arenaui.EnemyInputBar.SetActive(false);
-                
+
+                ///falls spieler einen 6. input slot kriegt:
+                //attackslotspawn.SpawnPlayerSlots();
+                //arenaui.GetAttackSlots();
 
                 //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
                 //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight

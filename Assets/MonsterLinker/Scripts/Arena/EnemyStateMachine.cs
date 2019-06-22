@@ -19,6 +19,8 @@ public class EnemyStateMachine : MonoBehaviour
     [HideInInspector]
     public int maxHitPoints;
     [HideInInspector]
+    public int maxInputSlots;
+    [HideInInspector]
     public float curHP;
     [HideInInspector]
     public float curRP;
@@ -26,6 +28,7 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void GetEnemyValues()
     {
         maxHitPoints = enemy.MaxHitPoints;
+        maxInputSlots = enemy.MaxInputSlots;
         curRP = 0;
         curHP = maxHitPoints;
         FAs = enemy.FAs;

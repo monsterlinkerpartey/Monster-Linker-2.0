@@ -8,4 +8,5 @@ public static class GlobalVars
     public static int Arena = 1;
     public static int PlayerMaxHP = 1000;
     public static int EnemyMaxHP;
+    public static bool QTEfailed;
 }

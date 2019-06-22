@@ -16,6 +16,7 @@ MonoBehaviour:
   LinkerPic: {fileID: 21300000, guid: e0323c68d52cf9642a9c243dc2b730ad, type: 3}
   MonsterName: Big Fat Dummy
   MaxHitPoints: 500
+  MaxInputSlots: 5
   DmgModifier: 22
   FAs:
   - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}

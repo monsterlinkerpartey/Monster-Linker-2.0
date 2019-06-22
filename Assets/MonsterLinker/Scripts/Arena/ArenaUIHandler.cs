@@ -11,7 +11,7 @@ public class ArenaUIHandler : MonoBehaviour
 
     [Header("Drag n Drop")]
     public GameObject BlackListPanel;
-    public GameObject PlayerInputPanel;
+    public GameObject InputPanel;
     public GameObject PlayerInputBar;
     public GameObject EnemyInputBar;
     public GameObject InitiativeCheck;

@@ -23,6 +23,14 @@ public enum eTurn
     Enemy
 }
 
+public enum eQTEType
+{
+    Attack,
+    Block,
+    FAEndurance,
+    FA
+}
+
 public enum eQTEState
 {
     Waiting,
@@ -31,6 +39,14 @@ public enum eQTEState
     Good,
     Perfect,
     Done
+}
+
+public enum eQTEZone
+{
+    None,
+    Fail,
+    Good,
+    Perfect
 }
 
 public enum eHomeUI

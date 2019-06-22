@@ -21,8 +21,8 @@ public class AttackSlotSpawn : MonoBehaviour
     private GridLayoutGroup PlayerGrid;
     [SerializeField]
     private GridLayoutGroup EnemyGrid;
-    private int NumberOfAttackSlotsPlayer;
-    private int NumberOfAttackSlotsEnemy;
+    public int NumberOfAttackSlotsPlayer;
+    public int NumberOfAttackSlotsEnemy;
 
     [SerializeField]
     private float PanelHeight;

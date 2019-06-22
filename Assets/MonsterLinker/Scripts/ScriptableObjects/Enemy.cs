@@ -15,6 +15,8 @@ public class Enemy : ScriptableObject
     [Header("In-fight values")]
     [Tooltip("Enemys max HP")]
     public int MaxHitPoints;
+    [Tooltip("Enemys max Input Slots")]
+    public int MaxInputSlots = 5;
     [Tooltip("Modifier for the dmg; Multipilier, e.g. 1.5 ")]
     public int DmgModifier;
 
