@@ -26,7 +26,7 @@ public class InputBarHandler : MonoBehaviour
     {
         if (PlayerAttackInput.Count < maxBaseAttackInputSlots)
         {
-            print("adding " + baseAttack.name);
+            //print("adding " + baseAttack.name);
             PlayerAttackInput.Add(baseAttack);
             arenaui.UpdatePlayerInput(PlayerAttackInput);
             //HACK save BAs in the feralart output

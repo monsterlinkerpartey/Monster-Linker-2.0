@@ -7,7 +7,6 @@ public class GameStateSwitch : MonoBehaviour
     public static GameStateSwitch Instance;
 
     public float IntroTime = 1f;
-
     //TODO: List of all scripts in the arena scene
     public FeralArtCheck feralartcheck;
     public ArenaPlayerInput playerinput;
@@ -17,6 +16,7 @@ public class GameStateSwitch : MonoBehaviour
     public InitiativeCheck initiativecheck;
     public EnemyStateMachine enemystatemachine;
     public TurnChanger turnchanger;
+    public QTEHandler qtehandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -54,6 +54,7 @@ public class GameStateSwitch : MonoBehaviour
         initiativecheck = GetComponentInChildren<InitiativeCheck>();
         enemystatemachine = GetComponentInChildren<EnemyStateMachine>();
         turnchanger = GetComponentInChildren<TurnChanger>();
+        qtehandler = GetComponentInChildren<QTEHandler>();
     }
 
     void ConnectScripts()
@@ -118,6 +119,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputPanel.SetActive(true);
 
+                arenaui.AttackQTE.SetActive(true);
+                qtehandler.QTEStateSwitch(eQTEState.Waiting);
                 //Animation der Attacke des Spielers sowie Reaktion des Gegners triggern
                 //QTE zu den Attacken
                 //DMG bei Hit austeilen
@@ -165,5 +168,5 @@ public class GameStateSwitch : MonoBehaviour
         print("showing arena intro");
         yield return new WaitForSeconds(waitingTime);
         SwitchState(eGameState.PlayerInput);
-    }
+    }    
 }

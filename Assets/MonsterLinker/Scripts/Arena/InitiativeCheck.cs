@@ -34,19 +34,27 @@ public class InitiativeCheck : MonoBehaviour
         {
             print("players turn");
             arenaui.PlayerInitiativeArrow.enabled = true;
+            ShowSpeedandTurn(1f);
             turnchanger.SwitchTurn(eTurn.Player);
         }
         else if (EnemySpeed > PlayerSpeed)
         {
             print("enemys turn");
             arenaui.EnemyInitiativeArrow.enabled = true;
+            ShowSpeedandTurn(1f);
             turnchanger.SwitchTurn(eTurn.Enemy);
         }
         else
         {
             print("players turn");
             arenaui.PlayerInitiativeArrow.enabled = true;
+            ShowSpeedandTurn(1f);
             turnchanger.SwitchTurn(eTurn.Player);
         }
+    }
+
+    IEnumerator ShowSpeedandTurn(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
     }
 }

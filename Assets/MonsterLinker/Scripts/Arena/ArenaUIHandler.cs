@@ -15,6 +15,7 @@ public class ArenaUIHandler : MonoBehaviour
     public GameObject PlayerInputBar;
     public GameObject EnemyInputBar;
     public GameObject InitiativeCheck;
+    public GameObject AttackQTE;
     public Button ConfirmBAsButton;
     public GameObject ResultPanel;
 

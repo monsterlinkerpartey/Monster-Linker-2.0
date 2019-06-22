@@ -23,6 +23,16 @@ public enum eTurn
     Enemy
 }
 
+public enum eQTEState
+{
+    Waiting,
+    Running,
+    Fail,
+    Good,
+    Perfect,
+    Done
+}
+
 public enum eHomeUI
 {
     Title,

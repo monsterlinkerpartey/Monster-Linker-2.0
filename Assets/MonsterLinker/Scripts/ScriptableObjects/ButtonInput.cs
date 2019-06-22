@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Button", menuName = "Other/ButtonInput")]
 public class ButtonInput : ScriptableObject
 {
-    [Tooltip("Input > Settings; ALL UPPERCASE")]
+    [Header("Input > Settings; all lowercase")]
+    [Tooltip("String for button input")]
     public string inputString;
     [Tooltip("Image for the Button")]
     public Sprite buttonSprite;

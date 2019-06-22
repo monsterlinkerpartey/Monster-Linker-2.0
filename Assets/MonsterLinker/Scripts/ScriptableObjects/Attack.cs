@@ -14,6 +14,6 @@ public class Attack : ScriptableObject
     [Tooltip("Speed of the attack")]
     public int Speed;
 
-    [Tooltip("For animation or some shit")]
-    public string Animation;
+    [Tooltip("Time til Startup in the attack animation")]
+    public string TimeTilStartup;
 }
