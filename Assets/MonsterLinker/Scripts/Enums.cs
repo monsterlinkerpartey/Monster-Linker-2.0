@@ -35,9 +35,6 @@ public enum eQTEState
 {
     Waiting,
     Running,
-    Fail,
-    Good,
-    Perfect,
     Done
 }
 

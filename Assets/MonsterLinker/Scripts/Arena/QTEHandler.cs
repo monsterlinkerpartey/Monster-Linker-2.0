@@ -45,9 +45,7 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] bool running;
     [SerializeField] string AnimString;
 
-    public ReadQTETimes readqtetimes;
-
-    public void Update()
+    void Update()
     {
         if (running)
         {
@@ -56,28 +54,32 @@ public class QTEHandler : MonoBehaviour
         }
     }
 
-    public void CheckForInput()
+    void CheckForInput()
     {
         if (Input.GetButtonDown(Buttons[ran].inputString))
         {
             print("qte button pressed");
             ButtonAnim.Play("Highlighted");
             curQTEAnim.speed = 0.0f;
-            CheckQTEZone();
+            StartCoroutine(CheckQTEZone());
         }
     }
 
-    void CheckQTEZone()
+    //Called if player input happened
+    //Or by QTEZoneReader if QTE has gone through without input
+    public IEnumerator CheckQTEZone()
     {
-        switch (readqtetimes.QTEZone)
+        running = false;
+
+        switch (QTEAnimEvents.QTEZone)
         {
             case eQTEZone.None:
-                print("ERROR: No QTE Zone set, check Animation Events");
+                print("ERROR: QTE Zone auf None, check Animation Events");
                 break;
             case eQTEZone.Fail:
                 //trigger fail anim
                 //do dmg stuff etc
-                print("fail QTE result");
+                print("fail QTE result");                
                 GlobalVars.QTEfailed = true;
                 break;
             case eQTEZone.Good:
@@ -94,6 +96,11 @@ public class QTEHandler : MonoBehaviour
                 print("ERROR: Could not find QTEZone, check QTEHandler");
                 break;
         }
+        //wait for result animation to play
+        yield return new WaitForSeconds(1f);
+        //start new qte or set qte done
+        QTEStateSwitch(eQTEState.Waiting);
+        curAttackSlotNo += 1;
         SetQTEAnim(curQTEType.Type);
     }
 
@@ -103,7 +110,6 @@ public class QTEHandler : MonoBehaviour
     {
         curAttackSlotNo = 1;
         MaxSlots = maxSlots;
-        RandomButtonGenerator();
 
         switch (QTEType)
         {
@@ -126,7 +132,7 @@ public class QTEHandler : MonoBehaviour
                 print("ERROR: QTEType not found, check QTEHandler");
                 break;
         }
-
+        
         print("QTE Type: " + QTEType);
     }
 
@@ -138,6 +144,7 @@ public class QTEHandler : MonoBehaviour
             return;
         }
 
+        RandomButtonGenerator();
         AnimString = type + curAttackSlotNo;
         print("Choosing an attack QTE for slot " + curAttackSlotNo + "\n Animation: " + AnimString);
 
@@ -165,8 +172,7 @@ public class QTEHandler : MonoBehaviour
                 WaitingTime = 0f;
                 print("ERROR: Could not set Wait Time, check QTEHandler");
                 break;
-        }
-        curAttackSlotNo += 1;
+        }        
         StartCoroutine(WaitForStart());
     }
 
@@ -187,7 +193,7 @@ public class QTEHandler : MonoBehaviour
     ///Randomizes the QTE Button Image and Input
     public void RandomButtonGenerator()
     {
-        ran = Random.Range(0, Buttons.Count - 1);
+        ran = Random.Range(0, Buttons.Count);
         print("Chosen Button: " + Buttons[ran].name);
 
         if (Buttons.Count <= 0)
@@ -205,15 +211,19 @@ public class QTEHandler : MonoBehaviour
         switch (QTEState)
         {
             case eQTEState.Waiting:
+                curQTEAnim.Play("Wait");                              
+                QTEButton.SetActive(false);
                 running = false;
                 break;
             case eQTEState.Running:
                 running = true;
+                curQTEAnim.speed = 1.0f;
                 QTEButton.SetActive(true);
                 curQTEAnim.Play(AnimString);                               
                 break;
             case eQTEState.Done:
                 print("QTEs done");
+
                 //call turnchanger to see if theres another turn or nextround
                 break;
             default:
@@ -221,8 +231,7 @@ public class QTEHandler : MonoBehaviour
                 break;
         }
     }
-
-
+    
     //public eQTEState QTEState;
 
     //[Tooltip("Current attack for animation length")]
