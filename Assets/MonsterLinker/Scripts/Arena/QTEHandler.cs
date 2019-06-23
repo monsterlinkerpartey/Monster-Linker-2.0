@@ -79,17 +79,23 @@ public class QTEHandler : MonoBehaviour
             case eQTEZone.Fail:
                 //trigger fail anim
                 //do dmg stuff etc
-                print("fail QTE result");                
+                print("fail QTE result");
+                curQTEAnim.speed = 1.0f;
+                curQTEAnim.Play(curQTEType.name + "_Fail");
                 GlobalVars.QTEfailed = true;
                 break;
             case eQTEZone.Good:
                 //trigger good anim
                 //do dmg stuff etc
+                curQTEAnim.speed = 1.0f;
+                curQTEAnim.Play(curQTEType.name + "_Good");
                 print("good QTE result");
                 break;
             case eQTEZone.Perfect:
                 //trigger perfect anim
                 //do dmg stuff etc
+                curQTEAnim.speed = 1.0f;
+                curQTEAnim.Play(curQTEType.name + "_Perfect");
                 print("perfect QTE result");
                 break;
             default:
@@ -97,7 +103,7 @@ public class QTEHandler : MonoBehaviour
                 break;
         }
         //wait for result animation to play
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         //start new qte or set qte done
         QTEStateSwitch(eQTEState.Waiting);
         curAttackSlotNo += 1;
@@ -217,14 +223,13 @@ public class QTEHandler : MonoBehaviour
                 break;
             case eQTEState.Running:
                 running = true;
-                curQTEAnim.speed = 1.0f;
                 QTEButton.SetActive(true);
                 curQTEAnim.Play(AnimString);                               
                 break;
             case eQTEState.Done:
                 print("QTEs done");
 
-                //call turnchanger to see if theres another turn or nextround
+                //TODO call turnchanger to see if theres another turn or nextround
                 break;
             default:
                 print("QTE state not found, check QTEHandler");
