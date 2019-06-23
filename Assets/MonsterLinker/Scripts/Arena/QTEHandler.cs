@@ -56,12 +56,20 @@ public class QTEHandler : MonoBehaviour
 
     void CheckForInput()
     {
-        if (Input.GetButtonDown(Buttons[ran].inputString))
+        if (Input.anyKey)
         {
-            print("qte button pressed");
-            ButtonAnim.Play("Highlighted");
-            curQTEAnim.speed = 0.0f;
-            StartCoroutine(CheckQTEZone());
+            if (Input.GetButtonDown(Buttons[ran].inputString))
+            {
+                print("qte button pressed");
+                ButtonAnim.Play("Highlighted");
+                curQTEAnim.speed = 0.0f;
+                StartCoroutine(CheckQTEZone());
+            }
+            else
+            {
+                QTEAnimEvents.QTEZone = eQTEZone.Fail;
+                StartCoroutine(CheckQTEZone());
+            }
         }
     }
 
