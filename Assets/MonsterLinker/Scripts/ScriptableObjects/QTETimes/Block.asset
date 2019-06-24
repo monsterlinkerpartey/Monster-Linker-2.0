@@ -19,3 +19,6 @@ MonoBehaviour:
   QTEAnimationLength5: 1.2
   QTEAnimationLength6: 1.01
   Type: Block
+  ModifierFail: 1.5
+  ModifierGood: 1
+  ModifierPerfect: 0.5

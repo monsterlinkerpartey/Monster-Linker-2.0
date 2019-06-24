@@ -1753,7 +1753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8add3c9c40d0f74d8c06e7d0f6b83ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qtehandler: {fileID: 0}
 --- !u!222 &586663255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2898,6 +2897,7 @@ GameObject:
   - component: {fileID: 1033392713}
   - component: {fileID: 1033392718}
   - component: {fileID: 1033392719}
+  - component: {fileID: 1033392720}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -3049,6 +3049,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turns: 0
+--- !u!114 &1033392720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033392711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5340b6fac712f0747913c6e1b8f6fc7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerMaxHP: 0
+  PlayerCurHP: 0
+  EnemyCurHP: 0
+  EnemyMaxHP: 0
+  PlayerCurRP: 0
+  EnemyCurRP: 0
+  TotalDmgTaken: 0
+  TotalDmgDealt: 0
+  curEnemyAttacks: []
+  curPlayerAttacks: []
+  curAttack: {fileID: 0}
+  DMGModifier: 0
 --- !u!1 &1039045088
 GameObject:
   m_ObjectHideFlags: 0
@@ -4129,6 +4153,7 @@ MonoBehaviour:
   enemystatemachine: {fileID: 0}
   turnchanger: {fileID: 0}
   qtehandler: {fileID: 0}
+  baeffectshandler: {fileID: 0}
   curProfile: {fileID: 11400000, guid: 50f46be133dcc0941935aaac9e32b8e2, type: 2}
   curEnemy: {fileID: 11400000, guid: b762a63ccaf259b4489ae7f097cee5f9, type: 2}
   LoadedFeralArts:
@@ -4212,11 +4237,11 @@ MonoBehaviour:
   AnimStartup: 2.01
   WaitingTime: 0
   curQTEAnim: {fileID: 0}
-  curAttackSlotNo: 0
   curQTEType: {fileID: 0}
   MaxSlots: 0
   running: 0
   AnimString: 
+  baeffectshandler: {fileID: 0}
 --- !u!1 &1454243484
 GameObject:
   m_ObjectHideFlags: 0

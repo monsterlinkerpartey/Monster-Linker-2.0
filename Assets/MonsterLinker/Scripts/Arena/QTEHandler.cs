@@ -38,12 +38,13 @@ public class QTEHandler : MonoBehaviour
     //[SerializeField] float QTEPerfect;
 
     [SerializeField] Animator curQTEAnim;
-    [SerializeField] int curAttackSlotNo;
     [SerializeField] QTE curQTEType;
     [SerializeField] int MaxSlots;
     [Tooltip("Bool to start QTE Timer")]
     [SerializeField] bool running;
     [SerializeField] string AnimString;
+
+    public BAEffectsHandler baeffectshandler;
 
     void Update()
     {
@@ -87,16 +88,18 @@ public class QTEHandler : MonoBehaviour
             case eQTEZone.Fail:
                 //trigger fail anim
                 //do dmg stuff etc
-                print("fail QTE result");
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTEType.name + "_Fail");
                 GlobalVars.QTEfailed = true;
+                baeffectshandler.DMGModifier = curQTEType.ModifierFail;
+                print("fail QTE result");
                 break;
             case eQTEZone.Good:
                 //trigger good anim
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTEType.name + "_Good");
+                baeffectshandler.DMGModifier = curQTEType.ModifierGood;
                 print("good QTE result");
                 break;
             case eQTEZone.Perfect:
@@ -104,17 +107,27 @@ public class QTEHandler : MonoBehaviour
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTEType.name + "_Perfect");
+                baeffectshandler.DMGModifier = curQTEType.ModifierPerfect;
                 print("perfect QTE result");
                 break;
             default:
                 print("ERROR: Could not find QTEZone, check QTEHandler");
+                baeffectshandler.DMGModifier = 1.0f;
                 break;
+        }
+        if (curQTEType.name == "Attack")
+        {
+            baeffectshandler.EnemyTakesDmg();
+        }
+        else if (curQTEType.name == "Block")
+        {
+            baeffectshandler.PlayerTakesDmg();
         }
         //wait for result animation to play
         yield return new WaitForSeconds(0.5f);
         //start new qte or set qte done
         QTEStateSwitch(eQTEState.Waiting);
-        curAttackSlotNo += 1;
+        GlobalVars.AttackRound += 1;
         SetQTEAnim(curQTEType.Type);
     }
 
@@ -122,7 +135,7 @@ public class QTEHandler : MonoBehaviour
     ///Sets QTE Animator, resets curAttackSlotNo to Zero, sets MaxSlotNo
     public void SetType(eQTEType QTEType, int maxSlots)
     {
-        curAttackSlotNo = 1;
+        GlobalVars.AttackRound = 1;
         MaxSlots = maxSlots;
 
         switch (QTEType)
@@ -130,13 +143,14 @@ public class QTEHandler : MonoBehaviour
             case eQTEType.Attack:
                 curQTEAnim = AttackQTEAnim;
                 curQTEType = Attack;
-                //AttackQTE.SetActive(true);
                 SetQTEAnim(curQTEType.Type);
+                //AttackQTE.SetActive(true);
                 break;
             case eQTEType.Block:
                 curQTEAnim = BlockQTEAnim;
-                //BlockQTE.SetActive(true);
+                curQTEType = Block;
                 SetQTEAnim(curQTEType.Type);
+                //BlockQTE.SetActive(true);
                 break;
             //case eQTEType.FAEndurance:
             //    break;
@@ -152,17 +166,18 @@ public class QTEHandler : MonoBehaviour
 
     public void SetQTEAnim(string type)
     {
-        if (curAttackSlotNo > MaxSlots)
+        if (GlobalVars.AttackRound > MaxSlots)
         {
             QTEStateSwitch(eQTEState.Done);
+            GlobalVars.AttackRound = 0;
             return;
         }
 
         RandomButtonGenerator();
-        AnimString = type + curAttackSlotNo;
-        print("Choosing an attack QTE for slot " + curAttackSlotNo + "\n Animation: " + AnimString);
+        AnimString = type + GlobalVars.AttackRound;
+        print("Choosing an attack QTE for slot " + GlobalVars.AttackRound + "\n Animation: " + AnimString);
 
-        switch (curAttackSlotNo)
+        switch (GlobalVars.AttackRound)
         {
             case 1:
                 WaitingTime = AnimStartup - curQTEType.QTEAnimationLength1;

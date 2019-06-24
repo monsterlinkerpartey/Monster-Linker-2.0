@@ -17,6 +17,7 @@ public class GameStateSwitch : MonoBehaviour
     public EnemyStateMachine enemystatemachine;
     public TurnChanger turnchanger;
     public QTEHandler qtehandler;
+    public BAEffectsHandler baeffectshandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -55,6 +56,8 @@ public class GameStateSwitch : MonoBehaviour
         enemystatemachine = GetComponentInChildren<EnemyStateMachine>();
         turnchanger = GetComponentInChildren<TurnChanger>();
         qtehandler = GetComponentInChildren<QTEHandler>();
+        baeffectshandler = GetComponentInChildren<BAEffectsHandler>();
+        
     }
 
     void ConnectScripts()
@@ -69,6 +72,7 @@ public class GameStateSwitch : MonoBehaviour
         enemystatemachine.initiativecheck = initiativecheck;
         initiativecheck.arenaui = arenaui;
         initiativecheck.turnchanger = turnchanger;
+        qtehandler.baeffectshandler = baeffectshandler;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -86,6 +90,9 @@ public class GameStateSwitch : MonoBehaviour
                 attackslotspawn.SpawnEnemySlots();
                 arenaui.GetAttackSlots();
                 GlobalVars.QTEfailed = false;
+
+                baeffectshandler.PlayerCurHP = GlobalVars.PlayerMaxHP;
+                baeffectshandler.EnemyCurHP = GlobalVars.EnemyMaxHP;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
             ///Arena in cinematischer Cutscene vorstellen
@@ -108,6 +115,8 @@ public class GameStateSwitch : MonoBehaviour
                 break;
             ///Speedwerte vergleichen um Ini festzulegen
             case eGameState.InitiativeCheck:
+
+                baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
                 arenaui.InputPanel.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -122,7 +131,7 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
-                
+                                
                 qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
                 qtehandler.QTEStateSwitch(eQTEState.Waiting);
 

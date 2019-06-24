@@ -14,4 +14,7 @@ public class QTE : ScriptableObject
     public float QTEAnimationLength6;
     [Header("QTE type, e.g. 'Attack'")]
     public string Type;
+    public float ModifierFail;
+    public float ModifierGood;
+    public float ModifierPerfect;
 }
