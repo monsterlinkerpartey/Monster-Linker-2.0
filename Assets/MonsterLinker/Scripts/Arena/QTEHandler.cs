@@ -45,6 +45,7 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] string AnimString;
 
     public BAEffectsHandler baeffectshandler;
+    public TurnChanger turnchanger;
 
     void Update()
     {
@@ -252,7 +253,19 @@ public class QTEHandler : MonoBehaviour
             case eQTEState.Done:
                 print("QTEs done");
 
-                //TODO call turnchanger to see if theres another turn or nextround
+                if (turnchanger.Turns == eTurn.EnemyFirst)
+                {
+                    turnchanger.SwitchTurn(eTurn.PlayerSecond);
+                }
+                else if (turnchanger.Turns == eTurn.PlayerFirst)
+                {
+                    turnchanger.SwitchTurn(eTurn.EnemySecond);
+                }
+                else
+                {
+                    turnchanger.SwitchTurn(eTurn.BothDone);
+                }
+                
                 break;
             default:
                 print("QTE state not found, check QTEHandler");

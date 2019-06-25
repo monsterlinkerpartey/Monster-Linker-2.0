@@ -18,9 +18,11 @@ public enum eEnemyState
 
 public enum eTurn
 {
-    NextRound,
-    Player,
-    Enemy
+    PlayerFirst,
+    PlayerSecond,
+    EnemyFirst,
+    EnemySecond,
+    BothDone,
 }
 
 public enum eQTEType

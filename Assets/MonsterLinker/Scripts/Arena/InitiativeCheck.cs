@@ -38,21 +38,21 @@ public class InitiativeCheck : MonoBehaviour
                 print("players turn");
                 arenaui.PlayerInitiativeArrow.enabled = true;
                 yield return new WaitForSeconds(waitForSecs);
-                turnchanger.SwitchTurn(eTurn.Player);
+                turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
             else if (EnemySpeed > PlayerSpeed)
             {
                 print("enemys turn");
                 arenaui.EnemyInitiativeArrow.enabled = true;
                 yield return new WaitForSeconds(waitForSecs);
-                turnchanger.SwitchTurn(eTurn.Enemy);
+                turnchanger.SwitchTurn(eTurn.EnemyFirst);
             }
             else
             {
                 print("players turn");
                 arenaui.PlayerInitiativeArrow.enabled = true;
                 yield return new WaitForSeconds(waitForSecs);
-                turnchanger.SwitchTurn(eTurn.Player);
+                turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
         }
 

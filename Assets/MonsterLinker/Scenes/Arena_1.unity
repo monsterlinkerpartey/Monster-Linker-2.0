@@ -1750,9 +1750,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 586663252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8add3c9c40d0f74d8c06e7d0f6b83ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f3de0e27e44d2144812bb8879b28404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qtehandler: {fileID: 1416454241}
 --- !u!222 &586663255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1768,13 +1769,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586663252}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1800,7 +1801,7 @@ Animator:
   m_GameObject: {fileID: 586663252}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 26815e4335c56534e8f415823d0f6d49, type: 2}
+  m_Controller: {fileID: 9100000, guid: 98ff9d0ce2e6e2d46808c4203f6443a6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3048,7 +3049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3dc9a8d40f9814598bb8486ade9271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turns: 0
+  Turns: 0
 --- !u!114 &1033392720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3061,10 +3062,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5340b6fac712f0747913c6e1b8f6fc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerMaxHP: 0
   PlayerCurHP: 0
   EnemyCurHP: 0
-  EnemyMaxHP: 0
   PlayerCurRP: 0
   EnemyCurRP: 0
   TotalDmgTaken: 0
@@ -4242,6 +4241,7 @@ MonoBehaviour:
   running: 0
   AnimString: 
   baeffectshandler: {fileID: 0}
+  turnchanger: {fileID: 0}
 --- !u!1 &1454243484
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class TurnChanger : MonoBehaviour
 {
-    public int turns = 0;
-    
+    public eTurn Turns;
+
     public void SwitchTurn(eTurn Turn)
     {
-        turns += 1;
-
-        if (turns > 2)
-        {
-            print("both monsters attacked, starting next round");
-            Turn = eTurn.NextRound;
-            turns = 0;
-        }
-
+        Turns = Turn;
+        
         print("turn: " + Turn);
 
         switch (Turn)
         {
-            case eTurn.NextRound:
-                GameStateSwitch.Instance.SwitchState(eGameState.NextRound);
-                break;
-            case eTurn.Player:
+            case eTurn.PlayerFirst:
                 GameStateSwitch.Instance.SwitchState(eGameState.QTEAttack);
                 break;
-            case eTurn.Enemy:
+            case eTurn.EnemyFirst:
                 GameStateSwitch.Instance.SwitchState(eGameState.QTEBlock);
+                break;
+            case eTurn.PlayerSecond:
+                GameStateSwitch.Instance.SwitchState(eGameState.QTEAttack);
+                break;
+            case eTurn.EnemySecond:
+                GameStateSwitch.Instance.SwitchState(eGameState.QTEBlock);
+                break;
+            case eTurn.BothDone:
+                GameStateSwitch.Instance.SwitchState(eGameState.NextRound);
+                break;
+            default:
                 break;
         }
     }

@@ -73,6 +73,7 @@ public class GameStateSwitch : MonoBehaviour
         initiativecheck.arenaui = arenaui;
         initiativecheck.turnchanger = turnchanger;
         qtehandler.baeffectshandler = baeffectshandler;
+        qtehandler.turnchanger = turnchanger;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -145,8 +146,11 @@ public class GameStateSwitch : MonoBehaviour
                 break;
             case eGameState.QTEBlock:
                 arenaui.InitiativeCheck.SetActive(false);
-                arenaui.InputPanel.SetActive(true);
+                arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
+
+                qtehandler.SetType(eQTEType.Block, attackslotspawn.NumberOfAttackSlotsEnemy);
+                qtehandler.QTEStateSwitch(eQTEState.Waiting);
 
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
                 //QTE zum Blocken & für RP Gain
