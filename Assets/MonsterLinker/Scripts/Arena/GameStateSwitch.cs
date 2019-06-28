@@ -76,6 +76,7 @@ public class GameStateSwitch : MonoBehaviour
         initiativecheck.turnchanger = turnchanger;
         qtehandler.baeffectshandler = baeffectshandler;
         qtehandler.turnchanger = turnchanger;
+        arenaui.inputbarhandler = inputbarhandler;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts

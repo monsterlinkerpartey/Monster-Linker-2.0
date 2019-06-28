@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Button", menuName = "Other/ButtonInput")]
+[CreateAssetMenu(fileName = "New Button", menuName = "Other/Buttons")]
 public class ButtonInput : ScriptableObject
 {
-    [Header("Input > Settings; all lowercase")]
-    [Tooltip("String for button input")]
+    [Header("a, b, x, y, start, select")]
+    [Tooltip("String for button input \nInput > Settings; all lowercase")]
     public string inputString;
     [Tooltip("Image for the Button")]
     public Sprite buttonSprite;

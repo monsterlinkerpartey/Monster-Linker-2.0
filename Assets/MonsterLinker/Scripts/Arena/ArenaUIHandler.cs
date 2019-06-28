@@ -19,12 +19,78 @@ public class ArenaUIHandler : MonoBehaviour
     public Button ConfirmBAsButton;
     public GameObject ResultPanel;
 
+    [Header("Buttons for BA Input")]
+    public Button HeavyAttack;
+    public Button NormalAttack;
+    public Button LightAttack;
+
     [HideInInspector]
     public AttackSlot[] playerSlots;
     [HideInInspector]
     public AttackSlot[] enemySlots;
+    [HideInInspector]
+    public InputBarHandler inputbarhandler;
 
     public bool hidden;
+
+    public void Update()
+    {
+        switch (GameStateSwitch.Instance.GameState)
+        {
+            case eGameState.PlayerInput:
+                CheckForPlayerBAInput();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void CheckForPlayerBAInput()
+    {
+        if (inputbarhandler.PlayerAttackInput.Count < inputbarhandler.maxBaseAttackInputSlots)
+        {
+            HeavyAttack.enabled = true;
+            NormalAttack.enabled = true;
+            LightAttack.enabled = true;
+
+            if (DPadButtons.Up)
+            {
+                HeavyAttack.animator.SetTrigger("Highlighted");
+                HeavyAttack.onClick.Invoke();
+            }
+            else
+            {
+                HeavyAttack.animator.SetTrigger("Normal");
+            }
+
+            if (DPadButtons.Right)
+            {
+                NormalAttack.animator.SetTrigger("Highlighted");
+                NormalAttack.onClick.Invoke();
+            }
+            else
+            {
+                NormalAttack.animator.SetTrigger("Normal");
+            }
+
+            if (DPadButtons.Down)
+            {
+                LightAttack.animator.SetTrigger("Highlighted");
+                LightAttack.onClick.Invoke();
+            }
+            else
+            {
+                LightAttack.animator.SetTrigger("Normal");
+            }
+        }
+        else
+        {
+            HeavyAttack.enabled = false;
+            NormalAttack.enabled = false;
+            LightAttack.enabled = false;
+        }
+
+    }
 
     public void GetAttackSlots()
     {
@@ -37,7 +103,7 @@ public class ArenaUIHandler : MonoBehaviour
     {
         enabled = ConfirmBAsButton.enabled;
     }
-    
+
     //TODO Show/Hide FA Info and Input Buttons
     public void ShowHideInputInfo()
     {
@@ -81,8 +147,8 @@ public class ArenaUIHandler : MonoBehaviour
                 playerSlots[i].ClearSlot();
             }
         }
-    }    
-    
+    }
+
     //player input shown in ui
     public void UpdateEnemyInput(List<BaseAttack> attacks)
     {
