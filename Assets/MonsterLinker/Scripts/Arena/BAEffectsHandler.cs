@@ -10,8 +10,8 @@ public class BAEffectsHandler : MonoBehaviour
     [SerializeField] float PlayerCurRP;
     [SerializeField] float EnemyCurRP;
 
-    [SerializeField] float TotalDmgTaken;
-    [SerializeField] float TotalDmgDealt;
+    public float TotalDmgTaken;
+    public float TotalDmgDealt;
 
     //Set by GameStateSwitch during Ini Check
     public List<Attack> curEnemyAttacks;
@@ -77,5 +77,42 @@ public class BAEffectsHandler : MonoBehaviour
         print("Player HP: " + PlayerCurHP + ", Player RP: " + PlayerCurRP + ", Enemy HP: " + EnemyCurHP+", Enemy RP: " + EnemyCurRP);
 
         TotalDmgDealt += curAttack.DMG * DMGModifier;
+    }
+
+    public void ShowTotalDmg(float totaldmg)
+    {
+        print("total damage this round: " + totaldmg);
+    }
+
+    public void ResetDmgCount()
+    {
+        TotalDmgTaken = 0f;
+        TotalDmgDealt = 0f;
+    }
+
+    public void CheckForDeath(float hitpoints, eTurn curTurn)
+    {
+        if (Mathf.Round(hitpoints) <= 0f)
+        {        
+            //TODO: set result screen to open up
+            switch(curTurn)
+            {
+                case eTurn.EnemyFirst:
+                    print("player died");
+                    break;
+                case eTurn.EnemySecond:
+                    print("player died");
+                    break;
+                case eTurn.PlayerFirst:
+                    print("enemy died");
+                    break;
+                case eTurn.PlayerSecond:
+                    print("enemy died");
+                    break;
+                default:
+                    Debug.LogError("I dunno who died, check BAEffectsHandler");
+                    break;
+            }
+        }
     }
 }

@@ -204,7 +204,7 @@ public class QTEHandler : MonoBehaviour
                 break;
             default:
                 WaitingTime = 0f;
-                print("ERROR: Could not set Wait Time, check QTEHandler");
+                Debug.LogError("Could not set Wait Time, check QTEHandler");
                 break;
         }        
         StartCoroutine(WaitForStart());
@@ -232,7 +232,7 @@ public class QTEHandler : MonoBehaviour
 
         if (Buttons.Count <= 0)
         {
-            Debug.LogError("ERROR: No buttons in list, check QTE Handler");
+            Debug.LogError("No buttons in list, check QTE Handler");
         }
         else
         {
@@ -257,6 +257,20 @@ public class QTEHandler : MonoBehaviour
             case eQTEState.Done:
                 print("QTEs done");
 
+                switch (GameStateSwitch.Instance.GameState)
+                {
+                    case eGameState.QTEAttack:
+                        baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgDealt);
+                        baeffectshandler.CheckForDeath(baeffectshandler.EnemyCurHP, turnchanger.Turns);
+
+                        break;
+                    case eGameState.QTEBlock:
+                        baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgTaken);
+                        baeffectshandler.CheckForDeath(baeffectshandler.PlayerCurHP, turnchanger.Turns);
+
+                        break;
+                }
+
                 if (turnchanger.Turns == eTurn.EnemyFirst)
                 {
                     turnchanger.SwitchTurn(eTurn.PlayerSecond);
@@ -272,7 +286,7 @@ public class QTEHandler : MonoBehaviour
                 
                 break;
             default:
-                print("QTE state not found, check QTEHandler");
+                Debug.LogError("QTE state not found, check QTEHandler");
                 break;
         }
     }

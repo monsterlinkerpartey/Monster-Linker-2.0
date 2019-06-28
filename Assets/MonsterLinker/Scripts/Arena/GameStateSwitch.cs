@@ -171,6 +171,8 @@ public class GameStateSwitch : MonoBehaviour
                 enemystatemachine.ClearInput();
                 //Enemy Input Bar ausblenden
                 arenaui.EnemyInputBar.SetActive(false);
+                //Reset DMG counters for the end of each turn
+                baeffectshandler.ResetDmgCount();
 
                 //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
                 //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight

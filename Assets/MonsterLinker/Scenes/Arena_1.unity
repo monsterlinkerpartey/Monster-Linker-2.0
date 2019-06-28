@@ -308,6 +308,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197039724}
   m_CullTransparentMesh: 0
+--- !u!1 &213355185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 213355186}
+  - component: {fileID: 213355188}
+  - component: {fileID: 213355187}
+  m_Layer: 0
+  m_Name: HPandRP_related
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &213355186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213355185}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1389594454}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213355187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213355185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70239f7080b55149b88dd594ecc3132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &213355188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213355185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5340b6fac712f0747913c6e1b8f6fc7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerCurHP: 0
+  EnemyCurHP: 0
+  PlayerCurRP: 0
+  EnemyCurRP: 0
+  TotalDmgTaken: 0
+  TotalDmgDealt: 0
+  curEnemyAttacks: []
+  curPlayerAttacks: []
+  curAttack: {fileID: 0}
+  DMGModifier: 0
 --- !u!1 &278408178
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,9 +2964,8 @@ GameObject:
   - component: {fileID: 1033392713}
   - component: {fileID: 1033392718}
   - component: {fileID: 1033392719}
-  - component: {fileID: 1033392720}
   m_Layer: 0
-  m_Name: Scripts
+  m_Name: OtherScripts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3050,28 +3115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Turns: 0
---- !u!114 &1033392720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033392711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5340b6fac712f0747913c6e1b8f6fc7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerCurHP: 0
-  EnemyCurHP: 0
-  PlayerCurRP: 0
-  EnemyCurRP: 0
-  TotalDmgTaken: 0
-  TotalDmgDealt: 0
-  curEnemyAttacks: []
-  curPlayerAttacks: []
-  curAttack: {fileID: 0}
-  DMGModifier: 0
 --- !u!1 &1039045088
 GameObject:
   m_ObjectHideFlags: 0
@@ -4142,6 +4185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9580800bc2ed474db8cda0c278869d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameState: 0
   IntroTime: 1
   feralartcheck: {fileID: 0}
   playerinput: {fileID: 0}
@@ -4174,6 +4218,7 @@ Transform:
   - {fileID: 1033392712}
   - {fileID: 742203324}
   - {fileID: 1416454240}
+  - {fileID: 213355186}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4188,7 +4233,7 @@ GameObject:
   - component: {fileID: 1416454240}
   - component: {fileID: 1416454241}
   m_Layer: 0
-  m_Name: QTE
+  m_Name: QTE_related
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
