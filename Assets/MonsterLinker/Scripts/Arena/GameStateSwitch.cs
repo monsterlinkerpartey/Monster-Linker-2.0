@@ -6,6 +6,8 @@ public class GameStateSwitch : MonoBehaviour
 {
     public static GameStateSwitch Instance;
 
+    public eGameState GameState;
+
     public float IntroTime = 1f;
     //TODO: List of all scripts in the arena scene
     public FeralArtCheck feralartcheck;
@@ -77,9 +79,11 @@ public class GameStateSwitch : MonoBehaviour
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
-    public void SwitchState(eGameState GameState)
+    public void SwitchState(eGameState gamestate)
     {
-        switch (GameState)
+        GameState = gamestate;
+
+        switch (gamestate)
         {
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
@@ -168,13 +172,14 @@ public class GameStateSwitch : MonoBehaviour
                 //Enemy Input Bar ausblenden
                 arenaui.EnemyInputBar.SetActive(false);
 
+                //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
+                //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
                 ///falls spieler einen 6. input slot kriegt:
                 //attackslotspawn.SpawnPlayerSlots();
                 //arenaui.GetAttackSlots();
 
-                //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
-                //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
                 //Go to Player Input State
+                SwitchState(eGameState.PlayerInput);
                 break;
             case eGameState.Result:
                 //Victory: Next Fight - Button

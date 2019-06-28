@@ -29,8 +29,9 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] int ran;
 
     [Header("Other stuff")]
-    [Tooltip("Time til startup of the animation, default 2s")]
+    [Tooltip("Time til impact/startup of Monster animation, default 2s")]
     public float AnimStartup = 2.0f;
+    //TODO get animation events for monster animations to check when they end/start
     [Tooltip("Time til QTE starts")]
     [SerializeField] float WaitingTime;
     //[SerializeField] float QTETimer;
@@ -116,19 +117,21 @@ public class QTEHandler : MonoBehaviour
                 baeffectshandler.DMGModifier = 1.0f;
                 break;
         }
-        if (curQTEType.name == "Attack")
-        {
-            baeffectshandler.EnemyTakesDmg();
-        }
-        else if (curQTEType.name == "Block")
-        {
-            baeffectshandler.PlayerTakesDmg();
-        }
+        //if (curQTEType.name == Attack.name)
+        //{
+        //    baeffectshandler.EnemyTakesDmg();
+        //}
+        //if (curQTEType.name == Block.name)
+        //{
+        //    baeffectshandler.PlayerTakesDmg();
+        //}
+        baeffectshandler.SetCurAttack();
         //wait for result animation to play
         yield return new WaitForSeconds(0.5f);
         //start new qte or set qte done
         QTEStateSwitch(eQTEState.Waiting);
         GlobalVars.AttackRound += 1;
+        print("attackround: " + GlobalVars.AttackRound);
         SetQTEAnim(curQTEType.Type);
     }
 
@@ -170,7 +173,8 @@ public class QTEHandler : MonoBehaviour
         if (GlobalVars.AttackRound > MaxSlots)
         {
             QTEStateSwitch(eQTEState.Done);
-            GlobalVars.AttackRound = 0;
+            GlobalVars.AttackRound = 1;
+            print("attackround: " + GlobalVars.AttackRound);
             return;
         }
 

@@ -38,10 +38,26 @@ public class BAEffectsHandler : MonoBehaviour
         }
     }
 
+    public void SetCurAttack()
+    {
+        switch(GameStateSwitch.Instance.GameState)
+        {
+            case (eGameState.QTEAttack):
+                curAttack = curPlayerAttacks[GlobalVars.AttackRound - 1];
+                EnemyTakesDmg();
+                print("setting curAttack to " + curPlayerAttacks[GlobalVars.AttackRound - 1]);
+                break;
+            case (eGameState.QTEBlock):
+                curAttack = curEnemyAttacks[GlobalVars.AttackRound - 1];
+                print("setting curAttack to " + curEnemyAttacks[GlobalVars.AttackRound - 1]);
+                PlayerTakesDmg();
+                break;
+        }
+    }
+
     public void PlayerTakesDmg()
     {
-        curAttack = curEnemyAttacks[GlobalVars.AttackRound-1];
-
+        print("dealing dmg to player");
         PlayerCurHP -= curAttack.DMG * DMGModifier;
         EnemyCurHP += curAttack.HPGain;
         EnemyCurRP += curAttack.RPGain;
@@ -52,9 +68,8 @@ public class BAEffectsHandler : MonoBehaviour
     }
 
     public void EnemyTakesDmg()
-    {
-        curAttack = curPlayerAttacks[GlobalVars.AttackRound-1];
-
+    {       
+        print("dealing dmg to enemy");
         EnemyCurHP -= curAttack.DMG * DMGModifier;
         PlayerCurHP += curAttack.HPGain;
         PlayerCurRP += curAttack.RPGain;
