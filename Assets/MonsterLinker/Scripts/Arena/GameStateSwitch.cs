@@ -22,12 +22,8 @@ public class GameStateSwitch : MonoBehaviour
     public BAEffectsHandler baeffectshandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
-    public Enemy curEnemy;
-
-    //HACK: for testing temporary feral art loadout
-    public List<FeralArt> LoadedFeralArts = new List<FeralArt>();
-
-
+    public Enemy curEnemy;   
+    
     void Start()
     {
         #region Singleton
@@ -77,6 +73,7 @@ public class GameStateSwitch : MonoBehaviour
         qtehandler.baeffectshandler = baeffectshandler;
         qtehandler.turnchanger = turnchanger;
         arenaui.inputbarhandler = inputbarhandler;
+        feralartcheck.inputbarhandler = inputbarhandler;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -89,7 +86,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
-                arenaui.BlackListPanel.SetActive(true);
+                arenaui.FALoadout.SetActive(true);
                 enemystatemachine.GetEnemyValues();
                 attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, enemystatemachine.maxInputSlots);
                 attackslotspawn.SpawnPlayerSlots();
@@ -99,13 +96,15 @@ public class GameStateSwitch : MonoBehaviour
 
                 baeffectshandler.PlayerCurHP = GlobalVars.PlayerMaxHP;
                 baeffectshandler.EnemyCurHP = GlobalVars.EnemyMaxHP;
+                inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
             ///Arena in cinematischer Cutscene vorstellen
             ///FA Loadout und alle scripts laden
             case eGameState.Intro:
-                arenaui.BlackListPanel.SetActive(false);
-                feralartcheck.FeralArtLoadout(curProfile.FALoadout);
+                arenaui.FALoadout.SetActive(false);
+                feralartcheck.LoadedFeralArts = curProfile.FALoadout;
+                //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
             ///Player Input enablen
@@ -122,7 +121,8 @@ public class GameStateSwitch : MonoBehaviour
             ///Speedwerte vergleichen um Ini festzulegen
             case eGameState.InitiativeCheck:
 
-                baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
+                baeffectshandler.GetAttackLists(feralartcheck.AttackList, enemystatemachine.curAttackInput);
+                //baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
                 arenaui.InputPanel.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -177,7 +177,10 @@ public class GameStateSwitch : MonoBehaviour
 
                 //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
                 //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
-                ///falls spieler einen 6. input slot kriegt:
+                ///falls spieler einen 6. input slot kriegt:      
+                //inputbarhandler.maxBaseAttackInputSlots += 1;
+                //inputbarhandler.maxBaseAttackInputSlots = 5;
+                //und updaten:
                 //attackslotspawn.SpawnPlayerSlots();
                 //arenaui.GetAttackSlots();
 
@@ -185,6 +188,8 @@ public class GameStateSwitch : MonoBehaviour
                 SwitchState(eGameState.PlayerInput);
                 break;
             case eGameState.Result:
+                //RESET EVERYTHING
+
                 //Victory: Next Fight - Button
                 //Defeat: Retry - Button
                 //Immer: Back to Home - Button

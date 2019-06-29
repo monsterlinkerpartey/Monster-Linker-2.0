@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}
   - {fileID: 11400000, guid: b1372efe5fe38c548b9d24c31f652320, type: 2}
   - {fileID: 11400000, guid: 4c44eac7079249f43b37801c6b2a4131, type: 2}
-  - {fileID: 11400000, guid: 01b158b686d3a3540bbdb79fe485522a, type: 2}
   LinkerName: Skerxan
   MonsterName: Death Claw
+  MaxHitPoints: 0
   Arena: 1

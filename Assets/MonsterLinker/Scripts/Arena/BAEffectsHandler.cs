@@ -26,12 +26,14 @@ public class BAEffectsHandler : MonoBehaviour
     //GlobalVars.AttackRound for curAttack
 
     //HACK possible needs to be rewritten later when FAs are implemented
-    public void GetAttackLists(List<BaseAttack> Playerlist, List<BaseAttack> Enemylist)
+    public void GetAttackLists(List<Attack> Playerlist, List<BaseAttack> Enemylist)
     {
-        foreach (Attack attack in Playerlist)
-        {
-            curPlayerAttacks.Add(attack);
-        }
+        curPlayerAttacks = Playerlist;
+        //foreach (Attack attack in Playerlist)
+        //{
+        //    curPlayerAttacks.Add(attack);
+        //}
+
         foreach (Attack attack in Enemylist)
         {
             curEnemyAttacks.Add(attack);

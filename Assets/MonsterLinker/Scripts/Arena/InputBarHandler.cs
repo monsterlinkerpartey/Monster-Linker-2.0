@@ -12,11 +12,6 @@ public class InputBarHandler : MonoBehaviour
     public InitiativeCheck initiativecheck;
     public ArenaUIHandler arenaui;
 
-    void Start()
-    {
-        //feralartcheck = GetComponentInChildren<FeralArtCheck>();
-    }
-
     public void AddInputSlot(int i)
     {
         maxBaseAttackInputSlots += i;
@@ -31,14 +26,17 @@ public class InputBarHandler : MonoBehaviour
             PlayerAttackInput.Add(baseAttack);
             arenaui.UpdatePlayerInput(PlayerAttackInput);
             //HACK save BAs in the feralart output
-            feralartcheck.SaveOutput(baseAttack);
+            feralartcheck.SaveBAlist(baseAttack);
             arenaui.SetConfirmButtonStatus(true);
+
+            //if (PlayerAttackInput.Count == maxBaseAttackInputSlots)
         }
 
         if (PlayerAttackInput.Count >= maxBaseAttackInputSlots)
         {
             print("input bar full: "+ PlayerAttackInput[0].name+", "+ PlayerAttackInput[1].name +", " + PlayerAttackInput[2].name +", " + PlayerAttackInput[3].name +", " + PlayerAttackInput[4].name);
-            //TODO feralArtCheck.CheckForFeralArt(PlayerAttackInput);
+            feralartcheck.CompareLists();
+            //TODO disable BA input
         }
     }
 
@@ -49,12 +47,13 @@ public class InputBarHandler : MonoBehaviour
             return;
 
         PlayerAttackInput.Clear();
-        feralartcheck.ResetAll();
+        feralartcheck.ResetBAlist();
         arenaui.UpdatePlayerInput(PlayerAttackInput);
         arenaui.SetConfirmButtonStatus(false);
         print("resetting Input bar");
-    }     
-    
+        //TODO enable BA input
+    }
+
     public void ConfirmInput()
     {
         initiativecheck.curPlayerInput = PlayerAttackInput;

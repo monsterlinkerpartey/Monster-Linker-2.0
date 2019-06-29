@@ -11,10 +11,16 @@ public class ArenaPlayerInput : MonoBehaviour
 {
     public InputBarHandler inputbarhandler;
     public ArenaUIHandler arenaui;
+    public FeralArtCheck feralartcheck;
+
+    public List<FeralArt> ChosenFAs;
        
-    public void ConfirmLoadout()
+    public void ConfirmLoadout() //List<Attack> choosenFAs
     {
-        arenaui.BlackListPanel.SetActive(false);
+        arenaui.FALoadout.SetActive(false);
+
+        //TODO: load FA into profile
+        //GameStateSwitch.Instance.curProfile.FALoadout = ChosenFAs;
         GameStateSwitch.Instance.SwitchState(eGameState.Intro);
     }
 

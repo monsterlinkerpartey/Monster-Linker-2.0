@@ -10,7 +10,7 @@ public class ArenaUIHandler : MonoBehaviour
     public Image EnemyInitiativeArrow;
 
     [Header("Drag n Drop")]
-    public GameObject BlackListPanel;
+    public GameObject FALoadout;
     public GameObject InputPanel;
     public GameObject PlayerInputBar;
     public GameObject EnemyInputBar;
@@ -53,7 +53,7 @@ public class ArenaUIHandler : MonoBehaviour
             NormalAttack.enabled = true;
             LightAttack.enabled = true;
 
-            if (DPadButtons.Up)
+            if (DPadButtons.Down)
             {
                 HeavyAttack.animator.SetTrigger("Highlighted");
                 HeavyAttack.onClick.Invoke();
@@ -73,7 +73,7 @@ public class ArenaUIHandler : MonoBehaviour
                 NormalAttack.animator.SetTrigger("Normal");
             }
 
-            if (DPadButtons.Down)
+            if (DPadButtons.Up)
             {
                 LightAttack.animator.SetTrigger("Highlighted");
                 LightAttack.onClick.Invoke();

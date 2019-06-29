@@ -1137,7 +1137,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reset
+  m_Text: 
 --- !u!222 &417742387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2672,7 +2672,7 @@ GameObject:
   - component: {fileID: 710541313}
   - component: {fileID: 710541312}
   m_Layer: 5
-  m_Name: BlackListPanel
+  m_Name: FALoadout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3446,6 +3446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputbarhandler: {fileID: 0}
   arenaui: {fileID: 0}
+  feralartcheck: {fileID: 0}
+  ChosenFAs: []
 --- !u!114 &1033392714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3483,7 +3485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerInitiativeArrow: {fileID: 1000054479}
   EnemyInitiativeArrow: {fileID: 166889025}
-  BlackListPanel: {fileID: 710541310}
+  FALoadout: {fileID: 710541310}
   InputPanel: {fileID: 2139440683}
   PlayerInputBar: {fileID: 314845168}
   EnemyInputBar: {fileID: 301035586}
@@ -3527,13 +3529,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adacc2c134de7b46bddbab9f5c7b8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginalFALoadout: []
-  PossibleFeralArtList: []
-  RecoveryFA: {fileID: 11400000, guid: 650cedf781f27744e88f1b0704b87678, type: 2}
-  AttackOutput: []
-  StartPos: 0
-  curPlayerInput: {fileID: 0}
-  curFeralArtAttack: {fileID: 0}
+  LoadedFeralArts: []
+  curBAlist: []
+  AttackList: []
+  BAsToDelete: 
+  inputbarhandler: {fileID: 0}
+  FANo: 0
+  InputNo: 0
+  Pos: 0
 --- !u!114 &1033392718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4794,11 +4797,6 @@ MonoBehaviour:
   baeffectshandler: {fileID: 0}
   curProfile: {fileID: 11400000, guid: 50f46be133dcc0941935aaac9e32b8e2, type: 2}
   curEnemy: {fileID: 11400000, guid: b762a63ccaf259b4489ae7f097cee5f9, type: 2}
-  LoadedFeralArts:
-  - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}
-  - {fileID: 11400000, guid: b1372efe5fe38c548b9d24c31f652320, type: 2}
-  - {fileID: 11400000, guid: 4c44eac7079249f43b37801c6b2a4131, type: 2}
-  - {fileID: 11400000, guid: 01b158b686d3a3540bbdb79fe485522a, type: 2}
 --- !u!4 &1389594454
 Transform:
   m_ObjectHideFlags: 0
@@ -5350,7 +5348,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Confirm
+  m_Text: 
 --- !u!222 &1547732044
 CanvasRenderer:
   m_ObjectHideFlags: 0
