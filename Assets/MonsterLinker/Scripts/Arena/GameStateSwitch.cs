@@ -74,6 +74,7 @@ public class GameStateSwitch : MonoBehaviour
         qtehandler.turnchanger = turnchanger;
         arenaui.inputbarhandler = inputbarhandler;
         feralartcheck.inputbarhandler = inputbarhandler;
+        feralartcheck.arenaui = arenaui;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts

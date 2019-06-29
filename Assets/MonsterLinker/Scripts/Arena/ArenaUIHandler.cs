@@ -55,12 +55,12 @@ public class ArenaUIHandler : MonoBehaviour
 
             if (DPadButtons.Down)
             {
-                HeavyAttack.animator.SetTrigger("Highlighted");
-                HeavyAttack.onClick.Invoke();
+                LightAttack.animator.SetTrigger("Highlighted");
+                LightAttack.onClick.Invoke();
             }
             else
             {
-                HeavyAttack.animator.SetTrigger("Normal");
+                LightAttack.animator.SetTrigger("Normal");
             }
 
             if (DPadButtons.Right)
@@ -75,12 +75,12 @@ public class ArenaUIHandler : MonoBehaviour
 
             if (DPadButtons.Up)
             {
-                LightAttack.animator.SetTrigger("Highlighted");
-                LightAttack.onClick.Invoke();
+                HeavyAttack.animator.SetTrigger("Highlighted");
+                HeavyAttack.onClick.Invoke();
             }
             else
             {
-                LightAttack.animator.SetTrigger("Normal");
+                HeavyAttack.animator.SetTrigger("Normal");
             }
         }
         else
@@ -166,6 +166,23 @@ public class ArenaUIHandler : MonoBehaviour
             {
                 enemySlots[i].ClearSlot();
             }
+        }
+    }
+
+    public void VisializeFAs(List<int> Positions, Color thiscolor)
+    {
+        foreach (int i in Positions)
+        {
+            AttackSlot slot = playerSlots[i].GetComponentInChildren<AttackSlot>();
+            slot.icon.color = thiscolor;
+        }
+    }
+
+    public void ResetBAColours(Color thiscolor)
+    {
+        foreach (AttackSlot slot in playerSlots)
+        {
+            slot.icon.color = thiscolor;
         }
     }
 }

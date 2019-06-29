@@ -8,10 +8,4 @@ public class FeralArt : Attack
     [Header("Base Attacks for this FA")]
     [Tooltip("List of BAs needed for this FA")]
     public List<BaseAttack> FeralArtInput = new List<BaseAttack>();
-    [Tooltip("Counter for FeralArtCheck")]
-    //[HideInInspector]
-    public int Counter;
-
-
-
 }

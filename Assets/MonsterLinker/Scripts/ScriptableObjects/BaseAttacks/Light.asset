@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Light
   m_EditorClassIdentifier: 
   DMG: 100
+  RPCost: 0
   RPGain: 5
   HPGain: 10
   Speed: 3
-  InputBarIcon: {fileID: 21300000, guid: c6b51304ba33b60498fa7ed211bc35fa, type: 3}
+  TimeTilStartup: 
+  InputBarIcon: {fileID: 21300000, guid: b93d56bb9d948b2459763fb754647775, type: 3}
   ButtonSprite: {fileID: 0}
   SlotAnim: {fileID: 0}
