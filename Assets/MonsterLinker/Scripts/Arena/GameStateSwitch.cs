@@ -20,6 +20,7 @@ public class GameStateSwitch : MonoBehaviour
     public TurnChanger turnchanger;
     public QTEHandler qtehandler;
     public BAEffectsHandler baeffectshandler;
+    public AttackRoundHandler attackroundhandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;   
@@ -55,6 +56,7 @@ public class GameStateSwitch : MonoBehaviour
         turnchanger = GetComponentInChildren<TurnChanger>();
         qtehandler = GetComponentInChildren<QTEHandler>();
         baeffectshandler = GetComponentInChildren<BAEffectsHandler>();
+        attackroundhandler = GetComponentInChildren<AttackRoundHandler>();
         
     }
 
@@ -75,6 +77,8 @@ public class GameStateSwitch : MonoBehaviour
         arenaui.inputbarhandler = inputbarhandler;
         feralartcheck.inputbarhandler = inputbarhandler;
         feralartcheck.arenaui = arenaui;
+        attackroundhandler.baeffectshandler = baeffectshandler;
+        attackroundhandler.qtehandler = qtehandler;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -139,6 +143,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                                 
+                attackroundhandler.GetAttackList(feralartcheck.AttackList);
+
                 qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
                 qtehandler.QTEStateSwitch(eQTEState.Waiting);
 
@@ -154,7 +160,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
-
+                //TODO: enemy attacks in Attack type umwandeln
+                //attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
                 qtehandler.SetType(eQTEType.Block, attackslotspawn.NumberOfAttackSlotsEnemy);
                 qtehandler.QTEStateSwitch(eQTEState.Waiting);
 

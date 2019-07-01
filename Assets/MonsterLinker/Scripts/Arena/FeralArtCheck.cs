@@ -190,11 +190,10 @@ public class FeralArtCheck : MonoBehaviour
             }
             else
             {
+                BAsToDelete.Clear();
                 print("no FA found, next FA?");
                 FANo += 1;
             }
-            BAsToDelete.Clear();
-
         }
 
         if (inputbarhandler.maxBaseAttackInputSlots == 5 && Pos < 2 || inputbarhandler.maxBaseAttackInputSlots == 6 && Pos < 3) // && FANo < LoadedFeralArts.Count

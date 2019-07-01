@@ -182,6 +182,7 @@ public class QTEHandler : MonoBehaviour
         AnimString = type + GlobalVars.AttackRound;
         print("Choosing an attack QTE for slot " + GlobalVars.AttackRound + "\n Animation: " + AnimString);
 
+        //TODO durch random gen ersetzen, random speed von block und attack qte
         switch (GlobalVars.AttackRound)
         {
             case 1:

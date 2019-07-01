@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67118168cf16cd442b5f30f4d38a22d8, type: 3}
-  m_Name: Chain6_1
+  m_Name: Chain5_3
   m_EditorClassIdentifier: 
   ChainInputList:
-  - {fileID: 11400000, guid: 6bcfc2dad5ac01847859eb8aa9dc16ed, type: 2}
-  - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
   - {fileID: 11400000, guid: d0bb3167010b18f4983b506bdb5f923b, type: 2}
-  - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
-  - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
+  - {fileID: 11400000, guid: d0bb3167010b18f4983b506bdb5f923b, type: 2}
+  - {fileID: 11400000, guid: d0bb3167010b18f4983b506bdb5f923b, type: 2}
+  - {fileID: 11400000, guid: 6bcfc2dad5ac01847859eb8aa9dc16ed, type: 2}
   NeededFeralArts:
-  - {fileID: 11400000, guid: b1372efe5fe38c548b9d24c31f652320, type: 2}
-  - {fileID: 11400000, guid: 01b158b686d3a3540bbdb79fe485522a, type: 2}
+  - {fileID: 11400000, guid: a73caced1849f6646bb69e0497467b39, type: 2}
+  - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}
