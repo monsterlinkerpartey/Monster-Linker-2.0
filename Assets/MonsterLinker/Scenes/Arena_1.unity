@@ -3529,6 +3529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adacc2c134de7b46bddbab9f5c7b8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Chain5:
+  - {fileID: 11400000, guid: a8418a13c31ae7d418d4f81ea2e6cbe8, type: 2}
+  Chain6:
+  - {fileID: 11400000, guid: 8ab665d2639e28a4489655d613f4445c, type: 2}
   Chain5_1: {fileID: 11400000, guid: a8418a13c31ae7d418d4f81ea2e6cbe8, type: 2}
   Chain6_1: {fileID: 11400000, guid: 8ab665d2639e28a4489655d613f4445c, type: 2}
   LoadedFeralArts: []

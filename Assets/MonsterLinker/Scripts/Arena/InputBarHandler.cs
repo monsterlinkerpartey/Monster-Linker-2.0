@@ -47,10 +47,10 @@ public class InputBarHandler : MonoBehaviour
             return;
 
         PlayerAttackInput.Clear();
-        feralartcheck.ResetBAlist();
+        feralartcheck.ResetLists();
         arenaui.UpdatePlayerInput(PlayerAttackInput);
         arenaui.SetConfirmButtonStatus(false);
-        arenaui.ResetBAColours(Color.white);
+        arenaui.ResetBAColours(Color.white);        
         print("resetting Input bar");
         //TODO enable BA input
     }

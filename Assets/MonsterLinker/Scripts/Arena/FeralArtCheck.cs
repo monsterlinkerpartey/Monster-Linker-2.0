@@ -6,8 +6,11 @@ using UnityEngine;
 public class FeralArtCheck : MonoBehaviour
 {
     [Header("FA Chains, drag n drop")]
-    public FAChain Chain5_1;
-    public FAChain Chain6_1;
+    public List<FAChain> Chain5;
+    public List<FAChain> Chain6;
+
+    //public FAChain Chain5_1;
+    //public FAChain Chain6_1;
 
     [Header("----- No touchies from this point on -----")]
     //FAs the player has chosen for this fight
@@ -29,10 +32,11 @@ public class FeralArtCheck : MonoBehaviour
     [SerializeField]
     int Pos = 0;
 
-    public void ResetBAlist()
+    public void ResetLists()
     {
         curBAlist.Clear();
         AttackList.Clear();
+        BAsToDelete.Clear();
         FANo = 0;
         InputNo = 0;
         Pos = 0;
@@ -50,41 +54,82 @@ public class FeralArtCheck : MonoBehaviour
 
         switch (inputbarhandler.maxBaseAttackInputSlots)
         {
+            //TODO foreach schleifen um durch alle chains zu gehen
             case 5:
-                if (curBAlist.Equals(Chain5_1.ChainInputList))
+                foreach (FAChain chain5 in Chain5)
                 {
-                    for (int i = 0; i < 5; i++)
+                    if (curBAlist.SequenceEqual(chain5.ChainInputList))
                     {
-                        BAsToDelete.Add(i);
-                        print("i: " + i);
-                    }
+                        for (int i = 0; i < 5; i++)
+                        {
+                            BAsToDelete.Add(i);
+                            print("i: " + i);
+                        }
 
-                    AttackList.Clear();
-                    AttackList = Chain5_1.NeededFeralArts;
-                    arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        AttackList.Clear();
+                        AttackList = chain5.NeededFeralArts;
+                        arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                    }
+                    else
+                    {
+                        print("no chainable FAs equal");
+                        CompareLists();
+                    }
                 }
-                else
-                {
-                    CompareLists();
-                }
+
                 break;
             case 6:
-                if (curBAlist == Chain6_1.ChainInputList)
+                foreach (FAChain chain6 in Chain6)
                 {
-                    for (int i = 0; i < 6; i++)
+                    if (curBAlist.SequenceEqual(chain6.ChainInputList))
                     {
-                        BAsToDelete.Add(i);
-                        print("i: " + i);
-                    }
+                        for (int i = 0; i < 6; i++)
+                        {
+                            BAsToDelete.Add(i);
+                            print("i: " + i);
+                        }
 
-                    AttackList.Clear();
-                    AttackList = Chain6_1.NeededFeralArts;
-                    arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        AttackList.Clear();
+                        AttackList = chain6.NeededFeralArts;
+                        arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                    }
+                    else if (!curBAlist.SequenceEqual(chain6.ChainInputList))
+                    {
+                        foreach (FAChain chain5 in Chain5)
+                        {
+                            List<BaseAttack> check1 = curBAlist.GetRange(0, 5);
+                            List<BaseAttack> check2 = curBAlist.GetRange(1, 5);
+
+                            if (check1.SequenceEqual(chain5.ChainInputList))
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    BAsToDelete.Add(i);
+                                    print("i: " + i);
+                                }
+
+                                arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                            }
+                            else if (check2.SequenceEqual(chain5.ChainInputList))
+                            {
+                                for (int i = 1; i < 6; i++)
+                                {
+                                    BAsToDelete.Add(i);
+                                    print("i: " + i);
+                                }
+
+                                arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                            }
+                            else
+                            {
+                                print("no chainable FAs equal");
+                                CompareLists();
+                            }
+
+                        }
+                    }
                 }
-                else
-                {
-                    CompareLists();
-                }
+                
                 break;
             default:
                 Debug.LogError("Wrong no of attack slots! Must be 5 or 6");
@@ -114,7 +159,7 @@ public class FeralArtCheck : MonoBehaviour
                 {
                     //check next input
                     print("positive, checking next input");
-                    //save BA no -> int list
+                    //save BA pos in list -> int list
                     BAsToDelete.Add(InputNo + Pos);
 
                 }
