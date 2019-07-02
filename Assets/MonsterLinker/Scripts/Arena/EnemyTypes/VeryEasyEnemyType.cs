@@ -14,7 +14,7 @@ public class VeryEasyEnemyType : EnemyStateMachine
     [Tooltip("Base Attack Pattern, 5 Slots")]
     [SerializeField] List<BaseAttack> BA_normal3;
 
-    [SerializeField] int normalState = 0;
+    [SerializeField] int defaultState = 0;
 
     public override void GetEnemyValues()
     {
@@ -29,16 +29,16 @@ public class VeryEasyEnemyType : EnemyStateMachine
     {
         base.CheckEnemyState();
 
-        EnemyState(eEnemyState.Normal);
+        EnemyState(eEnemyState.Default);
     }
 
     public override void EnemyState(eEnemyState EnemyState)
     {
         switch (EnemyState)
         {
-            case eEnemyState.Normal:
-                if (normalState > 2)
-                    normalState = 0;
+            case eEnemyState.Default:
+                if (defaultState > 2)
+                    defaultState = 0;
 
                 ChooseAttack();
                 break;
@@ -49,22 +49,22 @@ public class VeryEasyEnemyType : EnemyStateMachine
 
     public override void ChooseAttack()
     {
-        base.ChooseAttack();   
-        
-        normalState += 1;
+        base.ChooseAttack();
 
-        switch(normalState)
+        defaultState += 1;
+
+        switch(defaultState)
         {
             case 1:
-                curAttackInput = BA_normal1;
+                curBaseAttackInput = BA_normal1;
                 print("attack input 1");
                 break;
             case 2:
-                curAttackInput = BA_normal2;
+                curBaseAttackInput = BA_normal2;
                 print("attack input 2");
                 break;
             case 3:
-                curAttackInput = BA_normal3;
+                curBaseAttackInput = BA_normal3;
                 print("attack input 3");
                 break;
             default:

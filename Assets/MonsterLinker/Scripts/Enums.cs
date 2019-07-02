@@ -12,8 +12,11 @@
 
 public enum eEnemyState
 {
-    Normal,
-    LowHP
+    Default,
+    Normal_FA3Use,
+    Normal_NoRP,
+    LowHP_FA3Use,
+    LowHP_NoRP,
 };
 
 public enum eTurn
@@ -68,4 +71,12 @@ public enum eArenaUI
     EnemyTurn,
     Result
 };
+
+public enum eImplant
+{
+    RisingRage,
+    UnleashedMode,
+    SuperFA,
+    TempInputSlot
+}
 

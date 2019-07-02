@@ -262,12 +262,12 @@ public class QTEHandler : MonoBehaviour
                 {
                     case eGameState.QTEAttack:
                         baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgDealt);
-                        baeffectshandler.CheckForDeath(baeffectshandler.EnemyCurHP, turnchanger.Turns);
+                        baeffectshandler.CheckForDeath(baeffectshandler.curEnemyHP, turnchanger.Turns);
 
                         break;
                     case eGameState.QTEBlock:
                         baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgTaken);
-                        baeffectshandler.CheckForDeath(baeffectshandler.PlayerCurHP, turnchanger.Turns);
+                        baeffectshandler.CheckForDeath(baeffectshandler.curPlayerHP, turnchanger.Turns);
 
                         break;
                 }

@@ -79,6 +79,7 @@ public class GameStateSwitch : MonoBehaviour
         feralartcheck.arenaui = arenaui;
         attackroundhandler.baeffectshandler = baeffectshandler;
         attackroundhandler.qtehandler = qtehandler;
+        enemystatemachine.baeffectshandler = baeffectshandler;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -99,8 +100,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.GetAttackSlots();
                 GlobalVars.QTEfailed = false;
 
-                baeffectshandler.PlayerCurHP = GlobalVars.PlayerMaxHP;
-                baeffectshandler.EnemyCurHP = GlobalVars.EnemyMaxHP;
+                baeffectshandler.curPlayerHP = GlobalVars.PlayerMaxHP;
+                baeffectshandler.curEnemyHP = GlobalVars.EnemyMaxHP;
                 inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
