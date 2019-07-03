@@ -185,7 +185,7 @@ public class EnemyStateMachine : MonoBehaviour
         print("updating enemy input UI");
         initiativecheck.curEnemyInput = curBaseAttackInput;
         arenaui.UpdateEnemyInput(curBaseAttackInput);
-        baeffectshandler.curEnemyAttacks = curAttackInput;
+        //baeffectshandler.curEnemyAttacks = curAttackInput;
         //update ui to current attack input
     }
 

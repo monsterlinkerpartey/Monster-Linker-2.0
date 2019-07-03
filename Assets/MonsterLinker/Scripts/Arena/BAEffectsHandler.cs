@@ -15,48 +15,48 @@ public class BAEffectsHandler : MonoBehaviour
     public float TotalDmgTaken;
     public float TotalDmgDealt;
 
-    //Set by GameStateSwitch during Ini Check
-    public List<Attack> curEnemyAttacks;
-    public List<Attack> curPlayerAttacks;
-
-    [SerializeField] Attack curAttack;
+    [HideInInspector] public Attack curAttack;
 
     //Set by QTEHandler
     [Tooltip("Influenced by the QTE result")]
     public float DMGModifier;
 
+    ////Set by GameStateSwitch during Ini Check
+    //public List<Attack> curEnemyAttacks;
+    //public List<Attack> curPlayerAttacks;
+
     //GlobalVars.AttackRound for curAttack
 
     //HACK possible needs to be rewritten later when FAs are implemented
-    public void GetAttackLists(List<Attack> Playerlist, List<Attack> Enemylist)
-    {
-        curPlayerAttacks = Playerlist;
-        //foreach (Attack attack in Playerlist)
-        //{
-        //    curPlayerAttacks.Add(attack);
-        //}
+    //public void GetAttackLists(List<Attack> Playerlist, List<Attack> Enemylist)
+    //{
+    //    curPlayerAttacks = Playerlist;
+    //    //foreach (Attack attack in Playerlist)
+    //    //{
+    //    //    curPlayerAttacks.Add(attack);
+    //    //}
 
-        foreach (Attack attack in Enemylist)
-        {
-            curEnemyAttacks.Add(attack);
-        }
-    }
+    //    foreach (Attack attack in Enemylist)
+    //    {
+    //        curEnemyAttacks.Add(attack);
+    //    }
+    //}
 
     public void SetCurAttack()
     {
-        switch(GameStateSwitch.Instance.GameState)
-        {
-            case (eGameState.QTEAttack):
-                curAttack = curPlayerAttacks[GlobalVars.AttackRound - 1];
-                EnemyTakesDmg();
-                print("setting curAttack to " + curPlayerAttacks[GlobalVars.AttackRound - 1]);
-                break;
-            case (eGameState.QTEBlock):
-                curAttack = curEnemyAttacks[GlobalVars.AttackRound - 1];
-                print("setting curAttack to " + curEnemyAttacks[GlobalVars.AttackRound - 1]);
-                PlayerTakesDmg();
-                break;
-        }
+        //switch(GameStateSwitch.Instance.GameState)
+        //{
+        //    case (eGameState.QTEAttack):
+        //        curAttack = curPlayerAttacks[GlobalVars.AttackRound - 1];
+        //        EnemyTakesDmg();
+        //        print("setting curAttack to " + curPlayerAttacks[GlobalVars.AttackRound - 1]);
+        //        break;
+        //    case (eGameState.QTEBlock):
+        //        curAttack = curEnemyAttacks[GlobalVars.AttackRound - 1];
+        //        print("setting curAttack to " + curEnemyAttacks[GlobalVars.AttackRound - 1]);
+        //        PlayerTakesDmg();
+        //        break;
+        //}
     }
 
     public void PlayerTakesDmg()

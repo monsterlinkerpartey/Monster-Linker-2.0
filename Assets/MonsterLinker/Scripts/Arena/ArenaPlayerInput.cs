@@ -40,6 +40,39 @@ public class ArenaPlayerInput : MonoBehaviour
 
     }
 
+    public void RetryFight()
+    {
+        GameStateSwitch.Instance.ResetFight();
+        GameStateSwitch.Instance.SwitchState(eGameState.PlayerInput);
+        //Scene curScene = SceneManager.GetActiveScene();
+        //SceneManager.LoadScene(curScene.name);
+    }
+
+    public void RetryWithLoadout()
+    {
+        GameStateSwitch.Instance.ResetFight();
+        GameStateSwitch.Instance.SwitchState(eGameState.Loadout);
+        //Scene curScene = SceneManager.GetActiveScene();
+        //SceneManager.LoadScene(curScene.name);
+    }
+
+    public void NextFight()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void BackToHome()
+    {
+        SceneManager.LoadScene("Home");
+    }
+
+    public void Test()
+    {
+        arenaui.FALoadout.SetActive(false);
+        GameStateSwitch.Instance.FightResult = eFightResult.Defeat;
+        GameStateSwitch.Instance.SwitchState(eGameState.Result);
+    }
+
     //public void ChooseProfile(Save saveSlot)
     //{
     //    if (saveSlot.Used)

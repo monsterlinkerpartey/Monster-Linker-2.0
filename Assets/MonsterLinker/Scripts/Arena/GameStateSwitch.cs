@@ -23,7 +23,9 @@ public class GameStateSwitch : MonoBehaviour
     public AttackRoundHandler attackroundhandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
-    public Enemy curEnemy;   
+    public Enemy curEnemy;
+
+    public eFightResult FightResult;
     
     void Start()
     {
@@ -92,11 +94,12 @@ public class GameStateSwitch : MonoBehaviour
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
+                arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(true);
                 enemystatemachine.GetEnemyValues();
-                attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, enemystatemachine.maxInputSlots);
                 attackslotspawn.SpawnPlayerSlots();
                 attackslotspawn.SpawnEnemySlots();
+                attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, enemystatemachine.maxInputSlots);
                 arenaui.GetAttackSlots();
                 GlobalVars.QTEfailed = false;
 
@@ -108,6 +111,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Arena in cinematischer Cutscene vorstellen
             ///FA Loadout und alle scripts laden
             case eGameState.Intro:
+                arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
                 feralartcheck.LoadedFeralArts = curProfile.FALoadout;
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
@@ -117,6 +121,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
+                arenaui.ResultPanel.SetActive(false);
                 arenaui.InputPanel.SetActive(true);
                 arenaui.PlayerInputBar.SetActive(true);
                 enemystatemachine.CheckEnemyState();
@@ -127,7 +132,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Speedwerte vergleichen um Ini festzulegen
             case eGameState.InitiativeCheck:
 
-                baeffectshandler.GetAttackLists(feralartcheck.AttackList, enemystatemachine.curAttackInput);
+                //baeffectshandler.GetAttackLists(feralartcheck.AttackList, enemystatemachine.curAttackInput);
                 //baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
                 arenaui.InputPanel.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
@@ -145,9 +150,10 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.PlayerInputBar.SetActive(true);
                                 
                 attackroundhandler.GetAttackList(feralartcheck.AttackList);
+                attackroundhandler.SetAnimation();
 
-                qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
-                qtehandler.QTEStateSwitch(eQTEState.Waiting);
+                //qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
+                //qtehandler.QTEStateSwitch(eQTEState.Waiting);
 
 
                 //Animation der Attacke des Spielers sowie Reaktion des Gegners triggern
@@ -163,8 +169,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.EnemyInputBar.SetActive(true);
                 //TODO: enemy attacks in Attack type umwandeln
                 //attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
-                qtehandler.SetType(eQTEType.Block, attackslotspawn.NumberOfAttackSlotsEnemy);
-                qtehandler.QTEStateSwitch(eQTEState.Waiting);
+                //qtehandler.SetType(eQTEType.Block, attackslotspawn.NumberOfAttackSlotsEnemy);
+                //qtehandler.QTEStateSwitch(eQTEState.Waiting);
 
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
                 //QTE zum Blocken & für RP Gain
@@ -197,20 +203,59 @@ public class GameStateSwitch : MonoBehaviour
                 SwitchState(eGameState.PlayerInput);
                 break;
             case eGameState.Result:
-                //RESET EVERYTHING
+                //TODO disable player and enemy status HP/RP
 
-                //Victory: Next Fight - Button
-                //Defeat: Retry - Button
-                //Immer: Back to Home - Button
+
+                arenaui.EnemyInputBar.SetActive(false);
+                arenaui.PlayerInputBar.SetActive(false);
+
+                switch (FightResult)
+                {
+                    case eFightResult.None:
+                        Debug.LogError("No Result set!");
+                        break;
+                    case eFightResult.Victory:
+                        arenaui.NextButton.SetActive(true);
+                        arenaui.RetryButton.SetActive(false);
+                        arenaui.LoadoutButton.SetActive(false);
+
+                        arenaui.ResultText.text = "VICTORY";
+
+                        break;
+                    case eFightResult.Defeat:
+                        arenaui.NextButton.SetActive(false);
+                        arenaui.RetryButton.SetActive(true);
+                        arenaui.LoadoutButton.SetActive(true);
+
+                        arenaui.ResultText.text = "DEFEAT";
+                        break;
+                }
+                arenaui.ResultPanel.SetActive(true);
                 break;
         }
         print("arena state: " + GameState);
     }
+
+    public void ResetFight()
+    {
+        baeffectshandler.curEnemyHP = enemystatemachine.maxHitPoints;
+        baeffectshandler.curPlayerHP = curProfile.MaxHitPoints;
+        baeffectshandler.curEnemyRP = 0;
+        baeffectshandler.curPlayerRP = 0;
+
+        //reset player and enemy inputs
+        inputbarhandler.Reset();
+        enemystatemachine.ClearInput();
+
+        //reset all special implants but keep choice
+        //keep fa list choice
+    }
+
 
     IEnumerator WaitForIntro(float waitingTime)
     {
         print("showing arena intro");
         yield return new WaitForSeconds(waitingTime);
         SwitchState(eGameState.PlayerInput);
-    }    
+    }
 }

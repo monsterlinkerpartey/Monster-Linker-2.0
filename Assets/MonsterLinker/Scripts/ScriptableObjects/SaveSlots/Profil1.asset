@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Profil1
   m_EditorClassIdentifier: 
   Used: 1
-  maxBaseAttackInputSlots: 6
+  maxBaseAttackInputSlots: 5
   FALoadout:
   - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}
   - {fileID: 11400000, guid: b1372efe5fe38c548b9d24c31f652320, type: 2}

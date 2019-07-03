@@ -47,7 +47,8 @@ public class QTEAnimEvents : MonoBehaviour
     public void ZEndQTE()
     {
         QTEZone = eQTEZone.Fail;
-        StartCoroutine(qtehandler.CheckQTEZone());
+        //TODO: qtehandler QTE endet zone
+        //StartCoroutine(qtehandler.CheckQTEZone());
         print("cur Zone: " + QTEZone);
 
         print("Full length: "+timer);

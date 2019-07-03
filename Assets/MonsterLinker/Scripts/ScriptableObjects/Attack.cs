@@ -15,7 +15,9 @@ public class Attack : ScriptableObject
     public float HPGain;
     [Tooltip("Speed of the attack")]
     public int Speed;
+    
 
-    [Tooltip("Time til Startup in the attack animation")]
-    public string TimeTilStartup;
+
+    [Tooltip("Name of the attack animation")]
+    public string AnimationName;
 }

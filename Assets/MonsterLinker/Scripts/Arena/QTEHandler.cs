@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// 
 public class QTEHandler : MonoBehaviour
 {
+
     [Header("The different Types of QTE")]
     public Animator AttackQTEAnim;
     public Animator BlockQTEAnim;
@@ -40,6 +41,7 @@ public class QTEHandler : MonoBehaviour
 
     [SerializeField] Animator curQTEAnim;
     [SerializeField] QTE curQTEType;
+
     [SerializeField] int MaxSlots;
     [Tooltip("Bool to start QTE Timer")]
     [SerializeField] bool running;
@@ -164,7 +166,7 @@ public class QTEHandler : MonoBehaviour
                 print("ERROR: QTEType not found, check QTEHandler");
                 break;
         }
-        
+
         print("QTE Type: " + QTEType);
     }
 
@@ -207,7 +209,7 @@ public class QTEHandler : MonoBehaviour
                 WaitingTime = 0f;
                 Debug.LogError("Could not set Wait Time, check QTEHandler");
                 break;
-        }        
+        }
         StartCoroutine(WaitForStart());
     }
 
@@ -246,14 +248,14 @@ public class QTEHandler : MonoBehaviour
         switch (QTEState)
         {
             case eQTEState.Waiting:
-                curQTEAnim.Play("Wait");                              
+                curQTEAnim.Play("Wait");
                 QTEButton.SetActive(false);
                 running = false;
                 break;
             case eQTEState.Running:
                 running = true;
                 QTEButton.SetActive(true);
-                curQTEAnim.Play(AnimString);                               
+                curQTEAnim.Play(AnimString);
                 break;
             case eQTEState.Done:
                 print("QTEs done");
@@ -284,14 +286,17 @@ public class QTEHandler : MonoBehaviour
                 {
                     turnchanger.SwitchTurn(eTurn.BothDone);
                 }
-                
+
                 break;
             default:
                 Debug.LogError("QTE state not found, check QTEHandler");
                 break;
         }
     }
-    
+
+
+    ///=============================================================
+
     //public eQTEState QTEState;
 
     //[Tooltip("Current attack for animation length")]

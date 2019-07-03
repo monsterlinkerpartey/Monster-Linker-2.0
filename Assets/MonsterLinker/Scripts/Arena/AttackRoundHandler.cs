@@ -23,7 +23,22 @@ public class AttackRoundHandler : MonoBehaviour
         curAttack = curAttackList[curRound];
     }
          
-    
+    public void SetQTEType()
+    {
+        //FA oder BA
+        //Block oder Attack
+    }
+
+    public void SetAnimation()
+    {
+        //check whose turn
+        //string input from curAttack
+    }
+
+    public void SetEffectValues()
+    {
+        baeffectshandler.curAttack = curAttack;
+    }
 
     //TODO:
     //- attacklist von feralartcheck/enemystatemachine für wieviele "runden"

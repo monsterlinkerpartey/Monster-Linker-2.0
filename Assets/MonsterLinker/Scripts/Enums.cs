@@ -80,3 +80,9 @@ public enum eImplant
     TempInputSlot
 }
 
+public enum eFightResult
+{
+    None,
+    Victory,
+    Defeat
+}

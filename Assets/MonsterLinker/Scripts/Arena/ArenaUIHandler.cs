@@ -24,6 +24,12 @@ public class ArenaUIHandler : MonoBehaviour
     public Button NormalAttack;
     public Button LightAttack;
 
+    [Header("Buttons for Result Screen")]
+    public GameObject RetryButton;
+    public GameObject LoadoutButton;
+    public GameObject NextButton;
+    public Text ResultText;
+
     [HideInInspector]
     public AttackSlot[] playerSlots;
     [HideInInspector]
