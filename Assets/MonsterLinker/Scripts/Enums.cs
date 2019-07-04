@@ -72,6 +72,12 @@ public enum eArenaUI
     Result
 };
 
+public enum eAttackType
+{
+    FA,
+    BA
+}
+
 public enum eImplant
 {
     RisingRage,

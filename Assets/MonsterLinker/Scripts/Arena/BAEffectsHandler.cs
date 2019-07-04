@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BAEffectsHandler : MonoBehaviour
 {
+    public bool Playerturn;
+
     public float maxPlayerHP;
     public float curPlayerHP;
     public float curPlayerRP;
@@ -42,45 +44,41 @@ public class BAEffectsHandler : MonoBehaviour
     //    }
     //}
 
-    public void SetCurAttack()
+    public void DMGModification(float dmgModifier)
     {
-        //switch(GameStateSwitch.Instance.GameState)
-        //{
-        //    case (eGameState.QTEAttack):
-        //        curAttack = curPlayerAttacks[GlobalVars.AttackRound - 1];
-        //        EnemyTakesDmg();
-        //        print("setting curAttack to " + curPlayerAttacks[GlobalVars.AttackRound - 1]);
-        //        break;
-        //    case (eGameState.QTEBlock):
-        //        curAttack = curEnemyAttacks[GlobalVars.AttackRound - 1];
-        //        print("setting curAttack to " + curEnemyAttacks[GlobalVars.AttackRound - 1]);
-        //        PlayerTakesDmg();
-        //        break;
-        //}
+        float curDMG = curAttack.DMG * dmgModifier;
+        if (Playerturn)
+        {
+            EnemyTakesDmg(curDMG);
+        }
+        else
+        {
+            PlayerTakesDmg(curDMG);
+        }        
     }
 
-    public void PlayerTakesDmg()
+    public void PlayerTakesDmg(float curDMG)
     {
         print("dealing dmg to player");
-        curPlayerHP -= curAttack.DMG * DMGModifier;
+        curPlayerHP -= curDMG;
         curEnemyHP += curAttack.HPGain;
         curEnemyRP += curAttack.RPGain;
-        print("Player takes " + (curAttack.DMG * DMGModifier) + " DMG\n Enemy gains " + curAttack.RPGain + " RP");
-        print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
+        TotalDmgTaken += curDMG;
 
-        TotalDmgTaken += curAttack.DMG * DMGModifier;
+        print("Player takes " + (curDMG) + " DMG\n Enemy gains " + curAttack.RPGain + " RP");
+        print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
     }
 
-    public void EnemyTakesDmg()
+    public void EnemyTakesDmg(float curDMG)
     {       
         print("dealing dmg to enemy");
-        curEnemyHP -= curAttack.DMG * DMGModifier;
+        curEnemyHP -= curDMG;
         curPlayerHP += curAttack.HPGain;
         curPlayerRP += curAttack.RPGain;
-        print("Enemy takes " + (curAttack.DMG * DMGModifier) + " DMG\n Player gains " + curAttack.RPGain + " RP");
-        print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP + ", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
+        TotalDmgDealt += curDMG;
 
-        TotalDmgDealt += curAttack.DMG * DMGModifier;
+        print("Enemy takes " + (curDMG) + " DMG\n Player gains " + curAttack.RPGain + " RP");
+        print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP + ", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
     }
 
     public void ShowTotalDmg(float totaldmg)

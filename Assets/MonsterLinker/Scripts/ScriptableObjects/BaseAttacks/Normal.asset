@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   DMG: 200
+  RPCost: 0
   RPGain: 10
   HPGain: 0
   Speed: 2
+  AnimationName: normal
+  AttackType: 1
   InputBarIcon: {fileID: 21300000, guid: 922f0ee2b785eb9468772c2ec2ca1694, type: 3}
   ButtonSprite: {fileID: 0}
   SlotAnim: {fileID: 0}

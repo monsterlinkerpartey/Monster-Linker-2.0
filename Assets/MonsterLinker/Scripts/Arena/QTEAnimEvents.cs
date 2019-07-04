@@ -12,22 +12,20 @@ public class QTEAnimEvents : MonoBehaviour
     [Tooltip("Drag n drop")]
     public QTEHandler qtehandler;
 
-    bool start = false;
-    float timer;
+    //bool start = false;
+    //float timer;
 
-    //HACK temporary timer to read out time zones
-    public void Update()
-    {
-        if (start)
-        {
-            timer += Time.deltaTime;
-        }
-    }
+    //public void Update()
+    //{
+    //    if (start)
+    //    {
+    //        timer += Time.deltaTime;
+    //    }
+    //}
 
     public void ZStartQTE()
     {
-        start = true;
-
+        //start = true;
         QTEZone = eQTEZone.Fail;
         print("cur Zone: " + QTEZone);
     }
@@ -47,12 +45,10 @@ public class QTEAnimEvents : MonoBehaviour
     public void ZEndQTE()
     {
         QTEZone = eQTEZone.Fail;
-        //TODO: qtehandler QTE endet zone
-        //StartCoroutine(qtehandler.CheckQTEZone());
+        StartCoroutine(qtehandler.CheckQTEZone());
         print("cur Zone: " + QTEZone);
-
-        print("Full length: "+timer);
-        start = false;
-        timer = 0f;
+        //print("Full length: "+timer);
+        //start = false;
+        //timer = 0f;
     }
 }

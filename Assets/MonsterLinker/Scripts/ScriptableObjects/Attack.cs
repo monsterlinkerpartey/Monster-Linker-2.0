@@ -15,9 +15,8 @@ public class Attack : ScriptableObject
     public float HPGain;
     [Tooltip("Speed of the attack")]
     public int Speed;
-    
 
-
-    [Tooltip("Name of the attack animation")]
+    [Header("Do not touch unless told by coder")]
     public string AnimationName;
+    public eAttackType AttackType;
 }

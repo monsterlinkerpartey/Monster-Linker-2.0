@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Baseattack", menuName = "Attack/BaseAttack")]
 public class BaseAttack : Attack
 {
-    [Header("--- No changes after this point---")]
     [Tooltip("Sprite shown in the Input Bar")]
     public Sprite InputBarIcon;
     [Tooltip("Sprite for the Button")]

@@ -13,6 +13,7 @@ public class AttackRoundHandler : MonoBehaviour
     public AnimationHandler animationhandler;
     public QTEHandler qtehandler;
     public BAEffectsHandler baeffectshandler;
+    public TurnChanger turnchanger;
 
     //Called by GameStateSwitch, depending on state gives enemy or player attack list
     public void GetAttackList(List<Attack> curAttacks)
@@ -21,18 +22,63 @@ public class AttackRoundHandler : MonoBehaviour
         maxRounds = curAttackList.Count;
         curRound = 1;
         curAttack = curAttackList[curRound];
-    }
-         
-    public void SetQTEType()
+    }   
+    
+    public void NextAttack()
     {
-        //FA oder BA
-        //Block oder Attack
+        if (curRound <= maxRounds)
+        {
+            curRound += 1;
+            curAttack = curAttackList[curRound];
+        }
+        else
+        {
+            CheckForTurn();
+        }
     }
 
-    public void SetAnimation()
+    public void CheckForTurn()
     {
-        //check whose turn
-        //string input from curAttack
+        if (turnchanger.Turns == eTurn.EnemyFirst)
+        {
+            turnchanger.SwitchTurn(eTurn.PlayerSecond);
+        }
+        else if (turnchanger.Turns == eTurn.PlayerFirst)
+        {
+            turnchanger.SwitchTurn(eTurn.EnemySecond);
+        }
+        else
+        {
+            turnchanger.SwitchTurn(eTurn.BothDone);
+        }
+    }
+
+    //Called by GameStateSwitch at the beginning of a turn
+    public void StartAttack()
+    {
+        switch (GameStateSwitch.Instance.GameState)
+        {
+            case eGameState.QTEAttack:
+                baeffectshandler.Playerturn = true;
+                if (curAttack.AttackType == eAttackType.BA)
+                {
+                    qtehandler.SetType(eQTEType.Attack);
+                }
+                else if (curAttack.AttackType == eAttackType.FA)
+                {
+                    //qtehandler.SetType(eQTEType.FA, maxRounds);
+                }
+                animationhandler.PlayerAttack(curAttack.AnimationName);
+                break;
+            case eGameState.QTEBlock:
+                baeffectshandler.Playerturn = false;
+                qtehandler.SetType(eQTEType.Block);       
+                animationhandler.EnemyAttack(curAttack.AnimationName);
+                break;
+            default:
+                Debug.LogError("not the right game state!");
+                break;
+        }
     }
 
     public void SetEffectValues()

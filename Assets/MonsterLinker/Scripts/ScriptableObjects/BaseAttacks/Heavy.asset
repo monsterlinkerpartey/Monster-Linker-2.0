@@ -17,7 +17,8 @@ MonoBehaviour:
   RPGain: 5
   HPGain: 0
   Speed: 1
-  TimeTilStartup: 
+  AnimationName: heavy
+  AttackType: 1
   InputBarIcon: {fileID: 21300000, guid: c6b51304ba33b60498fa7ed211bc35fa, type: 3}
   ButtonSprite: {fileID: 0}
   SlotAnim: {fileID: 0}
