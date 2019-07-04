@@ -20,7 +20,7 @@ public class ArenaPlayerInput : MonoBehaviour
         arenaui.FALoadout.SetActive(false);
 
         //TODO: load FA into profile
-        //GameStateSwitch.Instance.curProfile.FALoadout = ChosenFAs;
+        feralartcheck.LoadedFeralArts = GameStateSwitch.Instance.curProfile.FALoadout;
         GameStateSwitch.Instance.SwitchState(eGameState.Intro);
     }
 

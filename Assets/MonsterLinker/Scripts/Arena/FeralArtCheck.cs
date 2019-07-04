@@ -14,11 +14,11 @@ public class FeralArtCheck : MonoBehaviour
 
     [Header("----- No touchies from this point on -----")]
     //FAs the player has chosen for this fight
-    public List<FeralArt> LoadedFeralArts = new List<FeralArt>();
+    public List<FeralArt> LoadedFeralArts;
     //BAs the player has chosen for this round
-    public List<BaseAttack> curBAlist = new List<BaseAttack>();
+    public List<BaseAttack> curBAlist;
     //List in which the actual attacks are written for readout during the fight
-    public List<Attack> AttackList = new List<Attack>();
+    public List<Attack> AttackList;
 
     public List<int> BAsToDelete;
 
