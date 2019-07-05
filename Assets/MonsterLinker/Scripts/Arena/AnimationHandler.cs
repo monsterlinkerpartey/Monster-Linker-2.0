@@ -18,6 +18,48 @@ public class AnimationHandler : MonoBehaviour
         EnemyAnim.SetTrigger(animString);
     }
 
+    public void HurtCheck()
+    {
+        switch(GameStateSwitch.Instance.GameState)
+        {
+            case eGameState.QTEAttack:
+                print("enemy hurt");
+                EnemyAnim.SetTrigger("hurt");
+                break;
+            case eGameState.QTEBlock:
+                print("player hurt");
+                PlayerAnim.SetTrigger("hurt");
+                break;
+        }
+    }
 
+    //public void BlockTrigger()
+    //{
+    //    switch (GameStateSwitch.Instance.GameState)
+    //    {
+    //        case eGameState.QTEAttack:
+    //            print("enemy blocking");
+    //            EnemyAnim.SetBool("block", true);
+    //            break;
+    //        case eGameState.QTEBlock:
+    //            print("player blocking");
+    //            PlayerAnim.SetBool("block", true);
+    //            break;
+    //    }
+    //}
 
+    public void ResetToIdle()
+    {
+        switch (GameStateSwitch.Instance.GameState)
+        {
+            case eGameState.QTEAttack:
+                print("enemy stops blocking, back to idle");
+                EnemyAnim.SetBool("block", false);
+                break;
+            case eGameState.QTEBlock:
+                print("player stops blocking, back to idle");
+                PlayerAnim.SetBool("block", false);
+                break;
+        }
+    }
 }

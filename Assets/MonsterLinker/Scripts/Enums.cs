@@ -1,4 +1,6 @@
-﻿public enum eGameState
+﻿// HACK: Delete this line
+
+public enum eGameState
 {
     Loadout,
     Intro,

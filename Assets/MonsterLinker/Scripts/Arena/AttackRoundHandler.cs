@@ -18,21 +18,26 @@ public class AttackRoundHandler : MonoBehaviour
     //Called by GameStateSwitch, depending on state gives enemy or player attack list
     public void GetAttackList(List<Attack> curAttacks)
     {
+        curAttackList.Clear();
         curAttackList = curAttacks;
         maxRounds = curAttackList.Count;
         curRound = 1;
-        curAttack = curAttackList[curRound];
+        curAttack = curAttackList[curRound-1];
     }   
     
     public void NextAttack()
     {
-        if (curRound <= maxRounds)
+        print("attack " + curAttack.name + " done");
+        if (curRound < maxRounds)
         {
+            print("next attack");
             curRound += 1;
-            curAttack = curAttackList[curRound];
+            curAttack = curAttackList[curRound-1];
+            StartAttack();
         }
         else
         {
+            print("turn done");
             CheckForTurn();
         }
     }
@@ -59,6 +64,7 @@ public class AttackRoundHandler : MonoBehaviour
         switch (GameStateSwitch.Instance.GameState)
         {
             case eGameState.QTEAttack:
+                animationhandler.EnemyAnim.SetBool("block", true);
                 baeffectshandler.Playerturn = true;
                 if (curAttack.AttackType == eAttackType.BA)
                 {
@@ -71,6 +77,7 @@ public class AttackRoundHandler : MonoBehaviour
                 animationhandler.PlayerAttack(curAttack.AnimationName);
                 break;
             case eGameState.QTEBlock:
+                animationhandler.PlayerAnim.SetBool("block", true);
                 baeffectshandler.Playerturn = false;
                 qtehandler.SetType(eQTEType.Block);       
                 animationhandler.EnemyAttack(curAttack.AnimationName);

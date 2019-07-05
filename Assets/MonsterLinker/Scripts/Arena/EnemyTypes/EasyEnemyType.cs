@@ -72,19 +72,23 @@ public class EasyEnemyType : EnemyStateMachine
         {
             case eEnemyState.Normal_FA3Use:
                 curBaseAttackInput = BA_normal_FA1;
+                WriteAttackList();
                 CheckForFeral();
                 break;
             case eEnemyState.Normal_NoRP:
                 if (normal_noRP_State > 2)
                     normal_noRP_State = 0;
                 ChooseAttack();
+                WriteAttackList();
                 break;
             case eEnemyState.LowHP_FA3Use:
                 curBaseAttackInput = BA_lowHP_FA2;
+                WriteAttackList();
                 CheckForFeral();
                 break;
             case eEnemyState.LowHP_NoRP:
                 curBaseAttackInput = BA_lowHP_noFA;
+                WriteAttackList();
                 break;
             default:
                 curBaseAttackInput = BA_normal_noRP1;
@@ -93,6 +97,11 @@ public class EasyEnemyType : EnemyStateMachine
         }
 
         base.EnemyState(EnemyState);
+    }
+
+    public override void WriteAttackList()
+    {
+        base.WriteAttackList();
     }
 
     public override void ChooseAttack()

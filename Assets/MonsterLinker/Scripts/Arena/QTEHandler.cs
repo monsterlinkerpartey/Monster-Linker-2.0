@@ -124,7 +124,7 @@ public class QTEHandler : MonoBehaviour
 
             if (Input.GetButtonDown(Buttons[ran].inputString))
             {
-                print("qte button pressed");
+                print("kuhteheh button pressed");
                 ButtonAnim.Play("Highlighted");
                 StartCoroutine(CheckQTEZone());
             }
@@ -221,6 +221,7 @@ public class QTEHandler : MonoBehaviour
 
     public IEnumerator WaitForStart()
     {
+        print("kuhteheh waiting for " + WaitingTime);
         yield return new WaitForSeconds(WaitingTime);
         QTEStateSwitch(eQTEState.Running);
     }
@@ -237,12 +238,13 @@ public class QTEHandler : MonoBehaviour
                 running = false;
                 break;
             case eQTEState.Running:
+                print("kuhteheh running");
                 running = true;
                 QTEButton.SetActive(true);
                 curQTEAnim.Play(AnimString);
                 break;
             case eQTEState.Done:
-                print("QTEs done");
+                print("kuhteheh done");
                 curQTEAnim.Play("Wait");
                 QTEButton.SetActive(false);                
 

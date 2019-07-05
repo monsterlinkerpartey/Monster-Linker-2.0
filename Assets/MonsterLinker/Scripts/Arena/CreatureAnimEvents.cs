@@ -11,22 +11,26 @@ public class CreatureAnimEvents : MonoBehaviour
     //QTEStateSwitch(eQTEState QTEState)
 
     public void AttackAnimStart()
-    {        
+    {
+        print("animation starts, call qte");
         StartCoroutine(qtehandler.WaitForStart());
     }
 
-    public void HitEnemy()
+    public void Blocktrigger()
     {
-        animationhandler.EnemyAnim.SetTrigger("hurt");
+        //animationhandler.BlockTrigger();
     }
 
-    public void HitPlayer()
+    public void HitImpact()
     {
-        animationhandler.PlayerAnim.SetTrigger("hurt");
+        print("impact, calling animation");
+        animationhandler.HurtCheck();
     }
 
     public void AttackAnimEnd()
     {
+        print("animation end");
         attackroundhandler.NextAttack();
+        animationhandler.ResetToIdle();
     }
 }

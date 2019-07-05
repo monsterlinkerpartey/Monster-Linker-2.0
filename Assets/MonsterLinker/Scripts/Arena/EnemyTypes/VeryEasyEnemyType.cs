@@ -71,6 +71,12 @@ public class VeryEasyEnemyType : EnemyStateMachine
                 print("ERROR: No BA Input for EnemyState found");
                 break;
         }
+        WriteAttackList();
+    }
+
+    public override void WriteAttackList()
+    {
+        base.WriteAttackList();
     }
 
     public override void SetInput()

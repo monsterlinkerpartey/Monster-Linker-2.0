@@ -22,7 +22,8 @@ public class GameStateSwitch : MonoBehaviour
     public BAEffectsHandler baeffectshandler;
     public AttackRoundHandler attackroundhandler;
     public AnimationHandler animationhandler;
-    public CreatureAnimEvents creatureanimevents;
+    public CreatureAnimEvents playerCreatureanimevents;
+    public CreatureAnimEvents enemyCreatureanimevents;
     public QTEAnimEvents qteanimevents;
 
     public Save curProfile; //TODO save file iwo her kriegen
@@ -62,8 +63,7 @@ public class GameStateSwitch : MonoBehaviour
         qtehandler = GetComponentInChildren<QTEHandler>();
         baeffectshandler = GetComponentInChildren<BAEffectsHandler>();
         attackroundhandler = GetComponentInChildren<AttackRoundHandler>();
-        animationhandler = GetComponentInChildren<AnimationHandler>();
-        creatureanimevents = FindObjectOfType<CreatureAnimEvents>();        
+        animationhandler = GetComponentInChildren<AnimationHandler>();    
         qteanimevents = FindObjectOfType<QTEAnimEvents>();        
     }
 
@@ -90,9 +90,12 @@ public class GameStateSwitch : MonoBehaviour
         attackroundhandler.animationhandler = animationhandler;
         attackroundhandler.turnchanger = turnchanger;
         enemystatemachine.baeffectshandler = baeffectshandler;
-        creatureanimevents.animationhandler = animationhandler;
-        creatureanimevents.attackroundhandler = attackroundhandler;
-        creatureanimevents.qtehandler = qtehandler;
+        playerCreatureanimevents.animationhandler = animationhandler;
+        playerCreatureanimevents.attackroundhandler = attackroundhandler;
+        playerCreatureanimevents.qtehandler = qtehandler;
+        enemyCreatureanimevents.animationhandler = animationhandler;
+        enemyCreatureanimevents.attackroundhandler = attackroundhandler;
+        enemyCreatureanimevents.qtehandler = qtehandler;
         qteanimevents.qtehandler = qtehandler;
     }
     
@@ -169,9 +172,9 @@ public class GameStateSwitch : MonoBehaviour
                 attackroundhandler.SetEffectValues();
                 attackroundhandler.StartAttack();
 
+
                 //qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
                 //qtehandler.QTEStateSwitch(eQTEState.Waiting);
-
 
                 //Animation der Attacke des Spielers sowie Reaktion des Gegners triggern
                 //QTE zu den Attacken
@@ -184,10 +187,10 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
-                //TODO: enemy attacks in Attack type umwandeln
-                //attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
-                //qtehandler.SetType(eQTEType.Block, attackslotspawn.NumberOfAttackSlotsEnemy);
-                //qtehandler.QTEStateSwitch(eQTEState.Waiting);
+
+                attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
+                attackroundhandler.SetEffectValues();
+                attackroundhandler.StartAttack();
 
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
                 //QTE zum Blocken & für RP Gain

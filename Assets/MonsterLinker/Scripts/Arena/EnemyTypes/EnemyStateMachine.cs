@@ -58,6 +58,14 @@ public class EnemyStateMachine : MonoBehaviour
         FAs = enemy.FAs;
     }
 
+    public virtual void WriteAttackList()
+    {
+        foreach (Attack attack in curBaseAttackInput)
+        {
+            curAttackInput.Add(attack);
+        }
+    }
+
     //thresholds: bleiben gleich in jedem type
     public virtual void CheckEnemyState()
     {
