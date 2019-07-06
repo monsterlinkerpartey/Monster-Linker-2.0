@@ -17,6 +17,8 @@ public class BAEffectsHandler : MonoBehaviour
     public float TotalDmgTaken;
     public float TotalDmgDealt;
 
+    public ArenaUIHandler arenaui;
+
     [HideInInspector] public Attack curAttack;
 
     //Set by QTEHandler
@@ -65,6 +67,9 @@ public class BAEffectsHandler : MonoBehaviour
         curEnemyRP += curAttack.RPGain;
         TotalDmgTaken += curDMG;
 
+        arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
+        arenaui.SetEnemyHPandRP(Mathf.RoundToInt(curEnemyHP), Mathf.RoundToInt(curEnemyRP));
+
         print("Player takes " + (curDMG) + " DMG\n Enemy gains " + curAttack.RPGain + " RP");
         print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
     }
@@ -76,6 +81,9 @@ public class BAEffectsHandler : MonoBehaviour
         curPlayerHP += curAttack.HPGain;
         curPlayerRP += curAttack.RPGain;
         TotalDmgDealt += curDMG;
+
+        arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
+        arenaui.SetEnemyHPandRP(Mathf.RoundToInt(curEnemyHP), Mathf.RoundToInt(curEnemyRP));
 
         print("Enemy takes " + (curDMG) + " DMG\n Player gains " + curAttack.RPGain + " RP");
         print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP + ", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);

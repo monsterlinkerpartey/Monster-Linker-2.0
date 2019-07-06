@@ -35,7 +35,9 @@ public class InputBarHandler : MonoBehaviour
         if (PlayerAttackInput.Count >= maxBaseAttackInputSlots)
         {
             print("input bar full: "+ PlayerAttackInput[0].name+", "+ PlayerAttackInput[1].name +", " + PlayerAttackInput[2].name +", " + PlayerAttackInput[3].name +", " + PlayerAttackInput[4].name);
+
             feralartcheck.CheckForChain();
+            
             //TODO disable BA input
         }
     }

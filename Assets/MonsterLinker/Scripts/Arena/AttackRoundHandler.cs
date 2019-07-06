@@ -23,6 +23,9 @@ public class AttackRoundHandler : MonoBehaviour
         maxRounds = curAttackList.Count;
         curRound = 1;
         curAttack = curAttackList[curRound-1];
+
+        SetEffectValues();
+        StartAttack();
     }   
     
     public void NextAttack()

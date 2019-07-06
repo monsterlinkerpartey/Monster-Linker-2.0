@@ -8,9 +8,9 @@ public class Attack : ScriptableObject
     [Tooltip("Damage the attack makes incl. Multiplier")]
     public float DMG;
     [Tooltip("Ragepoints spend by using this attack, FA ONLY")]
-    public float RPCost;
+    public int RPCost;
     [Tooltip("Ragepoints gained by using this attack")]
-    public float RPGain;
+    public int RPGain;
     [Tooltip("Health recovered by using this attack: % of max HP value")]
     public float HPGain;
     [Tooltip("Speed of the attack")]

@@ -20,6 +20,12 @@ public class ArenaUIHandler : MonoBehaviour
     public Button ConfirmBAsButton;
     public GameObject ResultPanel;
 
+    [Header("Health and Rage")]
+    public Text PlayerHPtxt;
+    public Text PlayerRPtxt;
+    public Text EnemyHPtxt;
+    public Text EnemyRPtxt;
+
     [Header("Buttons for BA Input")]
     public Button HeavyAttack;
     public Button NormalAttack;
@@ -50,6 +56,18 @@ public class ArenaUIHandler : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void SetPlayerHPandRP(int HP, int RP)
+    {
+        PlayerHPtxt.text = ""+HP;
+        PlayerRPtxt.text = ""+RP;
+    }
+
+    public void SetEnemyHPandRP(int HP, int RP)
+    {
+        EnemyHPtxt.text = "" + HP;
+        EnemyRPtxt.text = "" + RP;
     }
 
     public void CheckForPlayerBAInput()

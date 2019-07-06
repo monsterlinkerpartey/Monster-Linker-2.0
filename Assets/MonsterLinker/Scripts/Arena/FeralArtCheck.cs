@@ -24,6 +24,7 @@ public class FeralArtCheck : MonoBehaviour
 
     public InputBarHandler inputbarhandler;
     public ArenaUIHandler arenaui;
+    public BAEffectsHandler baeffectshandler;
 
     [SerializeField]
     int FANo = 0;
@@ -31,6 +32,8 @@ public class FeralArtCheck : MonoBehaviour
     int InputNo = 0;
     [SerializeField]
     int Pos = 0;
+    [SerializeField]
+    int RPCostSum;
 
     public void ResetLists()
     {
@@ -50,25 +53,41 @@ public class FeralArtCheck : MonoBehaviour
 
     public void CheckForChain()
     {
-        print("checking for chainable FAs");
+        //if player has not enough RP for the cheapest FA
+        if (baeffectshandler.curPlayerRP < GameStateSwitch.Instance.curProfile.lowestFAcost)
+        {
+            print("not enough RP for FAs");
+            return;
+        }
 
+        print("checking for chainable FAs");
         switch (inputbarhandler.maxBaseAttackInputSlots)
         {
-            //TODO foreach schleifen um durch alle chains zu gehen
             case 5:
                 foreach (FAChain chain5 in Chain5)
                 {
                     if (curBAlist.SequenceEqual(chain5.ChainInputList))
                     {
-                        for (int i = 0; i < 5; i++)
+                        //evaluate costs of the chain
+                        foreach (Attack attack in chain5.NeededFeralArts)
                         {
-                            BAsToDelete.Add(i);
-                            print("i: " + i);
+                            RPCostSum += attack.RPCost;
                         }
 
-                        AttackList.Clear();
-                        AttackList = chain5.NeededFeralArts;
-                        arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        //see if player has enough RP
+                        if (baeffectshandler.curPlayerRP >= RPCostSum)
+                        {
+                                for (int i = 0; i < 5; i++)
+                            {
+                                BAsToDelete.Add(i);
+                                print("i: " + i);
+                            }
+
+                            AttackList.Clear();
+                            AttackList = chain5.NeededFeralArts;
+                            arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        }
+
                     }
                     else
                     {
@@ -83,15 +102,25 @@ public class FeralArtCheck : MonoBehaviour
                 {
                     if (curBAlist.SequenceEqual(chain6.ChainInputList))
                     {
-                        for (int i = 0; i < 6; i++)
+                        //evaluate costs of the chain
+                        foreach (Attack attack in chain6.NeededFeralArts)
                         {
-                            BAsToDelete.Add(i);
-                            print("i: " + i);
+                            RPCostSum += attack.RPCost;
                         }
 
-                        AttackList.Clear();
-                        AttackList = chain6.NeededFeralArts;
-                        arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        //see if player has enough RP
+                        if (baeffectshandler.curPlayerRP >= RPCostSum)
+                        {
+                            for (int i = 0; i < 6; i++)
+                            {
+                                BAsToDelete.Add(i);
+                                print("i: " + i);
+                            }
+
+                            AttackList.Clear();
+                            AttackList = chain6.NeededFeralArts;
+                            arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                        }
                     }
                     else if (!curBAlist.SequenceEqual(chain6.ChainInputList))
                     {
@@ -102,23 +131,43 @@ public class FeralArtCheck : MonoBehaviour
 
                             if (check1.SequenceEqual(chain5.ChainInputList))
                             {
-                                for (int i = 0; i < 5; i++)
+                                //evaluate costs of the chain
+                                foreach (Attack attack in chain6.NeededFeralArts)
                                 {
-                                    BAsToDelete.Add(i);
-                                    print("i: " + i);
+                                    RPCostSum += attack.RPCost;
                                 }
 
-                                arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                                //see if player has enough RP
+                                if (baeffectshandler.curPlayerRP >= RPCostSum)
+                                {
+                                    for (int i = 0; i < 5; i++)
+                                    {
+                                        BAsToDelete.Add(i);
+                                        print("i: " + i);
+                                    }
+
+                                    arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                                }
                             }
                             else if (check2.SequenceEqual(chain5.ChainInputList))
                             {
-                                for (int i = 1; i < 6; i++)
+                                //evaluate costs of the chain
+                                foreach (Attack attack in chain6.NeededFeralArts)
                                 {
-                                    BAsToDelete.Add(i);
-                                    print("i: " + i);
+                                    RPCostSum += attack.RPCost;
                                 }
 
-                                arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                                //see if player has enough RP
+                                if (baeffectshandler.curPlayerRP >= RPCostSum)
+                                {
+                                    for (int i = 1; i < 6; i++)
+                                    {
+                                        BAsToDelete.Add(i);
+                                        print("i: " + i);
+                                    }
+
+                                    arenaui.VisializeFAs(BAsToDelete, Color.yellow);
+                                }
                             }
                             else
                             {
@@ -145,6 +194,7 @@ public class FeralArtCheck : MonoBehaviour
         {
             print("cur FA: " + LoadedFeralArts[FANo].name);
 
+            //skip FA if there is not enough slots for it to happen
             if (LoadedFeralArts[FANo].FeralArtInput.Count > (inputbarhandler.maxBaseAttackInputSlots - Pos))
             {
                 FANo += 1;
@@ -177,16 +227,25 @@ public class FeralArtCheck : MonoBehaviour
             //If it is a feral art
             if (BAsToDelete.Count == LoadedFeralArts[FANo].FeralArtInput.Count)
             {
-                print("FA found, adding " + LoadedFeralArts[FANo].name + " to list");
+                //checking if player has enough RP
+                if (baeffectshandler.curPlayerRP >= LoadedFeralArts[FANo].RPCost)
+                {
+                    print("FA found, adding " + LoadedFeralArts[FANo].name + " to list");
 
-                for (int i = BAsToDelete.Count; i > 0; i--)
-                    AttackList.RemoveAt(BAsToDelete[i - 1]);
+                    for (int i = BAsToDelete.Count; i > 0; i--)
+                        AttackList.RemoveAt(BAsToDelete[i - 1]);
 
-                AttackList.Insert(BAsToDelete[0], LoadedFeralArts[FANo]);
-                arenaui.VisializeFAs(BAsToDelete, Color.magenta);
-                Pos += BAsToDelete.Count;
-                FANo = 0;
-                //return;
+                    AttackList.Insert(BAsToDelete[0], LoadedFeralArts[FANo]);
+                    arenaui.VisializeFAs(BAsToDelete, Color.magenta);
+                    Pos += BAsToDelete.Count;
+                    FANo = 0;
+                }
+                else
+                {
+                    BAsToDelete.Clear();
+                    print("no FA found, next FA?");
+                    FANo += 1;
+                }
             }
             else
             {
@@ -208,9 +267,7 @@ public class FeralArtCheck : MonoBehaviour
             print("do not run FA check anymore");
             return;
         }
-    }
-
-
+    }    
 
     ////loop through LoadedFAlist
     //startFAloop:  for (int FANo = 0; FANo <= LoadedFeralArts.Count; FANo++)

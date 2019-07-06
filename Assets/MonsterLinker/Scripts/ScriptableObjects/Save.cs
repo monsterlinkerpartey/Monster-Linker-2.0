@@ -12,11 +12,25 @@ public class Save : ScriptableObject
     public bool Used;
     public int maxBaseAttackInputSlots = 5;
     public List<FeralArt> FALoadout;
+    public int lowestFAcost;
     public string LinkerName;
     public string MonsterName;
     public int MaxHitPoints;
     [Tooltip("Which arena has the player reached?")]
     public int Arena = 1;
+
+    public void SetCheapestFAcost()
+    {
+        lowestFAcost = 0;
+
+        for (int i = 0; i < FALoadout.Count; i++)
+        {
+            if (lowestFAcost > FALoadout[i].RPCost)
+            {
+                lowestFAcost = FALoadout[i].RPCost;
+            }
+        }
+    }
 
     public bool Write()
     {

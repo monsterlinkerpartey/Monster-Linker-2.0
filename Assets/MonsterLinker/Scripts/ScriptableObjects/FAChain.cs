@@ -7,4 +7,5 @@ public class FAChain : ScriptableObject
 {
     public List<BaseAttack> ChainInputList;
     public List<Attack> NeededFeralArts;
+
 }

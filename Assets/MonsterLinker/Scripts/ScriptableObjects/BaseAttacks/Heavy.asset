@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448c3cea29aa61e4c84a8a35aad986c9, type: 3}
   m_Name: Heavy
   m_EditorClassIdentifier: 
-  DMG: 300
+  DMG: 30
   RPCost: 0
   RPGain: 5
   HPGain: 0

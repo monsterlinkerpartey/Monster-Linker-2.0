@@ -97,6 +97,7 @@ public class GameStateSwitch : MonoBehaviour
         enemyCreatureanimevents.attackroundhandler = attackroundhandler;
         enemyCreatureanimevents.qtehandler = qtehandler;
         qteanimevents.qtehandler = qtehandler;
+        baeffectshandler.arenaui = arenaui;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -118,7 +119,6 @@ public class GameStateSwitch : MonoBehaviour
                 attackslotspawn.SpawnEnemySlots();
                 arenaui.GetAttackSlots();
                 //TODO alle states des player auslagern in playerprofile
-                GlobalVars.QTEfailed = false;
 
                 baeffectshandler.curPlayerHP = curProfile.MaxHitPoints;
                 baeffectshandler.curEnemyHP = curEnemy.MaxHitPoints;
@@ -131,7 +131,10 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.FALoadout.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
+                arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
+                arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
                 feralartcheck.LoadedFeralArts = curProfile.FALoadout;
+                
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
@@ -139,7 +142,9 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
+                GlobalVars.QTEfailed = false;
                 arenaui.ResultPanel.SetActive(false);
+                arenaui.EnemyInputBar.SetActive(false);
                 arenaui.InputPanel.SetActive(true);
                 arenaui.PlayerInputBar.SetActive(true);
                 enemystatemachine.CheckEnemyState();
@@ -164,14 +169,11 @@ public class GameStateSwitch : MonoBehaviour
                 //Int Turn += 1; Bei Turn 2 zu NextRound wechseln
                 break;
             case eGameState.QTEAttack:
-
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                                 
                 attackroundhandler.GetAttackList(feralartcheck.AttackList);
-                attackroundhandler.SetEffectValues();
-                attackroundhandler.StartAttack();
 
 
                 //qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
@@ -190,8 +192,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.EnemyInputBar.SetActive(true);
 
                 attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
-                attackroundhandler.SetEffectValues();
-                attackroundhandler.StartAttack();
+                //attackroundhandler.SetEffectValues();
+                //attackroundhandler.StartAttack();
 
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
                 //QTE zum Blocken & für RP Gain
@@ -207,9 +209,9 @@ public class GameStateSwitch : MonoBehaviour
                 initiativecheck.ResetSpeedValues();
                 //Reset Player Input und Enemy Input
                 inputbarhandler.Reset();
+                feralartcheck.ResetLists();
                 enemystatemachine.ClearInput();
-                //Enemy Input Bar ausblenden
-                arenaui.EnemyInputBar.SetActive(false);
+                enemystatemachine.curAttackInput.Clear();
                 //Reset DMG counters for the end of each turn
                 baeffectshandler.ResetDmgCount();
 
