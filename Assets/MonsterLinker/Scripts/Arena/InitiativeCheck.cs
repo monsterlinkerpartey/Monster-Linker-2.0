@@ -55,11 +55,11 @@ public class InitiativeCheck : MonoBehaviour
                 turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
         }
+    }
 
-        //IEnumerator ShowSpeedandTurn(float waitTime)
-        //{
-        //    print("waiting for " + waitTime + " s to show INI");
-        //    yield return new WaitForSeconds(waitTime);
-        //}
+    public void ResetSpeedValues()
+    {
+        PlayerSpeed = 0;
+        EnemySpeed = 0;
     }
 }

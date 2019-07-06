@@ -4484,7 +4484,6 @@ GameObject:
   - component: {fileID: 537040000}
   - component: {fileID: 537039999}
   - component: {fileID: 537040002}
-  - component: {fileID: 537040003}
   m_Layer: 5
   m_Name: Heavy
   m_TagString: Untagged
@@ -4625,22 +4624,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &537040003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537039997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2ab635191c597448ca4dd4088011c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noButton: {fileID: 2020677961}
-  InputName: 
-  Bdisabled: 0
-  ButtonInfo: {fileID: 0}
 --- !u!1 &553613432
 GameObject:
   m_ObjectHideFlags: 0
@@ -19838,7 +19821,6 @@ GameObject:
   - component: {fileID: 1518628527}
   - component: {fileID: 1518628526}
   - component: {fileID: 1518628529}
-  - component: {fileID: 1518628530}
   m_Layer: 5
   m_Name: Normal
   m_TagString: Untagged
@@ -19979,22 +19961,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1518628530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1518628524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2ab635191c597448ca4dd4088011c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noButton: {fileID: 2020677961}
-  InputName: 
-  Bdisabled: 0
-  ButtonInfo: {fileID: 0}
 --- !u!1 &1539609285
 GameObject:
   m_ObjectHideFlags: 0
@@ -30248,7 +30214,6 @@ GameObject:
   - component: {fileID: 1791578008}
   - component: {fileID: 1791578007}
   - component: {fileID: 1791578010}
-  - component: {fileID: 1791578011}
   m_Layer: 5
   m_Name: Light
   m_TagString: Untagged
@@ -30389,22 +30354,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1791578011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791578005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2ab635191c597448ca4dd4088011c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noButton: {fileID: 2020677961}
-  InputName: 
-  Bdisabled: 0
-  ButtonInfo: {fileID: 0}
 --- !u!1 &1792824495
 GameObject:
   m_ObjectHideFlags: 0

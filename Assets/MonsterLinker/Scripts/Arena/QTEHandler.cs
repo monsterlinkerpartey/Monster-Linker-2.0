@@ -73,7 +73,7 @@ public class QTEHandler : MonoBehaviour
     public void GetAnimClipTimes()
     {
         AnimationClip[] attackClips = AttackQTEAnim.runtimeAnimatorController.animationClips;
-        AnimationClip[] blockClips = AttackQTEAnim.runtimeAnimatorController.animationClips;
+        AnimationClip[] blockClips = BlockQTEAnim.runtimeAnimatorController.animationClips;
 
         foreach (AnimationClip clip in attackClips)
         {

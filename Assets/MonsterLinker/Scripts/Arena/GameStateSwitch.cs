@@ -204,6 +204,7 @@ public class GameStateSwitch : MonoBehaviour
                 //Disable both Initiative Arrows
                 arenaui.PlayerInitiativeArrow.enabled = false;
                 arenaui.EnemyInitiativeArrow.enabled = false;
+                initiativecheck.ResetSpeedValues();
                 //Reset Player Input und Enemy Input
                 inputbarhandler.Reset();
                 enemystatemachine.ClearInput();
