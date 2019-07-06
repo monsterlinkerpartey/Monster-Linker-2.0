@@ -15,6 +15,22 @@ public class QTEHandler : MonoBehaviour
     public Animator BlockQTEAnim;
     public Animator FAQTEAnim;
 
+    [Header("Length of the different attack kuh-teh-eh animations")]
+    public float Attack1Length;
+    public float Attack2Length;
+    public float Attack3Length;
+    public float Attack4Length;
+    public float Attack5Length;
+    public float Attack6Length;
+
+    [Header("Length of the different block kuh-teh-eh animations")]
+    public float Block1Length;
+    public float Block2Length;
+    public float Block3Length;
+    public float Block4Length;
+    public float Block5Length;
+
+
     [Header("For the Button Input Randomizer")]
     public List<ButtonInput> Buttons = new List<ButtonInput>();
     public GameObject QTEButton;
@@ -27,17 +43,14 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] int ranAnim;
 
     public eQTEState QTEState;
-
-
+    
     [Header("QTE Times for Attack")]
     public QTE Attack;
     [Header("QTE Times for Block")]
     public QTE Block;
 
-
-
     [Header("Other stuff")]
-    [Tooltip("Time til impact/startup of Monster animation, default 2s")]
+    [Tooltip("Time til impact/startup of Monster animation, default 1.5s")]
     public float AnimStartup = 1.5f;
     //TODO get animation events for monster animations to check when they end/start
     [Tooltip("Time til QTE starts")]
@@ -56,7 +69,66 @@ public class QTEHandler : MonoBehaviour
 
     public BAEffectsHandler baeffectshandler;
     public TurnChanger turnchanger;
+    
+    public void GetAnimClipTimes()
+    {
+        AnimationClip[] attackClips = AttackQTEAnim.runtimeAnimatorController.animationClips;
+        AnimationClip[] blockClips = AttackQTEAnim.runtimeAnimatorController.animationClips;
 
+        foreach (AnimationClip clip in attackClips)
+        {
+            switch (clip.name)
+            {
+                case "Attack1":
+                    Attack1Length = clip.length;
+                    break;
+                case "Attack2":
+                    Attack2Length = clip.length;
+                    break;
+                case "Attack3":
+                    Attack3Length = clip.length;
+                    break;
+                case "Attack4":
+                    Attack4Length = clip.length;
+                    break;
+                case "Attack5":
+                    Attack5Length = clip.length;
+                    break;
+                case "Attack6":
+                    Attack6Length = clip.length;
+                    break;
+                default:
+                    print("not saving time of " + clip.name);
+                    break;
+            }
+        }
+
+        foreach (AnimationClip clip in blockClips)
+        {
+            switch (clip.name)
+            {
+                case "Block1":
+                    Block1Length = clip.length;
+                    break;
+                case "Block2":
+                    Block2Length = clip.length;
+                    break;
+                case "Block3":
+                    Block3Length = clip.length;
+                    break;
+                case "Block4":
+                    Block4Length = clip.length;
+                    break;
+                case "Block5":
+                    Block5Length = clip.length;
+                    break;
+                default:
+                    print("not saving time of " + clip.name);
+                    break;
+            }
+        }
+    }
+    
     void Update()
     {
         if (running)
@@ -95,6 +167,7 @@ public class QTEHandler : MonoBehaviour
                 break;
         }
         print("QTE Type: " + QTEType);
+        GetAnimClipTimes();
         RandomButtonGenerator();
         SetQTEAnim(curQTEType.Type);
     }
@@ -188,40 +261,77 @@ public class QTEHandler : MonoBehaviour
 
     public void SetQTEAnim(string type)
     {
-        ranAnim = Random.Range(1, 6);
 
-        AnimString = type + ranAnim;
-
-        switch (ranAnim)
+        switch (GameStateSwitch.Instance.GameState)
         {
-            case 1:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength1;
+            case eGameState.QTEAttack:
+
+            //TODO animations randomizen
+            //ranAnim = Random.Range(1, 6);
+            ranAnim = 1;
+
+                switch (ranAnim)
+                {
+                    case 1:
+                        WaitingTime = AnimStartup - Attack1Length;
+                        break;
+                    case 2:
+                        WaitingTime = AnimStartup - Attack2Length;
+                        break;
+                    case 3:
+                        WaitingTime = AnimStartup - Attack3Length;
+                        break;
+                    case 4:
+                        WaitingTime = AnimStartup - Attack4Length;
+                        break;
+                    case 5:
+                        WaitingTime = AnimStartup - Attack5Length;
+                        break;
+                    case 6:
+                        WaitingTime = AnimStartup - Attack6Length;
+                        break;
+                    default:
+                        WaitingTime = 0f;
+                        Debug.LogError("Could not set Wait Time, check QTEHandler");
+                        break;
+                }
                 break;
-            case 2:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength2;
-                break;
-            case 3:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength3;
-                break;
-            case 4:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength4;
-                break;
-            case 5:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength5;
-                break;
-            case 6:
-                WaitingTime = AnimStartup - curQTEType.QTEAnimationLength6;
-                break;
-            default:
-                WaitingTime = 0f;
-                Debug.LogError("Could not set Wait Time, check QTEHandler");
+            case eGameState.QTEBlock:
+
+                //TODO animations randomizen
+                //ranAnim = Random.Range(1, 5);
+                ranAnim = 1;
+
+                switch (ranAnim)
+                {
+                    case 1:
+                        WaitingTime = AnimStartup - Block1Length;
+                        break;
+                    case 2:
+                        WaitingTime = AnimStartup - Block2Length;
+                        break;
+                    case 3:
+                        WaitingTime = AnimStartup - Block3Length;
+                        break;
+                    case 4:
+                        WaitingTime = AnimStartup - Block4Length;
+                        break;
+                    case 5:
+                        WaitingTime = AnimStartup - Block5Length;
+                        break;
+                    default:
+                        WaitingTime = 0f;
+                        Debug.LogError("Could not set Wait Time, check QTEHandler");
+                        break;
+                }
                 break;
         }
+        AnimString = type + ranAnim;        
     }
 
     public IEnumerator WaitForStart()
     {
-        print("kuhteheh waiting for " + WaitingTime);
+        print("kuhteheh waiting for " + WaitingTime+" s");
         yield return new WaitForSeconds(WaitingTime);
         QTEStateSwitch(eQTEState.Running);
     }
@@ -233,7 +343,8 @@ public class QTEHandler : MonoBehaviour
         switch (qteState)
         {
             case eQTEState.Waiting:
-                curQTEAnim.Play("Wait");
+                AttackQTEAnim.Play("Wait");
+                BlockQTEAnim.Play("Wait");
                 QTEButton.SetActive(false);
                 running = false;
                 break;
@@ -241,7 +352,7 @@ public class QTEHandler : MonoBehaviour
                 print("kuhteheh running");
                 running = true;
                 QTEButton.SetActive(true);
-                curQTEAnim.Play(AnimString);
+                curQTEAnim.SetTrigger(AnimString);
                 break;
             case eQTEState.Done:
                 print("kuhteheh done");

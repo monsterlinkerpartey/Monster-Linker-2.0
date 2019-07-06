@@ -117,10 +117,11 @@ public class GameStateSwitch : MonoBehaviour
                 attackslotspawn.SpawnPlayerSlots();
                 attackslotspawn.SpawnEnemySlots();
                 arenaui.GetAttackSlots();
+                //TODO alle states des player auslagern in playerprofile
                 GlobalVars.QTEfailed = false;
 
-                baeffectshandler.curPlayerHP = GlobalVars.PlayerMaxHP;
-                baeffectshandler.curEnemyHP = GlobalVars.EnemyMaxHP;
+                baeffectshandler.curPlayerHP = curProfile.MaxHitPoints;
+                baeffectshandler.curEnemyHP = curEnemy.MaxHitPoints;
                 inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
