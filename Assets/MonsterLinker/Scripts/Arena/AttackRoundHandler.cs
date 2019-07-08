@@ -18,7 +18,7 @@ public class AttackRoundHandler : MonoBehaviour
     //Called by GameStateSwitch, depending on state gives enemy or player attack list
     public void GetAttackList(List<Attack> curAttacks)
     {
-        curAttackList.Clear();
+        //curAttackList.Clear(); >>> Throws error in 2nd round for monster that attacked 2nd in 1st round
         curAttackList = curAttacks;
         maxRounds = curAttackList.Count;
         curRound = 1;

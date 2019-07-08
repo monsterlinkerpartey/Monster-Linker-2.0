@@ -70,9 +70,6 @@ public class EnemyStateMachine : MonoBehaviour
     public virtual void CheckEnemyState()
     {
         print("setting enemy state");
-        //if own hp
-        //if own rp
-        //if player hp
     }
 
     //BA inputs sind unterschiedlich bei jedem gegner

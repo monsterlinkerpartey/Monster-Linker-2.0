@@ -46,6 +46,17 @@ public class BAEffectsHandler : MonoBehaviour
     //    }
     //}
 
+    public void StartHpandRPValues(float playerHP,int playerRP,float enemyHP,int enemyRP)
+    {
+        maxPlayerHP = playerHP;
+        curPlayerHP = playerHP;
+        curPlayerRP = playerRP;
+
+        maxEnemyHP = enemyHP;
+        curEnemyHP = enemyHP;
+        curEnemyRP = enemyRP;
+    }
+
     public void DMGModification(float dmgModifier)
     {
         float curDMG = curAttack.DMG * dmgModifier;
@@ -100,24 +111,20 @@ public class BAEffectsHandler : MonoBehaviour
         TotalDmgDealt = 0f;
     }
 
-    public void CheckForDeath(float hitpoints, eTurn curTurn)
+    public void CheckForDeath(float hitpoints, eGameState gameState)
     {
-        if (Mathf.Round(hitpoints) <= 0f)
-        {        
+        if (Mathf.Round(hitpoints) <= 0)
+        {
             //TODO: set result screen to open up
-            switch(curTurn)
+            switch (gameState)
             {
-                case eTurn.EnemyFirst:
-                    print("player died");
-                    break;
-                case eTurn.EnemySecond:
-                    print("player died");
-                    break;
-                case eTurn.PlayerFirst:
+                case eGameState.QTEAttack:
                     print("enemy died");
+
                     break;
-                case eTurn.PlayerSecond:
-                    print("enemy died");
+                case eGameState.QTEBlock:
+                    print("player died");
+
                     break;
                 default:
                     Debug.LogError("I dunno who died, check BAEffectsHandler");

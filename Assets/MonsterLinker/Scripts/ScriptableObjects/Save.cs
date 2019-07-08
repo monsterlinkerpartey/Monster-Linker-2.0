@@ -21,13 +21,18 @@ public class Save : ScriptableObject
 
     public void SetCheapestFAcost()
     {
-        lowestFAcost = 0;
+        Debug.Log("setting lowest FA cost in profile");
+        lowestFAcost = 100;
 
         for (int i = 0; i < FALoadout.Count; i++)
         {
             if (lowestFAcost > FALoadout[i].RPCost)
             {
                 lowestFAcost = FALoadout[i].RPCost;
+            }
+            else
+            {
+                continue;
             }
         }
     }

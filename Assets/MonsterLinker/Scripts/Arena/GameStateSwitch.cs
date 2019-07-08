@@ -85,6 +85,7 @@ public class GameStateSwitch : MonoBehaviour
         arenaui.inputbarhandler = inputbarhandler;
         feralartcheck.inputbarhandler = inputbarhandler;
         feralartcheck.arenaui = arenaui;
+        feralartcheck.baeffectshandler = baeffectshandler;
         attackroundhandler.baeffectshandler = baeffectshandler;
         attackroundhandler.qtehandler = qtehandler;
         attackroundhandler.animationhandler = animationhandler;
@@ -104,6 +105,7 @@ public class GameStateSwitch : MonoBehaviour
     public void SwitchState(eGameState gamestate)
     {
         GameState = gamestate;
+        print("arena state: " + GameState);
 
         switch (gamestate)
         {
@@ -120,8 +122,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.GetAttackSlots();
                 //TODO alle states des player auslagern in playerprofile
 
-                baeffectshandler.curPlayerHP = curProfile.MaxHitPoints;
-                baeffectshandler.curEnemyHP = curEnemy.MaxHitPoints;
+                baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0);                
+
                 inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
@@ -133,6 +135,7 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.FALoadout.SetActive(false);
                 arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
                 arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
+                curProfile.SetCheapestFAcost();
                 feralartcheck.LoadedFeralArts = curProfile.FALoadout;
                 
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
@@ -258,7 +261,6 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.ResultPanel.SetActive(true);
                 break;
         }
-        print("arena state: " + GameState);
     }
 
     public void ResetFight()

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Rend
   m_EditorClassIdentifier: 
   DMG: 0
-  RPCost: 0
+  RPCost: 36
   RPGain: 0
   HPGain: 0
   Speed: 0
-  TimeTilStartup: 
+  AnimationName: 
+  AttackType: 0
   FeralArtInput:
   - {fileID: 11400000, guid: 6bcfc2dad5ac01847859eb8aa9dc16ed, type: 2}
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
