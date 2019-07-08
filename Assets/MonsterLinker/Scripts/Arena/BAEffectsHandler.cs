@@ -25,6 +25,9 @@ public class BAEffectsHandler : MonoBehaviour
     [Tooltip("Influenced by the QTE result")]
     public float DMGModifier;
 
+    [Tooltip("Influenced by the Endurance result")]
+    public float EnduranceModifier;
+
     ////Set by GameStateSwitch during Ini Check
     //public List<Attack> curEnemyAttacks;
     //public List<Attack> curPlayerAttacks;
@@ -46,6 +49,16 @@ public class BAEffectsHandler : MonoBehaviour
     //    }
     //}
 
+    public void SetMashValue(int mashCount)
+    {
+        if (mashCount <= 0)
+            EnduranceModifier = 1.0f;
+        else
+        {
+            EnduranceModifier = (mashCount / 100) + 1;
+        }
+    }
+
     public void StartHpandRPValues(float playerHP,int playerRP,float enemyHP,int enemyRP)
     {
         maxPlayerHP = playerHP;
@@ -59,14 +72,14 @@ public class BAEffectsHandler : MonoBehaviour
 
     public void DMGModification(float dmgModifier)
     {
-        float curDMG = curAttack.DMG * dmgModifier;
+        float curDMG = (curAttack.DMG * EnduranceModifier) * dmgModifier;
         if (Playerturn)
         {
-            EnemyTakesDmg(curDMG);
+            EnemyTakesDmg(Mathf.Round(curDMG));
         }
         else
         {
-            PlayerTakesDmg(curDMG);
+            PlayerTakesDmg(Mathf.Round(curDMG));
         }        
     }
 
@@ -76,6 +89,7 @@ public class BAEffectsHandler : MonoBehaviour
         curPlayerHP -= curDMG;
         curEnemyHP += curAttack.HPGain;
         curEnemyRP += curAttack.RPGain;
+        curEnemyRP -= curAttack.RPCost;
         TotalDmgTaken += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
@@ -91,6 +105,7 @@ public class BAEffectsHandler : MonoBehaviour
         curEnemyHP -= curDMG;
         curPlayerHP += curAttack.HPGain;
         curPlayerRP += curAttack.RPGain;
+        curPlayerRP -= curAttack.RPCost;
         TotalDmgDealt += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));

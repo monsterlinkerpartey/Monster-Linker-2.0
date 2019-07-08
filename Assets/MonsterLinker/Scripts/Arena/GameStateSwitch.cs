@@ -194,6 +194,7 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
 
+                baeffectshandler.SetMashValue(0);
                 attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
                 //attackroundhandler.SetEffectValues();
                 //attackroundhandler.StartAttack();

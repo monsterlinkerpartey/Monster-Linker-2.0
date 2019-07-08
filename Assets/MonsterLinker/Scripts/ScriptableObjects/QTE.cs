@@ -12,13 +12,6 @@ public class QTE : ScriptableObject
     public float ModifierGood;
     [Tooltip("Modifier for QTE perfect result")]
     public float ModifierPerfect;
-    [Header("Timing for the QTEs to read out by QTEHandler")]
-    public float QTEAnimationLength1;
-    public float QTEAnimationLength2;
-    public float QTEAnimationLength3;
-    public float QTEAnimationLength4;
-    public float QTEAnimationLength5;
-    public float QTEAnimationLength6;
-    [Header("QTE type, 'Attack'/'Block'/'Endurance'/'FeralArt'")]
+    [Header("QTE type, 'Attack'/'Block'/'FA'")]
     public string Type;
 }

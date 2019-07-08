@@ -13,23 +13,21 @@ public class QTEHandler : MonoBehaviour
     [Header("The different Types of QTE")]
     public Animator AttackQTEAnim;
     public Animator BlockQTEAnim;
+    public Animator EnduranceQTEAnim;
     public Animator FAQTEAnim;
 
     [Header("Length of the different attack kuh-teh-eh animations")]
     public float Attack1Length;
     public float Attack2Length;
     public float Attack3Length;
-    public float Attack4Length;
-    public float Attack5Length;
-    public float Attack6Length;
 
     [Header("Length of the different block kuh-teh-eh animations")]
     public float Block1Length;
     public float Block2Length;
     public float Block3Length;
-    public float Block4Length;
-    public float Block5Length;
 
+    [Header("Length of the different FA kuh-teh-eh animations")]
+    public float FA1Length;
 
     [Header("For the Button Input Randomizer")]
     public List<ButtonInput> Buttons = new List<ButtonInput>();
@@ -37,17 +35,22 @@ public class QTEHandler : MonoBehaviour
     public Animator ButtonAnim;
     public Image ButtonImage;
 
+    public Text EnduranceCounter;
+
     [Tooltip("Random generated no. for button")]
     [SerializeField] int ran;
     [Tooltip("Random generated no. for animation")]
     [SerializeField] int ranAnim;
 
     public eQTEState QTEState;
-    
+    public eQTEType curQTEType;
+
     [Header("QTE Times for Attack")]
     public QTE Attack;
     [Header("QTE Times for Block")]
     public QTE Block;
+    [Header("QTE Times for FA")]
+    public QTE FA;
 
     [Header("Other stuff")]
     [Tooltip("Time til impact/startup of Monster animation, default 1.5s")]
@@ -60,20 +63,44 @@ public class QTEHandler : MonoBehaviour
     //[SerializeField] float QTEPerfect;
 
     [SerializeField] Animator curQTEAnim;
-    [SerializeField] QTE curQTEType;
+    [SerializeField] QTE curQTE;
 
     [SerializeField] int MaxSlots;
-    [Tooltip("Bool to start QTE Timer")]
-    [SerializeField] bool running;
+
+    public eQTEInput QTEInput;
+
+    //[Tooltip("Bool to start QTE Timer")]
+    //[SerializeField] bool running;
+    //[Tooltip("Bool to start Endurance QTE")]
+    //[SerializeField] bool mashing;
+
+    [Tooltip("Counter for the Endurance button mashing")]
+    [SerializeField] int mashCounter = 0;
+    [Tooltip("How long the Endurance QTE lasts")]
+    [SerializeField] float EnduranceTime;
     [SerializeField] string AnimString;
 
     public BAEffectsHandler baeffectshandler;
     public TurnChanger turnchanger;
-    
+
     public void GetAnimClipTimes()
     {
         AnimationClip[] attackClips = AttackQTEAnim.runtimeAnimatorController.animationClips;
         AnimationClip[] blockClips = BlockQTEAnim.runtimeAnimatorController.animationClips;
+        AnimationClip[] FAClips = FAQTEAnim.runtimeAnimatorController.animationClips;
+
+        foreach (AnimationClip clip in FAClips)
+        {
+            switch (clip.name)
+            {
+                case "FA1":
+                    FA1Length = clip.length;
+                    break;
+                default:
+                    print("not saving time of " + clip.name);
+                    break;
+            }
+        }
 
         foreach (AnimationClip clip in attackClips)
         {
@@ -87,15 +114,6 @@ public class QTEHandler : MonoBehaviour
                     break;
                 case "Attack3":
                     Attack3Length = clip.length;
-                    break;
-                case "Attack4":
-                    Attack4Length = clip.length;
-                    break;
-                case "Attack5":
-                    Attack5Length = clip.length;
-                    break;
-                case "Attack6":
-                    Attack6Length = clip.length;
                     break;
                 default:
                     print("not saving time of " + clip.name);
@@ -116,24 +134,25 @@ public class QTEHandler : MonoBehaviour
                 case "Block3":
                     Block3Length = clip.length;
                     break;
-                case "Block4":
-                    Block4Length = clip.length;
-                    break;
-                case "Block5":
-                    Block5Length = clip.length;
-                    break;
                 default:
                     print("not saving time of " + clip.name);
                     break;
             }
         }
     }
-    
+
     void Update()
     {
-        if (running)
+        switch (QTEInput)
         {
-            CheckForInput();
+            case eQTEInput.None:
+                break;
+            case eQTEInput.QTE:
+                CheckForInput();
+                break;
+            case eQTEInput.Endurance:
+                CountButtonMash();
+                break;
         }
     }
 
@@ -141,37 +160,57 @@ public class QTEHandler : MonoBehaviour
     {
         //GlobalVars.AttackRound = 1;
         //MaxSlots = maxSlots;
-
-        QTEStateSwitch(eQTEState.Waiting);
+        curQTEType = QTEType;
+        print("QTE Type: " + QTEType);
 
         switch (QTEType)
         {
             case eQTEType.Attack:
                 curQTEAnim = AttackQTEAnim;
-                curQTEType = Attack;
-                SetQTEAnim(curQTEType.Type);
+                curQTE = Attack;
                 //AttackQTE.SetActive(true);
                 break;
             case eQTEType.Block:
                 curQTEAnim = BlockQTEAnim;
-                curQTEType = Block;
-                SetQTEAnim(curQTEType.Type);
+                curQTE = Block;
                 //BlockQTE.SetActive(true);
                 break;
             case eQTEType.FAEndurance:
+                curQTEAnim = EnduranceQTEAnim;
                 break;
             case eQTEType.FA:
+                //TODO: put real FA stuff in
+                curQTEAnim = FAQTEAnim;
+                curQTE = FA;
                 break;
             default:
                 print("ERROR: QTEType not found, check QTEHandler");
                 break;
         }
-        print("QTE Type: " + QTEType);
-        GetAnimClipTimes();
         RandomButtonGenerator();
-        SetQTEAnim(curQTEType.Type);
+
+        if (curQTEType != eQTEType.FAEndurance)
+        {
+            SetQTEAnim(curQTE.Type);
+            GetAnimClipTimes();
+            QTEStateSwitch(eQTEState.Waiting);
+        }
+        else
+        {
+            StartCoroutine(ButtonMash());
+        }
     }
 
+    public IEnumerator ButtonMash()
+    {
+        QTEStateSwitch(eQTEState.Endurance);
+        print("qte will last " + EnduranceTime + " secs");
+        yield return new WaitForSeconds(EnduranceTime);
+        QTEStateSwitch(eQTEState.Waiting);
+        baeffectshandler.SetMashValue(mashCounter);
+        //give count to baeffectthingy
+        SetType(eQTEType.FA);
+    }
 
     ///Randomizes the QTE Button Image and Input
     public void RandomButtonGenerator()
@@ -186,6 +225,17 @@ public class QTEHandler : MonoBehaviour
         else
         {
             ButtonImage.sprite = Buttons[ran].buttonSprite;
+        }
+    }
+
+    public void CountButtonMash()
+    {
+        if (Input.GetButtonDown(Buttons[ran].inputString))
+        {
+            print("button " + Buttons[ran].name + " pressed");
+            mashCounter += 1;
+            float DMGvalue = baeffectshandler.curAttack.DMG * (((float)mashCounter / 100f) + 1.1f);
+            EnduranceCounter.text = ("" + Mathf.Round(DMGvalue));
         }
     }
 
@@ -213,7 +263,7 @@ public class QTEHandler : MonoBehaviour
     //Or by QTEZoneReader if QTE has gone through without input
     public IEnumerator CheckQTEZone()
     {
-        running = false;
+        QTEInput = eQTEInput.None;
 
         switch (QTEAnimEvents.QTEZone)
         {
@@ -224,30 +274,30 @@ public class QTEHandler : MonoBehaviour
                 //trigger fail anim
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
-                curQTEAnim.Play(curQTEType.name + "_Fail");
+                curQTEAnim.Play(curQTE.name + "_Fail");
                 GlobalVars.QTEfailed = true;
-                baeffectshandler.DMGModification(curQTEType.ModifierFail);
+                baeffectshandler.DMGModification(curQTE.ModifierFail);
                 print("fail QTE result");
                 break;
             case eQTEZone.Good:
                 //trigger good anim
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
-                curQTEAnim.Play(curQTEType.name + "_Good");
-                baeffectshandler.DMGModification(curQTEType.ModifierGood);
+                curQTEAnim.Play(curQTE.name + "_Good");
+                baeffectshandler.DMGModification(curQTE.ModifierGood);
                 print("good QTE result");
                 break;
             case eQTEZone.Perfect:
                 //trigger perfect anim
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
-                curQTEAnim.Play(curQTEType.name + "_Perfect");
-                baeffectshandler.DMGModification(curQTEType.ModifierPerfect);
+                curQTEAnim.Play(curQTE.name + "_Perfect");
+                baeffectshandler.DMGModification(curQTE.ModifierPerfect);
                 print("perfect QTE result");
                 break;
             default:
                 print("ERROR: Could not find QTEZone, check QTEHandler");
-                baeffectshandler.DMGModification(curQTEType.ModifierFail);
+                baeffectshandler.DMGModification(curQTE.ModifierFail);
                 break;
         }
         //wait for result animation to play
@@ -256,7 +306,7 @@ public class QTEHandler : MonoBehaviour
         QTEStateSwitch(eQTEState.Done);
         //GlobalVars.AttackRound += 1;
         //print("attackround: " + GlobalVars.AttackRound);
-        //SetQTEAnim(curQTEType.Type);
+        //SetQTEAnim(curQTE.Type);
     }
 
     public void SetQTEAnim(string type)
@@ -266,9 +316,9 @@ public class QTEHandler : MonoBehaviour
         {
             case eGameState.QTEAttack:
 
-            //TODO animations randomizen
-            //ranAnim = Random.Range(1, 6);
-            ranAnim = 1;
+                //TODO animations randomizen
+                //ranAnim = Random.Range(1, 6);
+                ranAnim = 1;
 
                 switch (ranAnim)
                 {
@@ -280,15 +330,6 @@ public class QTEHandler : MonoBehaviour
                         break;
                     case 3:
                         WaitingTime = AnimStartup - Attack3Length;
-                        break;
-                    case 4:
-                        WaitingTime = AnimStartup - Attack4Length;
-                        break;
-                    case 5:
-                        WaitingTime = AnimStartup - Attack5Length;
-                        break;
-                    case 6:
-                        WaitingTime = AnimStartup - Attack6Length;
                         break;
                     default:
                         WaitingTime = 0f;
@@ -313,12 +354,6 @@ public class QTEHandler : MonoBehaviour
                     case 3:
                         WaitingTime = AnimStartup - Block3Length;
                         break;
-                    case 4:
-                        WaitingTime = AnimStartup - Block4Length;
-                        break;
-                    case 5:
-                        WaitingTime = AnimStartup - Block5Length;
-                        break;
                     default:
                         WaitingTime = 0f;
                         Debug.LogError("Could not set Wait Time, check QTEHandler");
@@ -326,12 +361,12 @@ public class QTEHandler : MonoBehaviour
                 }
                 break;
         }
-        AnimString = type + ranAnim;        
+        AnimString = type + ranAnim;
     }
 
     public IEnumerator WaitForStart()
     {
-        print("kuhteheh waiting for " + WaitingTime+" s");
+        print("kuhteheh waiting for " + WaitingTime + " s");
         yield return new WaitForSeconds(WaitingTime);
         QTEStateSwitch(eQTEState.Running);
     }
@@ -343,50 +378,30 @@ public class QTEHandler : MonoBehaviour
         switch (qteState)
         {
             case eQTEState.Waiting:
-                AttackQTEAnim.Play("Wait");
-                BlockQTEAnim.Play("Wait");
+                EnduranceCounter.text = "";
+                curQTEAnim.Play("Wait");
                 QTEButton.SetActive(false);
-                running = false;
+                QTEInput = eQTEInput.None;
                 break;
             case eQTEState.Running:
                 print("kuhteheh running");
-                running = true;
+                QTEInput = eQTEInput.QTE;                
                 QTEButton.SetActive(true);
                 curQTEAnim.SetTrigger(AnimString);
                 break;
+            case eQTEState.Endurance:
+                print("endurance kuhteheh running");
+                QTEInput = eQTEInput.Endurance;                
+                QTEButton.SetActive(true);
+                curQTEAnim.SetTrigger("Endurance");
+                break;
             case eQTEState.Done:
+                EnduranceCounter.text = "";
                 print("kuhteheh done");
+                QTEInput = eQTEInput.None; 
                 curQTEAnim.Play("Wait");
-                QTEButton.SetActive(false);                
-
-                ////TODO this shit goes somewhere else
-                //switch (GameStateSwitch.Instance.GameState)
-                //{
-                //    case eGameState.QTEAttack:
-                //        baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgDealt);
-                //        baeffectshandler.CheckForDeath(baeffectshandler.curEnemyHP, turnchanger.Turns);
-
-                //        break;
-                //    case eGameState.QTEBlock:
-                //        baeffectshandler.ShowTotalDmg(baeffectshandler.TotalDmgTaken);
-                //        baeffectshandler.CheckForDeath(baeffectshandler.curPlayerHP, turnchanger.Turns);
-
-                //        break;
-                //}
-
-                //if (turnchanger.Turns == eTurn.EnemyFirst)
-                //{
-                //    turnchanger.SwitchTurn(eTurn.PlayerSecond);
-                //}
-                //else if (turnchanger.Turns == eTurn.PlayerFirst)
-                //{
-                //    turnchanger.SwitchTurn(eTurn.EnemySecond);
-                //}
-                //else
-                //{
-                //    turnchanger.SwitchTurn(eTurn.BothDone);
-                //}
-
+                QTEButton.SetActive(false);
+                mashCounter = 0;
                 break;
             default:
                 Debug.LogError("QTE state not found, check QTEHandler");

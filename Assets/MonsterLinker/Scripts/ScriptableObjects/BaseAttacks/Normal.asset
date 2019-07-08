@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DMG: 20
   RPCost: 0
-  RPGain: 5
-  HPGain: 10
+  RPGain: 10
+  HPGain: 0
   Speed: 2
   AnimationName: normal
   AttackType: 1

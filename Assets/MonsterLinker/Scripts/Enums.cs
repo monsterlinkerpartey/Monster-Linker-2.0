@@ -42,6 +42,7 @@ public enum eQTEState
 {
     Waiting,
     Running,
+    Endurance,
     Done
 }
 
@@ -93,4 +94,11 @@ public enum eFightResult
     None,
     Victory,
     Defeat
+}
+
+public enum eQTEInput
+{
+    None,
+    QTE,
+    Endurance
 }

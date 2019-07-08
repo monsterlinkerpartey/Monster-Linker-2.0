@@ -69,15 +69,23 @@ public class AttackRoundHandler : MonoBehaviour
             case eGameState.QTEAttack:
                 animationhandler.EnemyAnim.SetBool("block", true);
                 baeffectshandler.Playerturn = true;
-                if (curAttack.AttackType == eAttackType.BA)
+
+                switch (curAttack.AttackType)
                 {
-                    qtehandler.SetType(eQTEType.Attack);
+                    case eAttackType.FA:                    
+                        //endurance qte callen
+                        qtehandler.SetType(eQTEType.FAEndurance);
+                        //player endurance stance
+                        animationhandler.PlayerAnim.SetBool("Endurance", true);
+                        break;
+                    case eAttackType.BA:
+                        qtehandler.SetType(eQTEType.Attack);
+                        animationhandler.PlayerAttack(curAttack.AnimationName);
+                        break;
+                    default:
+                        Debug.LogError("Attack Type not specified!");
+                        break;
                 }
-                else if (curAttack.AttackType == eAttackType.FA)
-                {
-                    //qtehandler.SetType(eQTEType.FA, maxRounds);
-                }
-                animationhandler.PlayerAttack(curAttack.AnimationName);
                 break;
             case eGameState.QTEBlock:
                 animationhandler.PlayerAnim.SetBool("block", true);
@@ -105,18 +113,18 @@ public class AttackRoundHandler : MonoBehaviour
     //      - qtehandler: info geben ob block/attack, BA/FA
     //      - nach letzter runde an turnchanger weitergeben
 
-        //    if (turnchanger.Turns == eTurn.EnemyFirst)
-        //{
-        //    turnchanger.SwitchTurn(eTurn.PlayerSecond);
-        //}
-        //else if (turnchanger.Turns == eTurn.PlayerFirst)
-        //{
-        //    turnchanger.SwitchTurn(eTurn.EnemySecond);
-        //}
-        //else
-        //{
-        //    turnchanger.SwitchTurn(eTurn.BothDone);
-        //}
+    //    if (turnchanger.Turns == eTurn.EnemyFirst)
+    //{
+    //    turnchanger.SwitchTurn(eTurn.PlayerSecond);
+    //}
+    //else if (turnchanger.Turns == eTurn.PlayerFirst)
+    //{
+    //    turnchanger.SwitchTurn(eTurn.EnemySecond);
+    //}
+    //else
+    //{
+    //    turnchanger.SwitchTurn(eTurn.BothDone);
+    //}
 
 
 }
