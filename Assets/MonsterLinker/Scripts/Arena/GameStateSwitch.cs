@@ -112,6 +112,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
+                arenaui.StatusBars.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(true);
                 arenaui.QTEPanel.SetActive(false);
@@ -130,6 +131,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Arena in cinematischer Cutscene vorstellen
             ///FA Loadout und alle scripts laden
             case eGameState.Intro:
+                arenaui.StatusBars.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
@@ -145,6 +147,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
+                arenaui.StatusBars.SetActive(true);
                 GlobalVars.QTEfailed = false;
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
@@ -232,8 +235,7 @@ public class GameStateSwitch : MonoBehaviour
                 SwitchState(eGameState.PlayerInput);
                 break;
             case eGameState.Result:
-                //TODO disable player and enemy status HP/RP
-
+                arenaui.StatusBars.SetActive(true);
 
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
