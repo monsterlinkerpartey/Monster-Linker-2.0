@@ -80,6 +80,9 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] float EnduranceTime;
     [SerializeField] string AnimString;
 
+    public bool EnduranceDone;
+
+    public AttackRoundHandler attackroundhandler;
     public BAEffectsHandler baeffectshandler;
     public TurnChanger turnchanger;
 
@@ -168,18 +171,16 @@ public class QTEHandler : MonoBehaviour
             case eQTEType.Attack:
                 curQTEAnim = AttackQTEAnim;
                 curQTE = Attack;
-                //AttackQTE.SetActive(true);
                 break;
             case eQTEType.Block:
                 curQTEAnim = BlockQTEAnim;
                 curQTE = Block;
-                //BlockQTE.SetActive(true);
                 break;
             case eQTEType.FAEndurance:
                 curQTEAnim = EnduranceQTEAnim;
                 break;
             case eQTEType.FA:
-                //TODO: put real FA stuff in
+                EnduranceDone = false;
                 curQTEAnim = FAQTEAnim;
                 curQTE = FA;
                 break;
@@ -208,8 +209,8 @@ public class QTEHandler : MonoBehaviour
         yield return new WaitForSeconds(EnduranceTime);
         QTEStateSwitch(eQTEState.Waiting);
         baeffectshandler.SetMashValue(mashCounter);
-        //give count to baeffectthingy
-        SetType(eQTEType.FA);
+        EnduranceDone = true;
+        attackroundhandler.StartAttack();
     }
 
     ///Randomizes the QTE Button Image and Input

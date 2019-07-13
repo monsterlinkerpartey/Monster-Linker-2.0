@@ -7,8 +7,8 @@ public class BaseAttack : Attack
 {
     [Tooltip("Sprite shown in the Input Bar")]
     public Sprite InputBarIcon;
-    [Tooltip("Sprite for the Button")]
-    public Sprite ButtonSprite;
+    [Tooltip("Sprite shown in the FA Info Panel under 'Input'")]
+    public Sprite InfoPanelIcon;
     [Tooltip("Animator of the Icon")]
     public Animator SlotAnim;
 

@@ -16,9 +16,9 @@ public class CreatureAnimEvents : MonoBehaviour
         StartCoroutine(qtehandler.WaitForStart());
     }
 
-    public void Blocktrigger()
+    public void FAQTEcall()
     {
-        //animationhandler.BlockTrigger();
+        StartCoroutine(qtehandler.WaitForStart());
     }
 
     public void HitImpact()

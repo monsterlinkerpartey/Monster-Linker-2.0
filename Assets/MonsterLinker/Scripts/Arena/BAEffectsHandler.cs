@@ -89,7 +89,6 @@ public class BAEffectsHandler : MonoBehaviour
         curPlayerHP -= curDMG;
         curEnemyHP += curAttack.HPGain;
         curEnemyRP += curAttack.RPGain;
-        curEnemyRP -= curAttack.RPCost;
         TotalDmgTaken += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
@@ -99,13 +98,22 @@ public class BAEffectsHandler : MonoBehaviour
         print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
     }
 
+    public void PlayerPaysRP()
+    {
+        curPlayerRP -= curAttack.RPCost;
+    }
+
+    public void EnemyPaysRP()
+    {
+        curEnemyRP -= curAttack.RPCost;
+    }
+
     public void EnemyTakesDmg(float curDMG)
     {       
         print("dealing dmg to enemy");
         curEnemyHP -= curDMG;
         curPlayerHP += curAttack.HPGain;
         curPlayerRP += curAttack.RPGain;
-        curPlayerRP -= curAttack.RPCost;
         TotalDmgDealt += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));

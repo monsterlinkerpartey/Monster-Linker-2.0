@@ -37,27 +37,26 @@ public class ButtonControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Bdisabled)
-        {
-            thisButton.enabled = false;
-            buttonAnim.SetTrigger("Disabled");
-        }
-        else
+        if (!Bdisabled)
         {
             thisButton.enabled = true;
-            buttonAnim.SetTrigger("Normal");
 
             if (Input.GetButtonDown(InputName))
             {
-                buttonAnim.SetTrigger("Highlighted");
+                buttonAnim.SetTrigger("Pressed");
                 thisButton.onClick.Invoke();
             }
             else if (Input.GetButtonUp(InputName))
             {
-                buttonAnim.SetTrigger("Normal");
+                //buttonAnim.Play("Normal");
                 if (noButton != null)
                     noButton.Select();
             }
+        }
+        else
+        {
+            thisButton.enabled = false;
+            //buttonAnim.SetTrigger("Disabled");
         }
     }
 }

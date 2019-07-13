@@ -102,3 +102,10 @@ public enum eQTEInput
     QTE,
     Endurance
 }
+
+public enum eLoadout
+{
+    LoadoutOnly,
+    FeralArtChoice,
+    ImplantChoice
+};

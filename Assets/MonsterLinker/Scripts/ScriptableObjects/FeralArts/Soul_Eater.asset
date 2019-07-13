@@ -17,8 +17,9 @@ MonoBehaviour:
   RPGain: 0
   HPGain: 0
   Speed: 0
-  AnimationName: 
+  AnimationName: FA1
   AttackType: 0
+  FAName: Soul Eater
   FeralArtInput:
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}
   - {fileID: 11400000, guid: 13e0d9c0e44d2b14cad25e4260a4a5ae, type: 2}

@@ -72,11 +72,21 @@ public class AttackRoundHandler : MonoBehaviour
 
                 switch (curAttack.AttackType)
                 {
-                    case eAttackType.FA:                    
-                        //endurance qte callen
-                        qtehandler.SetType(eQTEType.FAEndurance);
-                        //player endurance stance
-                        animationhandler.PlayerAnim.SetBool("Endurance", true);
+                    case eAttackType.FA:  
+                        if (!qtehandler.EnduranceDone)
+                        {
+                            //endurance qte callen
+                            qtehandler.SetType(eQTEType.FAEndurance);
+                            animationhandler.PlayerAnim.SetBool("Endurance", true);
+                        }
+                        else
+                        {
+                            //FA QTE und animation callen
+                            animationhandler.PlayerAnim.SetBool("Endurance", false);
+                            baeffectshandler.PlayerPaysRP();
+                            qtehandler.SetType(eQTEType.FA);
+                            animationhandler.PlayerAttack(curAttack.AnimationName);
+                        }    
                         break;
                     case eAttackType.BA:
                         qtehandler.SetType(eQTEType.Attack);
@@ -88,10 +98,14 @@ public class AttackRoundHandler : MonoBehaviour
                 }
                 break;
             case eGameState.QTEBlock:
+                if (curAttack.AttackType == eAttackType.FA)
+                    baeffectshandler.EnemyPaysRP();
+
                 animationhandler.PlayerAnim.SetBool("block", true);
                 baeffectshandler.Playerturn = false;
                 qtehandler.SetType(eQTEType.Block);       
                 animationhandler.EnemyAttack(curAttack.AnimationName);
+
                 break;
             default:
                 Debug.LogError("not the right game state!");

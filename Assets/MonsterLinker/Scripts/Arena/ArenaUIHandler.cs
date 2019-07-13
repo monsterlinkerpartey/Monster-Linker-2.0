@@ -81,32 +81,20 @@ public class ArenaUIHandler : MonoBehaviour
 
             if (DPadButtons.Down)
             {
-                LightAttack.animator.SetTrigger("Highlighted");
+                LightAttack.animator.SetTrigger("Pressed");
                 LightAttack.onClick.Invoke();
-            }
-            else
-            {
-                LightAttack.animator.SetTrigger("Normal");
             }
 
             if (DPadButtons.Right)
             {
-                NormalAttack.animator.SetTrigger("Highlighted");
+                NormalAttack.animator.SetTrigger("Pressed");
                 NormalAttack.onClick.Invoke();
-            }
-            else
-            {
-                NormalAttack.animator.SetTrigger("Normal");
             }
 
             if (DPadButtons.Up)
             {
-                HeavyAttack.animator.SetTrigger("Highlighted");
+                HeavyAttack.animator.SetTrigger("Pressed");
                 HeavyAttack.onClick.Invoke();
-            }
-            else
-            {
-                HeavyAttack.animator.SetTrigger("Normal");
             }
         }
         else
@@ -114,6 +102,9 @@ public class ArenaUIHandler : MonoBehaviour
             HeavyAttack.enabled = false;
             NormalAttack.enabled = false;
             LightAttack.enabled = false;
+            //HeavyAttack.animator.SetBool("Disabled");
+            //NormalAttack.animator.SetBool("Disabled");
+            //LightAttack.animator.SetBool("Disabled");
         }
 
     }

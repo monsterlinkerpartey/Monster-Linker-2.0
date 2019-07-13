@@ -25,6 +25,7 @@ public class GameStateSwitch : MonoBehaviour
     public CreatureAnimEvents playerCreatureanimevents;
     public CreatureAnimEvents enemyCreatureanimevents;
     public QTEAnimEvents qteanimevents;
+    public LoadoutButtons loadoutbuttons;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -52,6 +53,7 @@ public class GameStateSwitch : MonoBehaviour
     void GetAllScripts()
     {
         //TODO getcomponentinchildren, get each script at the start of scene
+        loadoutbuttons = GetComponentInChildren<LoadoutButtons>();
         feralartcheck = GetComponentInChildren<FeralArtCheck>();
         playerinput = GetComponentInChildren<ArenaPlayerInput>();
         inputbarhandler = GetComponentInChildren<InputBarHandler>();
@@ -82,6 +84,7 @@ public class GameStateSwitch : MonoBehaviour
         initiativecheck.turnchanger = turnchanger;
         qtehandler.baeffectshandler = baeffectshandler;
         qtehandler.turnchanger = turnchanger;
+        qtehandler.attackroundhandler = attackroundhandler;
         arenaui.inputbarhandler = inputbarhandler;
         feralartcheck.inputbarhandler = inputbarhandler;
         feralartcheck.arenaui = arenaui;
@@ -112,6 +115,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
+                loadoutbuttons.WindowSwitch(eLoadout.LoadoutOnly);
                 arenaui.StatusBars.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(true);
