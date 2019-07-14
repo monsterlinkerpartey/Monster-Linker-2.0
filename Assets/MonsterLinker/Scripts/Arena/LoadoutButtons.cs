@@ -7,23 +7,26 @@ public class LoadoutButtons : MonoBehaviour
 {
     [Header("Drag n drop")]
     public eLoadout Window;
+    public eImplant ChoosenImplant;
+
     public GameObject FeralArtChoice;
     public GameObject ImplantChoice;
     public Animator FeralArtChoiceAnim;
     public Animator ImplantChoiceAnim;
 
     public GameObject EventSystem_Normal;
-    //public GameObject EventSystem_FAChoice;
-    //public GameObject EventSystem_ImplantChoice;
 
     public Button FAChoiceButton1;
     public Button ImplantChoiceButton1;
 
-    public List<FeralArt> LoadedFAs;
+    public List<FeralArt> LoadedFAs = new List<FeralArt>(3);
+    public List<Button> FAChoiceButton;
+    public List<Button> SIChoiceButton;
 
     [Header("No touchie")]
     public Button curLeftButton;
     public Text curLeftText;
+    public Text ImplantText;
 
     public void Update()
     {
@@ -44,39 +47,65 @@ public class LoadoutButtons : MonoBehaviour
         }
     }
 
-    //TODO write script that tells left buttson which FA they are holding
-    //TODO add/remove FAs from loaded list
-    //TODO check which FA is in the loaded list and disable them in the choice selection
-
-    public void CheckActiveFAs()
+    public void ConfirmLoadout() 
     {
-
+        if (LoadedFAs[0] != null && LoadedFAs[1] != null && LoadedFAs[2] != null && ChoosenImplant != eImplant.None)
+        {
+            GameStateSwitch.Instance.arenaui.FALoadout.SetActive(false);
+            GameStateSwitch.Instance.curProfile.FALoadout = LoadedFAs;
+            GameStateSwitch.Instance.SwitchState(eGameState.Intro);
+        }
+        else
+            print("not enough FAs chosen");
     }
 
     public void OpenFAChoice(Button thisButton)
     {
         curLeftButton = thisButton;
-        curLeftText = curLeftButton.GetComponentInChildren<Text>();
+        curLeftText = curLeftButton.GetComponentInChildren<Text>();        
         WindowSwitch(eLoadout.FeralArtChoice);
-        FAChoiceButton1.Select();
+        FAChoiceButton1.Select();        
+    }
+    public void ChooseFA(FeralArt thisFA)
+    {
+        if (!LoadedFAs.Contains(thisFA))
+        {
+            int slotNo = int.Parse(curLeftButton.name);
+            LoadedFAs[slotNo] = thisFA;
+            print("pressed button for FA choice "+thisFA.name);
+            curLeftText.text = thisFA.FAName;
+        }
+        else
+        {
+            print("FA already in list");
+        }
+        WindowSwitch(eLoadout.LoadoutOnly);
+        curLeftButton.Select();
     }
 
     public void OpenImplantChoice(Button thisButton)
     {
         curLeftButton = thisButton;
-        curLeftText = curLeftButton.GetComponentInChildren<Text>();
+        curLeftText = curLeftButton.GetComponentInChildren<Text>();        
         WindowSwitch(eLoadout.ImplantChoice);
         ImplantChoiceButton1.Select();
     }
 
-    public void ChooseFA(FeralArt thisFA)
+    public void ChooseImplant(Implant implant)
     {
-        print("pressed button for FA choice "+thisFA.name);
-        curLeftText.text = thisFA.FAName;
+        if (ChoosenImplant != implant.implant)
+        {
+            ChoosenImplant = implant.implant;
+            curLeftText.text = implant.name;
+        }
+        else
+        {
+            print("implant already chosen");
+        }
         WindowSwitch(eLoadout.LoadoutOnly);
         curLeftButton.Select();
     }
-    
+
     public void WindowSwitch(eLoadout window)
     {
         Window = window;
@@ -85,31 +114,19 @@ public class LoadoutButtons : MonoBehaviour
         {
             case eLoadout.LoadoutOnly:
                 CloseWindows();
-                //EventSystem_Normal.SetActive(true);
-                //EventSystem_FAChoice.SetActive(false);
-                //EventSystem_ImplantChoice.SetActive(false);
                 break;
             case eLoadout.FeralArtChoice:
                 FeralArtChoice.SetActive(true);
-                //EventSystem_Normal.SetActive(false);
-                //EventSystem_FAChoice.SetActive(true);
                 break;
             case eLoadout.ImplantChoice:
                 ImplantChoice.SetActive(true);
-                //EventSystem_Normal.SetActive(false);
-                //EventSystem_ImplantChoice.SetActive(true);
                 break;
         }
-
     }
 
     public void CloseWindows()
     {
         FeralArtChoice.SetActive(false);
         ImplantChoice.SetActive(false);
-        //Closes the choice windows
-        //sets cur feral arts button as active button
     }
-
-
 }

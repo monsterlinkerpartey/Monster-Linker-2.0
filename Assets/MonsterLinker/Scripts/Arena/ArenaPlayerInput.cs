@@ -12,18 +12,6 @@ public class ArenaPlayerInput : MonoBehaviour
     public InputBarHandler inputbarhandler;
     public ArenaUIHandler arenaui;
     public FeralArtCheck feralartcheck;
-
-    public List<FeralArt> ChosenFAs;
-       
-    public void ConfirmLoadout() //List<Attack> choosenFAs
-    {
-        arenaui.FALoadout.SetActive(false);
-
-        //TODO: load FA into profile
-        feralartcheck.LoadedFeralArts = GameStateSwitch.Instance.curProfile.FALoadout;
-        GameStateSwitch.Instance.SwitchState(eGameState.Intro);
-    }
-
     public void AddBaseattack(BaseAttack baseAttack)
     {
         inputbarhandler.Add(baseAttack);

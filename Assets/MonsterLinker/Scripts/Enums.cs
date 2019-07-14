@@ -83,6 +83,7 @@ public enum eAttackType
 
 public enum eImplant
 {
+    None,
     RisingRage,
     UnleashedMode,
     SuperFA,
@@ -108,4 +109,11 @@ public enum eLoadout
     LoadoutOnly,
     FeralArtChoice,
     ImplantChoice
+};
+
+public enum eSlotNo
+{
+    First,
+    Second,
+    Third
 };
