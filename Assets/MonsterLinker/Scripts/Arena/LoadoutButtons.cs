@@ -7,7 +7,6 @@ public class LoadoutButtons : MonoBehaviour
 {
     [Header("Drag n drop")]
     public eLoadout Window;
-    public eImplant ChoosenImplant;
 
     public GameObject FeralArtChoice;
     public GameObject ImplantChoice;
@@ -49,7 +48,7 @@ public class LoadoutButtons : MonoBehaviour
 
     public void ConfirmLoadout() 
     {
-        if (LoadedFAs[0] != null && LoadedFAs[1] != null && LoadedFAs[2] != null && ChoosenImplant != eImplant.None)
+        if (LoadedFAs[0] != null && LoadedFAs[1] != null && LoadedFAs[2] != null && GameStateSwitch.Instance.curProfile.curImplant != eImplant.None)
         {
             GameStateSwitch.Instance.arenaui.FALoadout.SetActive(false);
             GameStateSwitch.Instance.curProfile.FALoadout = LoadedFAs;
@@ -93,9 +92,9 @@ public class LoadoutButtons : MonoBehaviour
 
     public void ChooseImplant(Implant implant)
     {
-        if (ChoosenImplant != implant.implant)
+        if (GameStateSwitch.Instance.curProfile.curImplant != implant.implant)
         {
-            ChoosenImplant = implant.implant;
+            GameStateSwitch.Instance.curProfile.curImplant = implant.implant;
             curLeftText.text = implant.name;
         }
         else

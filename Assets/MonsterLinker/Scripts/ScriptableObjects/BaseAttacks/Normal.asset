@@ -20,5 +20,5 @@ MonoBehaviour:
   AnimationName: normal
   AttackType: 1
   InputBarIcon: {fileID: 21300000, guid: 922f0ee2b785eb9468772c2ec2ca1694, type: 3}
-  ButtonSprite: {fileID: 0}
+  InfoPanelIcon: {fileID: 21300000, guid: 2e46d0a9367b6a341a7b661bd84a5675, type: 3}
   SlotAnim: {fileID: 0}
