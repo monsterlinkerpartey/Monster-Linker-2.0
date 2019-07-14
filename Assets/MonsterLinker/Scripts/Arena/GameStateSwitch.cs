@@ -26,7 +26,6 @@ public class GameStateSwitch : MonoBehaviour
     public CreatureAnimEvents enemyCreatureanimevents;
     public QTEAnimEvents qteanimevents;
     public LoadoutButtons loadoutbuttons;
-    public FAInfoWindow fainfowindow;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -68,7 +67,6 @@ public class GameStateSwitch : MonoBehaviour
         attackroundhandler = GetComponentInChildren<AttackRoundHandler>();
         animationhandler = GetComponentInChildren<AnimationHandler>();    
         qteanimevents = FindObjectOfType<QTEAnimEvents>();        
-        fainfowindow = FindObjectOfType<FAInfoWindow>();        
     }
 
     void ConnectScripts()
@@ -129,7 +127,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.GetAttackSlots();
                 //TODO alle states des player auslagern in playerprofile
 
-                baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0); 
+                baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0);                
+
                 inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
@@ -144,8 +143,6 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
                 curProfile.SetCheapestFAcost();
                 feralartcheck.LoadedFeralArts = curProfile.FALoadout;
-                fainfowindow.WriteFAData();
-                fainfowindow.SetSI();
                 
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
                 StartCoroutine(WaitForIntro(IntroTime));

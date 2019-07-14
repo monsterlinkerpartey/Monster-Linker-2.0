@@ -12,7 +12,6 @@ public class Save : ScriptableObject
     public bool Used;
     public int maxBaseAttackInputSlots = 5;
     public List<FeralArt> FALoadout;
-    public eImplant curImplant;
     public int lowestFAcost;
     public string LinkerName;
     public string MonsterName;

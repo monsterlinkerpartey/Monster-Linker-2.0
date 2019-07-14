@@ -7,6 +7,4 @@ public class Implant : ScriptableObject
 {
     public string ImplantName;
     public eImplant implant;
-    public int RPCost;
-    public List<BaseAttack> FAInput;
 }
