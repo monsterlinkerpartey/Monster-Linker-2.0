@@ -20,5 +20,5 @@ MonoBehaviour:
   AnimationName: heavy
   AttackType: 1
   InputBarIcon: {fileID: 21300000, guid: c6b51304ba33b60498fa7ed211bc35fa, type: 3}
-  InfoPanelIcon: {fileID: 21300000, guid: cf7577e08d582e146af641a95b5e08d8, type: 3}
+  ButtonSprite: {fileID: 0}
   SlotAnim: {fileID: 0}
