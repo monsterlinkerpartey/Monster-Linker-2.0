@@ -12,11 +12,6 @@ public class InputBarHandler : MonoBehaviour
     public InitiativeCheck initiativecheck;
     public ArenaUIHandler arenaui;
     
-    public void AddInputSlot(int i)
-    {
-        maxBaseAttackInputSlots += i;
-    }
-
     //call this via button to add the attack
     public void Add(BaseAttack baseAttack)
     {

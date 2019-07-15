@@ -10302,7 +10302,6 @@ GameObject:
   - component: {fileID: 1033392720}
   - component: {fileID: 1033392721}
   - component: {fileID: 1033392722}
-  - component: {fileID: 1033392723}
   m_Layer: 0
   m_Name: OtherScripts
   m_TagString: Untagged
@@ -10479,6 +10478,7 @@ MonoBehaviour:
   qtehandler: {fileID: 0}
   baeffectshandler: {fileID: 0}
   turnchanger: {fileID: 0}
+  QTEfailed: 0
 --- !u!114 &1033392722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10493,18 +10493,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyAnim: {fileID: 1039573784}
   PlayerAnim: {fileID: 1351376616}
---- !u!114 &1033392723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033392711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f137217f2d7bd3d42a24a42905866375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1039573782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 730a7e282402c6e4d8e4e80ca3a62f10,

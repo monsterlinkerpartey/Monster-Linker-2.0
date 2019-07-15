@@ -41,7 +41,8 @@ public class ArenaUIHandler : MonoBehaviour
     public Text ResultText;
 
     [HideInInspector]
-    public AttackSlot[] playerSlots;
+    //public AttackSlot[] playerSlots;
+    public List<AttackSlot> playerSlots;
     [HideInInspector]
     public AttackSlot[] enemySlots;
     [HideInInspector]
@@ -106,7 +107,7 @@ public class ArenaUIHandler : MonoBehaviour
     public void GetAttackSlots()
     {
         print("getting attack slots");
-        playerSlots = PlayerInputBar.GetComponentsInChildren<AttackSlot>();
+        PlayerInputBar.GetComponentsInChildren<AttackSlot>(playerSlots);
         enemySlots = EnemyInputBar.GetComponentsInChildren<AttackSlot>();
     }
 
@@ -156,7 +157,7 @@ public class ArenaUIHandler : MonoBehaviour
 
         print("updating icon slots");
 
-        for (int i = 0; i < playerSlots.Length; i++)
+        for (int i = 0; i < playerSlots.Count; i++)
         {
             if (i < attacks.Count)
             {

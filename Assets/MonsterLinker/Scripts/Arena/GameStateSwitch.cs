@@ -24,14 +24,14 @@ public class GameStateSwitch : MonoBehaviour
     public BAEffectsHandler baeffectshandler;
     public AttackRoundHandler attackroundhandler;
     public AnimationHandler animationhandler;
-    public CreatureAnimEvents playerCreatureanimevents;
-    public CreatureAnimEvents enemyCreatureanimevents;
     public QTEAnimEvents qteanimevents;
     public LoadoutButtons loadoutbuttons;
     public FAInfoWindow fainfowindow;
     //public StatusBarHandler statusbarhandler;
+    public CreatureAnimEvents playerCreatureanimevents;
+    public CreatureAnimEvents enemyCreatureanimevents;
 
-    public Save curProfile; //TODO save file iwo her kriegen
+    public Save curProfile; 
     public Enemy curEnemy;
 
     
@@ -151,6 +151,7 @@ public class GameStateSwitch : MonoBehaviour
                 fainfowindow.WriteFAData();
                 fainfowindow.SetSI();
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
+                attackroundhandler.QTEfailed = false;
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
             ///Player Input enablen
@@ -159,7 +160,7 @@ public class GameStateSwitch : MonoBehaviour
             case eGameState.PlayerInput:
                 baeffectshandler.PlayerRPatAttackStart = baeffectshandler.curPlayerRP;
                 arenaui.StatusBars.SetActive(true);
-                GlobalVars.QTEfailed = false;
+                attackroundhandler.QTEfailed = false;
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.InputPanel.SetActive(true);
@@ -236,14 +237,52 @@ public class GameStateSwitch : MonoBehaviour
                 //Reset DMG counters for the end of each turn
                 baeffectshandler.ResetDmgCount();
 
-                //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
-                //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
-                ///falls spieler einen 6. input slot kriegt:      
-                //inputbarhandler.maxBaseAttackInputSlots += 1;
-                //inputbarhandler.maxBaseAttackInputSlots = 5;
-                //und updaten:
-                //attackslotspawn.SpawnPlayerSlots();
-                //arenaui.GetAttackSlots();
+                //HACK: zum Test von Temp Input Slot
+                //attackroundhandler.QTEfailed = false;
+
+                //check which implant is active
+                switch (Implant)
+                {
+                    case eImplant.UnleashedMode:
+                        print("unleash mode");
+                        break;
+                    case eImplant.SuperFA:
+                        print("super duper fa");
+                        //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
+                        break;
+                    case eImplant.TempInputSlot:
+                        print("temporary input slot");
+                        //=> Check ob Temp. Extra BA Input Slot freigeschaltet wurde
+                        if (!attackroundhandler.QTEfailed)
+                        {
+                            print("no qte fails, giving 6th slot");
+                            inputbarhandler.maxBaseAttackInputSlots = 6;
+
+                            if (arenaui.playerSlots.Count < 6)
+                            {
+                                attackslotspawn.SpawnTemporarySlot();
+                                arenaui.GetAttackSlots();
+                            }
+                        }
+                        else
+                        {
+                            print("you failed, no 6th slot");
+                            inputbarhandler.maxBaseAttackInputSlots = 5;
+                            if (arenaui.playerSlots.Count > 5)
+                            {
+                                print("deleting 6th slot");
+                                attackslotspawn.DestroyTemporarySlot();
+                                arenaui.GetAttackSlots();
+                            }
+                            attackroundhandler.QTEfailed = false;
+                        }
+                        break;
+                    case eImplant.RisingRage:
+                        break;
+                    default:
+                        Debug.LogError("implant not found");
+                        break;
+                }
 
                 //Go to Player Input State
                 SwitchState(eGameState.PlayerInput);

@@ -15,6 +15,8 @@ public class AttackRoundHandler : MonoBehaviour
     public BAEffectsHandler baeffectshandler;
     public TurnChanger turnchanger;
 
+    public bool QTEfailed = false;
+
     //Called by GameStateSwitch, depending on state gives enemy or player attack list
     public void GetAttackList(List<Attack> curAttacks)
     {

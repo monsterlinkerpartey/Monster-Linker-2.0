@@ -276,7 +276,7 @@ public class QTEHandler : MonoBehaviour
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTE.name + "_Fail");
-                GlobalVars.QTEfailed = true;
+                attackroundhandler.QTEfailed = true;
                 baeffectshandler.DMGModification(curQTE.ModifierFail);
                 print("fail QTE result");
                 break;
@@ -317,8 +317,7 @@ public class QTEHandler : MonoBehaviour
             case eGameState.QTEAttack:
 
                 //TODO animations randomizen
-                //ranAnim = Random.Range(1, 6);
-                ranAnim = 1;
+                ranAnim = Random.Range(1, 3);
 
                 switch (ranAnim)
                 {
@@ -340,8 +339,7 @@ public class QTEHandler : MonoBehaviour
             case eGameState.QTEBlock:
 
                 //TODO animations randomizen
-                //ranAnim = Random.Range(1, 5);
-                ranAnim = 1;
+                ranAnim = Random.Range(1, 3);
 
                 switch (ranAnim)
                 {

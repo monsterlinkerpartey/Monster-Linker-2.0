@@ -24,6 +24,8 @@ public class AttackSlotSpawn : MonoBehaviour
     public int NumberOfAttackSlotsPlayer;
     public int NumberOfAttackSlotsEnemy;
 
+    GameObject extraSlot;
+
     [SerializeField]
     private float PanelHeight;
     [SerializeField]
@@ -38,6 +40,28 @@ public class AttackSlotSpawn : MonoBehaviour
         NumberOfAttackSlotsEnemy = enemyAttackNo;
         EnemyPanelTransform = EnemyInputBar.GetComponent<RectTransform>();
         EnemyGrid = EnemyInputBar.GetComponent<GridLayoutGroup>();
+    }
+
+    public void SpawnTemporarySlot()
+    {
+        //Checking grid size and adjusting panel size to it
+        float cellsize = PlayerGrid.cellSize.x;
+        float spacing = PlayerGrid.spacing.x;
+        if (spacing == 0)
+            spacing = 1;
+
+        PanelWidth = (((NumberOfAttackSlotsPlayer + 1) * cellsize) + (NumberOfAttackSlotsPlayer + 2) * (spacing));
+        PanelHeight = 2 * spacing + cellsize;
+        PlayerPanelTransform.sizeDelta = new Vector2(PanelWidth, PanelHeight);
+
+        extraSlot = GameObject.Instantiate(Slot, transform.position, transform.rotation) as GameObject;
+        extraSlot.transform.parent = PlayerInputBar.transform;
+        extraSlot.transform.localScale = new Vector3(2, 2, 1);
+    }
+
+    public void DestroyTemporarySlot()
+    {
+        Destroy(extraSlot);
     }
 
     public void SpawnPlayerSlots()
