@@ -11,8 +11,8 @@ public class Save : ScriptableObject
     [Tooltip("Has this save been used?")]
     public bool Used;
     public int maxBaseAttackInputSlots = 5;
-    public List<FeralArt> FALoadout;
-    public eImplant curImplant;
+    public List<FeralArt> FALoadout = new List<FeralArt>(3);
+    public Implant curImplant;
     public int lowestFAcost;
     public string LinkerName;
     public string MonsterName;

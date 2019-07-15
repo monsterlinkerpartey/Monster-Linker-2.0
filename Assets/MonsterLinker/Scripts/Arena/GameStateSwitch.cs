@@ -118,6 +118,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
                 loadoutbuttons.WindowSwitch(eLoadout.LoadoutOnly);
+                loadoutbuttons.SetInitialTexts();
                 arenaui.StatusBars.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(true);
@@ -146,7 +147,6 @@ public class GameStateSwitch : MonoBehaviour
                 feralartcheck.LoadedFeralArts = curProfile.FALoadout;
                 fainfowindow.WriteFAData();
                 fainfowindow.SetSI();
-                
                 //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
@@ -159,6 +159,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.InputPanel.SetActive(true);
+                arenaui.SetConfirmButtonStatus(false);
+                arenaui.SetInputButtonsStatus(true);
                 arenaui.PlayerInputBar.SetActive(true);
                 enemystatemachine.CheckEnemyState();
                 enemystatemachine.SetInput();

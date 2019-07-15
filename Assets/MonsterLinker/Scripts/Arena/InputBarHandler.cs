@@ -11,7 +11,7 @@ public class InputBarHandler : MonoBehaviour
     public FeralArtCheck feralartcheck;
     public InitiativeCheck initiativecheck;
     public ArenaUIHandler arenaui;
-
+    
     public void AddInputSlot(int i)
     {
         maxBaseAttackInputSlots += i;
@@ -27,18 +27,22 @@ public class InputBarHandler : MonoBehaviour
             arenaui.UpdatePlayerInput(PlayerAttackInput);
             //HACK save BAs in the feralart output
             feralartcheck.SaveBAlist(baseAttack);
-            arenaui.SetConfirmButtonStatus(true);
-
-            //if (PlayerAttackInput.Count == maxBaseAttackInputSlots)
         }
 
         if (PlayerAttackInput.Count >= maxBaseAttackInputSlots)
         {
-            print("input bar full: "+ PlayerAttackInput[0].name+", "+ PlayerAttackInput[1].name +", " + PlayerAttackInput[2].name +", " + PlayerAttackInput[3].name +", " + PlayerAttackInput[4].name);
+            print("input bar full: "+ PlayerAttackInput[0].name+    
+                                ", "+ PlayerAttackInput[1].name +
+                                ", " + PlayerAttackInput[2].name +
+                                ", " + PlayerAttackInput[3].name +
+                                ", " + PlayerAttackInput[4].name);    
+            
+            arenaui.SetConfirmButtonStatus(true);
+            //arenaui.ConfirmBAsButton.enabled = true;
+            arenaui.SetInputButtonsStatus(false);
+            //TODO disable BA input and enable confirm button
 
             feralartcheck.CheckForChain();
-            
-            //TODO disable BA input
         }
     }
 
@@ -51,17 +55,27 @@ public class InputBarHandler : MonoBehaviour
         PlayerAttackInput.Clear();
         feralartcheck.ResetLists();
         arenaui.UpdatePlayerInput(PlayerAttackInput);
-        arenaui.SetConfirmButtonStatus(false);
         arenaui.ResetBAColours(Color.white);        
         print("resetting Input bar");
-        //TODO enable BA input
+
+        arenaui.SetConfirmButtonStatus(false);
+        //arenaui.ConfirmBAsButton.enabled = false;
+        arenaui.SetInputButtonsStatus(true);
     }
 
     public void ConfirmInput()
     {
-        initiativecheck.curPlayerInput = PlayerAttackInput;
-        GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
-        //TODO
+        if (PlayerAttackInput.Count == maxBaseAttackInputSlots)
+        {
+            initiativecheck.curPlayerInput = PlayerAttackInput;
+            GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
+        }
+        else
+        {
+            arenaui.SetConfirmButtonStatus(false);
+            //arenaui.ConfirmBAsButton.enabled = false;
+            print("BA input not full, cannot start fight");
+        }
     }   
 
 }

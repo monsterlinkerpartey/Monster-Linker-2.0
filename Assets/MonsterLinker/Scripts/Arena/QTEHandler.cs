@@ -312,7 +312,6 @@ public class QTEHandler : MonoBehaviour
 
     public void SetQTEAnim(string type)
     {
-
         switch (GameStateSwitch.Instance.GameState)
         {
             case eGameState.QTEAttack:
@@ -402,6 +401,7 @@ public class QTEHandler : MonoBehaviour
                 QTEInput = eQTEInput.None; 
                 curQTEAnim.Play("Wait");
                 QTEButton.SetActive(false);
+                RandomButtonGenerator();
                 mashCounter = 0;
                 break;
             default:

@@ -23,11 +23,6 @@ public class ArenaPlayerInput : MonoBehaviour
         inputbarhandler.Reset();
     }
 
-    public void ConfirmOutput()
-    {
-
-    }
-
     public void RetryFight()
     {
         GameStateSwitch.Instance.ResetFight();

@@ -15,10 +15,11 @@ MonoBehaviour:
   Used: 1
   maxBaseAttackInputSlots: 5
   FALoadout:
-  - {fileID: 11400000, guid: f3c3e14e80b3bbf47a13e11f17edd9ac, type: 2}
-  - {fileID: 11400000, guid: b1372efe5fe38c548b9d24c31f652320, type: 2}
+  - {fileID: 11400000, guid: 07b1ea51c4c798d498817d58f7ec93d4, type: 2}
   - {fileID: 11400000, guid: 4c44eac7079249f43b37801c6b2a4131, type: 2}
-  lowestFAcost: 0
+  - {fileID: 11400000, guid: 73cf7530c323cec48ae7a40273d02661, type: 2}
+  curImplant: {fileID: 11400000, guid: 696d92a495ffea4449449655b66c586f, type: 2}
+  lowestFAcost: 36
   LinkerName: Skerxan
   MonsterName: Death Claw
   MaxHitPoints: 1000

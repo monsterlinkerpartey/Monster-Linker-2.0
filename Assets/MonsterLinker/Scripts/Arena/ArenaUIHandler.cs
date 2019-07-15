@@ -21,6 +21,8 @@ public class ArenaUIHandler : MonoBehaviour
     public Button ConfirmBAsButton;
     public GameObject ResultPanel;
 
+    public List<Button> BAInputButtons = new List<Button>(3);
+
     [Header("Health and Rage")]
     public Text PlayerHPtxt;
     public Text PlayerRPtxt;
@@ -52,7 +54,8 @@ public class ArenaUIHandler : MonoBehaviour
         switch (GameStateSwitch.Instance.GameState)
         {
             case eGameState.PlayerInput:
-                CheckForPlayerBAInput();
+                if (inputbarhandler.PlayerAttackInput.Count < inputbarhandler.maxBaseAttackInputSlots)
+                    CheckForPlayerBAInput();
                 break;
             default:
                 break;
@@ -72,41 +75,24 @@ public class ArenaUIHandler : MonoBehaviour
     }
 
     public void CheckForPlayerBAInput()
-    {
-        if (inputbarhandler.PlayerAttackInput.Count < inputbarhandler.maxBaseAttackInputSlots)
+    {             
+        if (DPadButtons.Down)
         {
-            HeavyAttack.enabled = true;
-            NormalAttack.enabled = true;
-            LightAttack.enabled = true;
-
-            if (DPadButtons.Down)
-            {
-                LightAttack.animator.SetTrigger("Pressed");
-                LightAttack.onClick.Invoke();
-            }
-
-            if (DPadButtons.Right)
-            {
-                NormalAttack.animator.SetTrigger("Pressed");
-                NormalAttack.onClick.Invoke();
-            }
-
-            if (DPadButtons.Up)
-            {
-                HeavyAttack.animator.SetTrigger("Pressed");
-                HeavyAttack.onClick.Invoke();
-            }
-        }
-        else
-        {
-            HeavyAttack.enabled = false;
-            NormalAttack.enabled = false;
-            LightAttack.enabled = false;
-            //HeavyAttack.animator.SetBool("Disabled");
-            //NormalAttack.animator.SetBool("Disabled");
-            //LightAttack.animator.SetBool("Disabled");
+            LightAttack.animator.SetTrigger("Pressed");
+            LightAttack.onClick.Invoke();
         }
 
+        if (DPadButtons.Right)
+        {
+            NormalAttack.animator.SetTrigger("Pressed");
+            NormalAttack.onClick.Invoke();
+        }
+
+        if (DPadButtons.Up)
+        {
+            HeavyAttack.animator.SetTrigger("Pressed");
+            HeavyAttack.onClick.Invoke();
+        }
     }
 
     public void GetAttackSlots()
@@ -118,7 +104,16 @@ public class ArenaUIHandler : MonoBehaviour
 
     public void SetConfirmButtonStatus(bool enabled)
     {
-        enabled = ConfirmBAsButton.enabled;
+        //TODO: disable button anims somehow
+        //ConfirmBAsButton.GetComponent<ButtonControl>().Bdisabled = enabled;
+    }
+
+    public void SetInputButtonsStatus(bool enabled)
+    {
+        print("input buttons enabled: " + enabled);
+        HeavyAttack.enabled = enabled;
+        LightAttack.enabled = enabled;
+        NormalAttack.enabled = enabled;        
     }
 
     //TODO Show/Hide FA Info and Input Buttons

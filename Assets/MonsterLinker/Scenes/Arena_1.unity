@@ -599,7 +599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -105.5}
+  m_AnchoredPosition: {x: 360, y: -17.5}
   m_SizeDelta: {x: 720, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &55988807
@@ -2699,7 +2699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -17.5}
+  m_AnchoredPosition: {x: 360, y: -61.5}
   m_SizeDelta: {x: 720, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &289627997
@@ -3470,7 +3470,7 @@ GameObject:
   - component: {fileID: 326178442}
   - component: {fileID: 326178441}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10602,7 +10602,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1636052096}
+  m_FirstSelected: {fileID: 2051594097}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &1100777396
@@ -10928,7 +10928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1118766938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12296,7 +12296,7 @@ GameObject:
   - component: {fileID: 1286004366}
   - component: {fileID: 1286004365}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22977,7 +22977,7 @@ GameObject:
   - component: {fileID: 1554150418}
   - component: {fileID: 1554150417}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35098,7 +35098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -149.5}
+  m_AnchoredPosition: {x: 360, y: -105.5}
   m_SizeDelta: {x: 720, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1903318686
@@ -35385,7 +35385,7 @@ GameObject:
   - component: {fileID: 1909733954}
   - component: {fileID: 1909733953}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35509,6 +35509,7 @@ MonoBehaviour:
   AttackQTE: {fileID: 1672796694}
   ConfirmBAsButton: {fileID: 2051594099}
   ResultPanel: {fileID: 299264821}
+  BAInputButtons: []
   PlayerHPtxt: {fileID: 1908699092}
   PlayerRPtxt: {fileID: 1988697593}
   EnemyHPtxt: {fileID: 329292365}
@@ -35544,13 +35545,19 @@ MonoBehaviour:
   EventSystem_Normal: {fileID: 1096617605}
   FAChoiceButton1: {fileID: 1576838748}
   ImplantChoiceButton1: {fileID: 55988808}
+  StartButton: {fileID: 2051594099}
   LoadedFAs:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   FAChoiceButton: []
   SIChoiceButton: []
-  curLeftButton: {fileID: 0}
+  ChoosenTexts:
+  - {fileID: 1554150417}
+  - {fileID: 1909733953}
+  - {fileID: 326178441}
+  - {fileID: 1286004365}
+  curLeftButton: {fileID: 1636052099}
   curLeftText: {fileID: 0}
   ImplantText: {fileID: 0}
 --- !u!114 &1921945842
@@ -35613,7 +35620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -99.99988, y: 100}
+  m_AnchoredPosition: {x: -100, y: 100}
   m_SizeDelta: {x: 1000, y: 1200}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1943646899
@@ -36651,7 +36658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: -61.5}
+  m_AnchoredPosition: {x: 360, y: -149.5}
   m_SizeDelta: {x: 720, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2049268901
@@ -36855,7 +36862,7 @@ GameObject:
   - component: {fileID: 2051594099}
   - component: {fileID: 2051594102}
   m_Layer: 5
-  m_Name: ConfirmButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

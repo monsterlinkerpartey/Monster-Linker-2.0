@@ -43,28 +43,30 @@ public class FAInfoWindow : MonoBehaviour
 
     public void SetSI()
     {
-        switch (GameStateSwitch.Instance.curProfile.curImplant)
-        {
-            case eImplant.None:
-                Debug.LogError("No implant chosen?!");
-                break;
-            case eImplant.RisingRage:
-                WriteSiData(availableImplants[0]);
+        WriteSiData(GameStateSwitch.Instance.curProfile.curImplant);
 
-                break;
-            case eImplant.UnleashedMode:
-                WriteSiData(availableImplants[1]);
+        //switch (GameStateSwitch.Instance.curProfile.curImplant)
+        //{
+        //    case eImplant.None:
+        //        Debug.LogError("No implant chosen?!");
+        //        break;
+        //    case eImplant.RisingRage:
+        //        WriteSiData(availableImplants[0]);
 
-                break;
-            case eImplant.SuperFA:
-                WriteSiData(availableImplants[2]);
+        //        break;
+        //    case eImplant.UnleashedMode:
+        //        WriteSiData(availableImplants[1]);
 
-                break;
-            case eImplant.TempInputSlot:
-                WriteSiData(availableImplants[3]);
+        //        break;
+        //    case eImplant.SuperFA:
+        //        WriteSiData(availableImplants[2]);
 
-                break;
-        }
+        //        break;
+        //    case eImplant.TempInputSlot:
+        //        WriteSiData(availableImplants[3]);
+
+        //        break;
+        //}
     }
 
     public void WriteSiData(Implant curImplant)
