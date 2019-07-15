@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: RisingRage
   m_EditorClassIdentifier: 
   ImplantName: Rising Rage
-  implant: 1
+  ImplantType: 1
+  RPCost: 0
+  FAInput: []

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Implant : ScriptableObject
 {
     public string ImplantName;
-    public eImplant implant;
+    public eImplant ImplantType;
     public int RPCost;
     public List<BaseAttack> FAInput;
 }

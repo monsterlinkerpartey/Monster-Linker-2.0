@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class BAEffectsHandler : MonoBehaviour
 {
+    [Tooltip("If Rising Rage is active")]
+    public float RisingRageModifier = 1.0f;
+
     public bool Playerturn;
 
     public float maxPlayerHP;
     public float curPlayerHP;
     public float curPlayerRP;
+
+    public float PlayerRPatAttackStart;
 
     public float maxEnemyHP;
     public float curEnemyHP;
@@ -24,9 +29,10 @@ public class BAEffectsHandler : MonoBehaviour
     //Set by QTEHandler
     [Tooltip("Influenced by the QTE result")]
     public float DMGModifier;
-
     [Tooltip("Influenced by the Endurance result")]
     public float EnduranceModifier;
+    [Tooltip("Multiplier for percentage, e.g. x2 -> 1RP gains 2Dmg")]
+    public float RRPercentage;
 
     ////Set by GameStateSwitch during Ini Check
     //public List<Attack> curEnemyAttacks;
@@ -51,12 +57,7 @@ public class BAEffectsHandler : MonoBehaviour
 
     public void SetMashValue(int mashCount)
     {
-        if (mashCount <= 0)
-            EnduranceModifier = 1.0f;
-        else
-        {
-            EnduranceModifier = (mashCount / 100) + 1;
-        }
+        EnduranceModifier = (mashCount / 100) + 1;      
     }
 
     public void StartHpandRPValues(float playerHP,int playerRP,float enemyHP,int enemyRP)
@@ -72,14 +73,31 @@ public class BAEffectsHandler : MonoBehaviour
 
     public void DMGModification(float dmgModifier)
     {
-        float curDMG = (curAttack.DMG * EnduranceModifier) * dmgModifier;
-        if (Playerturn)
-        {
-            EnemyTakesDmg(Mathf.Round(curDMG));
+        DMGModifier = dmgModifier;
+
+        if (Mathf.RoundToInt(EnduranceModifier) <= 0)
+            EnduranceModifier = Mathf.Round(1);
+
+        if (GameStateSwitch.Instance.Implant == eImplant.RisingRage)
+        {            
+            RisingRageModifier = 1 + (PlayerRPatAttackStart * (RRPercentage / 100));
+            print("rising rage active: x" + RisingRageModifier + " dmg");
         }
         else
+            RisingRageModifier = 1;
+
+        switch (GameStateSwitch.Instance.GameState)
         {
-            PlayerTakesDmg(Mathf.Round(curDMG));
+            case eGameState.QTEAttack:
+                float curDMG = ((curAttack.DMG * RisingRageModifier) * EnduranceModifier) * DMGModifier;
+                EnemyTakesDmg(Mathf.Round(curDMG));
+                break;
+            case eGameState.QTEBlock:
+                curDMG = curAttack.DMG * DMGModifier;
+                PlayerTakesDmg(Mathf.Round(curDMG));
+                break;
+            default:
+                break;
         }        
     }
 
@@ -88,7 +106,11 @@ public class BAEffectsHandler : MonoBehaviour
         print("dealing dmg to player");
         curPlayerHP -= curDMG;
         curEnemyHP += curAttack.HPGain;
+
         curEnemyRP += curAttack.RPGain;
+        if (Mathf.RoundToInt(curEnemyRP) > (int)100)
+            curEnemyRP = Mathf.Round(100);
+
         TotalDmgTaken += curDMG;
 
         //GameStateSwitch.Instance.statusbarhandler.LerpPlayerHP();
@@ -115,7 +137,11 @@ public class BAEffectsHandler : MonoBehaviour
         print("dealing dmg to enemy");
         curEnemyHP -= curDMG;
         curPlayerHP += curAttack.HPGain;
+
         curPlayerRP += curAttack.RPGain;
+        if (Mathf.RoundToInt(curPlayerRP) > (int)100)
+            curPlayerRP = Mathf.Round(100);
+
         TotalDmgDealt += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
@@ -138,19 +164,19 @@ public class BAEffectsHandler : MonoBehaviour
 
     public void CheckForDeath()
     {
-        if ( Mathf.RoundToInt(curEnemyHP) > 0 && Mathf.RoundToInt(curPlayerHP) > 0)
+        if ( Mathf.RoundToInt(curEnemyHP) > (int) 0 && Mathf.RoundToInt(curPlayerHP) > (int) 0)
         {
             GameStateSwitch.Instance.FightResult = eFightResult.None;
             print("fight state: " + GameStateSwitch.Instance.FightResult);
         }
-        else if (Mathf.RoundToInt(curEnemyHP) <= 0)
+        else if (Mathf.RoundToInt(curEnemyHP) <= (int) 0)
         {
             GameStateSwitch.Instance.FightResult = eFightResult.Victory;
             print("fight state: " + GameStateSwitch.Instance.FightResult);
             GameStateSwitch.Instance.SwitchState(eGameState.Result);
             return;
         }
-        else if (Mathf.RoundToInt(curPlayerHP) <= 0)
+        else if (Mathf.RoundToInt(curPlayerHP) <= (int) 0)
         {
             GameStateSwitch.Instance.FightResult = eFightResult.Defeat;
             print("fight state: " + GameStateSwitch.Instance.FightResult);

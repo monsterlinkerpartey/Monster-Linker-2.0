@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: SuperFA
   m_EditorClassIdentifier: 
   ImplantName: Super Feral Art
-  implant: 3
+  ImplantType: 3
+  RPCost: 0
+  FAInput: []

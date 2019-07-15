@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: TempInputSlot
   m_EditorClassIdentifier: 
   ImplantName: Temp. Input Slot
-  implant: 4
+  ImplantType: 4
+  RPCost: 0
+  FAInput: []

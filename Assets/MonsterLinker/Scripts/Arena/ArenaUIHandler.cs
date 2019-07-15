@@ -64,13 +64,21 @@ public class ArenaUIHandler : MonoBehaviour
 
     public void SetPlayerHPandRP(int HP, int RP)
     {
+        if (HP < 0)
+        PlayerHPtxt.text = "0";
+        else
         PlayerHPtxt.text = ""+HP;
+
         PlayerRPtxt.text = ""+RP;
     }
 
     public void SetEnemyHPandRP(int HP, int RP)
     {
-        EnemyHPtxt.text = "" + HP;
+        if (HP < 0)
+            EnemyHPtxt.text = "0";
+        else
+            EnemyHPtxt.text = "" + HP;
+        
         EnemyRPtxt.text = "" + RP;
     }
 

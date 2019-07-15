@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: UnleashedMode
   m_EditorClassIdentifier: 
   ImplantName: Unleashed Mode
-  implant: 2
+  ImplantType: 2
+  RPCost: 0
+  FAInput: []

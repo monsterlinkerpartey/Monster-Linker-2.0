@@ -7,6 +7,8 @@ public class GameStateSwitch : MonoBehaviour
     public static GameStateSwitch Instance;
 
     public eGameState GameState;
+    public eFightResult FightResult;
+    public eImplant Implant;
 
     public float IntroTime = 1f;
     //TODO: List of all scripts in the arena scene
@@ -32,7 +34,6 @@ public class GameStateSwitch : MonoBehaviour
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
 
-    public eFightResult FightResult;
     
     void Start()
     {
@@ -156,6 +157,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
+                baeffectshandler.PlayerRPatAttackStart = baeffectshandler.curPlayerRP;
                 arenaui.StatusBars.SetActive(true);
                 GlobalVars.QTEfailed = false;
                 arenaui.ResultPanel.SetActive(false);
