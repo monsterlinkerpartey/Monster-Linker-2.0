@@ -8,7 +8,7 @@ public class AttackSlot : MonoBehaviour
     public Image icon;
     public Image frame;  
     BaseAttack attack;
-    public AnimOnEnable enableAnimation;    
+    public AnimOnEnable enableAnimation;
 
     public void AddCombo(BaseAttack newattack)
     {

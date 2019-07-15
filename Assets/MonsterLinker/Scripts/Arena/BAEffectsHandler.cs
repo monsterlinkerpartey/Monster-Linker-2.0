@@ -91,6 +91,8 @@ public class BAEffectsHandler : MonoBehaviour
         curEnemyRP += curAttack.RPGain;
         TotalDmgTaken += curDMG;
 
+        //GameStateSwitch.Instance.statusbarhandler.LerpPlayerHP();
+
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
         arenaui.SetEnemyHPandRP(Mathf.RoundToInt(curEnemyHP), Mathf.RoundToInt(curEnemyRP));
 
@@ -134,25 +136,49 @@ public class BAEffectsHandler : MonoBehaviour
         TotalDmgDealt = 0f;
     }
 
-    public void CheckForDeath(float hitpoints, eGameState gameState)
+    public void CheckForDeath()
     {
-        if (Mathf.Round(hitpoints) <= 0)
+        if ( Mathf.RoundToInt(curEnemyHP) > 0 && Mathf.RoundToInt(curPlayerHP) > 0)
         {
-            //TODO: set result screen to open up
-            switch (gameState)
-            {
-                case eGameState.QTEAttack:
-                    print("enemy died");
-
-                    break;
-                case eGameState.QTEBlock:
-                    print("player died");
-
-                    break;
-                default:
-                    Debug.LogError("I dunno who died, check BAEffectsHandler");
-                    break;
-            }
+            GameStateSwitch.Instance.FightResult = eFightResult.None;
+            print("fight state: " + GameStateSwitch.Instance.FightResult);
         }
+        else if (Mathf.RoundToInt(curEnemyHP) <= 0)
+        {
+            GameStateSwitch.Instance.FightResult = eFightResult.Victory;
+            print("fight state: " + GameStateSwitch.Instance.FightResult);
+            GameStateSwitch.Instance.SwitchState(eGameState.Result);
+            return;
+        }
+        else if (Mathf.RoundToInt(curPlayerHP) <= 0)
+        {
+            GameStateSwitch.Instance.FightResult = eFightResult.Defeat;
+            print("fight state: " + GameStateSwitch.Instance.FightResult);
+            GameStateSwitch.Instance.SwitchState(eGameState.Result);
+            return;
+        }
+        //    if (Mathf.Round(hitpoints) <= 0)
+        //{
+        //    //TODO: set result screen to open up
+        //    switch (gameState)
+        //    {
+        //        case eGameState.QTEAttack:
+        //            print("enemy died");
+        //            GameStateSwitch.Instance.FightResult = eFightResult.Victory;
+
+        //            break;
+        //        case eGameState.QTEBlock:
+        //            print("player died");
+        //            GameStateSwitch.Instance.FightResult = eFightResult.Defeat;
+
+        //            break;
+        //        default:
+        //            Debug.LogError("I dunno who died, check BAEffectsHandler");
+        //            GameStateSwitch.Instance.FightResult = eFightResult.None;
+        //            break;
+        //    }
+
+        //    GameStateSwitch.Instance.SwitchState(eGameState.Result);
+        //}
     }
 }

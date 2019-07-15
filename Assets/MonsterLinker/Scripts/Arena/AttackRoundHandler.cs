@@ -47,17 +47,22 @@ public class AttackRoundHandler : MonoBehaviour
 
     public void CheckForTurn()
     {
-        if (turnchanger.Turns == eTurn.EnemyFirst)
+        baeffectshandler.CheckForDeath();
+
+        if (GameStateSwitch.Instance.FightResult == eFightResult.None)
         {
-            turnchanger.SwitchTurn(eTurn.PlayerSecond);
-        }
-        else if (turnchanger.Turns == eTurn.PlayerFirst)
-        {
-            turnchanger.SwitchTurn(eTurn.EnemySecond);
-        }
-        else
-        {
-            turnchanger.SwitchTurn(eTurn.BothDone);
+            if (turnchanger.Turns == eTurn.EnemyFirst)
+            {
+                turnchanger.SwitchTurn(eTurn.PlayerSecond);
+            }
+            else if (turnchanger.Turns == eTurn.PlayerFirst)
+            {
+                turnchanger.SwitchTurn(eTurn.EnemySecond);
+            }
+            else
+            {
+                turnchanger.SwitchTurn(eTurn.BothDone);
+            }
         }
     }
 

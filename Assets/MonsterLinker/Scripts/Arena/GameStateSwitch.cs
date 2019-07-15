@@ -27,6 +27,7 @@ public class GameStateSwitch : MonoBehaviour
     public QTEAnimEvents qteanimevents;
     public LoadoutButtons loadoutbuttons;
     public FAInfoWindow fainfowindow;
+    //public StatusBarHandler statusbarhandler;
 
     public Save curProfile; //TODO save file iwo her kriegen
     public Enemy curEnemy;
@@ -68,7 +69,8 @@ public class GameStateSwitch : MonoBehaviour
         attackroundhandler = GetComponentInChildren<AttackRoundHandler>();
         animationhandler = GetComponentInChildren<AnimationHandler>();    
         qteanimevents = FindObjectOfType<QTEAnimEvents>();        
-        fainfowindow = FindObjectOfType<FAInfoWindow>();        
+        fainfowindow = FindObjectOfType<FAInfoWindow>();
+        //statusbarhandler = FindObjectOfType<StatusBarHandler>();
     }
 
     void ConnectScripts()
@@ -220,6 +222,7 @@ public class GameStateSwitch : MonoBehaviour
             case eGameState.NextRound:
                 arenaui.QTEPanel.SetActive(false);
                 //Disable both Initiative Arrows
+                arenaui.StatusBars.SetActive(false);
                 arenaui.PlayerInitiativeArrow.enabled = false;
                 arenaui.EnemyInitiativeArrow.enabled = false;
                 initiativecheck.ResetSpeedValues();
