@@ -60,6 +60,7 @@ public class StatusBarHandler : MonoBehaviour
     {
         maxHP = Mathf.Round(maxHitPoints);
         maxRagePoints = Mathf.Round(100f);
+        maxRP = 100.0f;
 
         minXValueHP = Mathf.Round(MinXValueHP);
         maxXValueHP = Mathf.Round(MaxXValueHP);

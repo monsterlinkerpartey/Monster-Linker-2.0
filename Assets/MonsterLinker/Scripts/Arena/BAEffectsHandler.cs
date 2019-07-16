@@ -126,8 +126,8 @@ public class BAEffectsHandler : MonoBehaviour
             curEnemyHP = Mathf.Round(maxEnemyHP);
 
         curEnemyRP += curAttack.RPGain;
-        if (Mathf.RoundToInt(curEnemyRP) > (int)100)
-            curEnemyRP = Mathf.Round(100);
+        if (Mathf.RoundToInt(curEnemyRP) >= (int)100)
+            curEnemyRP = 100.0f;
 
         TotalDmgTaken += curDMG;
 
@@ -151,8 +151,8 @@ public class BAEffectsHandler : MonoBehaviour
             curPlayerHP = Mathf.Round(maxPlayerHP);
 
         curPlayerRP += curAttack.RPGain;
-        if (Mathf.RoundToInt(curPlayerRP) > (int)100)
-            curPlayerRP = Mathf.Round(100);
+        if (Mathf.RoundToInt(curPlayerRP) >= (int)100)
+            curPlayerRP = 100.0f;
 
         TotalDmgDealt += curDMG;
 
