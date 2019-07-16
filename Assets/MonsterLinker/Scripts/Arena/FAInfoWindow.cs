@@ -69,16 +69,35 @@ public class FAInfoWindow : MonoBehaviour
         //}
     }
 
+    public void WriteSFAData(FeralArt superFA)
+    {
+        Text Name = SI.GetComponentInChildren<FaNameField>().GetComponent<Text>();
+        Text Cost = SI.GetComponentInChildren<FaCostField>().GetComponent<Text>();
+        Name.text = superFA.FAName;
+
+        GameObject IconParent = SI.GetComponentInChildren<FaInputField>().gameObject;
+
+        //spawn input icons
+        int n = 0;
+        while (n < superFA.FeralArtInput.Count)
+        {
+            GameObject icon = GameObject.Instantiate(Icon, transform.position, transform.rotation) as GameObject;
+            icon.transform.SetParent(IconParent.transform);
+            icon.transform.localScale = new Vector3(1, 1, 1);
+
+            Image iconImg = icon.GetComponent<Image>();
+            iconImg.sprite = superFA.FeralArtInput[n].InfoPanelIcon;
+
+            n += 1;
+        }
+    }
+
     public void WriteSiData(Implant curImplant)
     {
         Text Name = SI.GetComponentInChildren<FaNameField>().GetComponent<Text>();
         Text Cost = SI.GetComponentInChildren<FaCostField>().GetComponent<Text>();
         Name.text = curImplant.ImplantName;
-
-        if (curImplant.RPCost != 0)
-            Cost.text = "" + curImplant.RPCost;
-        else
-            Cost.text = "";
+        Cost.text = "" + curImplant.RPCost;
 
         if (curImplant.FAInput.Count > 0)
         {
@@ -90,6 +109,7 @@ public class FAInfoWindow : MonoBehaviour
             {
                 GameObject icon = GameObject.Instantiate(Icon, transform.position, transform.rotation) as GameObject;
                 icon.transform.SetParent(IconParent.transform);
+                icon.transform.localScale = new Vector3(1, 1, 1);
 
                 Image iconImg = icon.GetComponent<Image>();
                 iconImg.sprite = curImplant.FAInput[n].InfoPanelIcon;

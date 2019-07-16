@@ -233,17 +233,32 @@ public class GameStateSwitch : MonoBehaviour
                 baeffectshandler.ResetDmgCount();
 
         //HACK: zum Test von Temp Input Slot
-            attackroundhandler.QTEfailed = false;
+        //attackroundhandler.QTEfailed = false;
 
                 //check which implant is active
                 switch (Implant)
                 {
                     case eImplant.UnleashedMode:
+                        //=> rundencounter für UM, check wenn eingesetzt wurde
                         print("unleash mode");
                         break;
                     case eImplant.SuperFA:
                         print("super duper fa");
                         //=> Check ob Recovery FA freigeschaltet ist und noch nicht benutzt wurde in diesem Fight
+                        if ((baeffectshandler.curPlayerHP <= (baeffectshandler.maxPlayerHP / 100) * 25) && !feralartcheck.superFAused)
+                        {
+                            if (feralartcheck.LoadedFeralArts.Count < 4)
+                            {
+                                print("activate super duper fa");
+                                feralartcheck.LoadedFeralArts.Add(curProfile.SuperDuperFA);
+                                fainfowindow.WriteSFAData(curProfile.SuperDuperFA);
+                                fainfowindow.SI.SetActive(true);
+                            }
+                            else
+                                print("super duper fa already activated");
+                        }
+                        else
+                            print("not activating super duper FA");
                         break;
                     case eImplant.TempInputSlot:
                         print("temporary input slot");
@@ -272,10 +287,10 @@ public class GameStateSwitch : MonoBehaviour
                             attackroundhandler.QTEfailed = false;
                         }
                         break;
-                    case eImplant.RisingRage:
-                        break;
+                    //case eImplant.RisingRage:
+                    //    break;
                     default:
-                        Debug.LogError("implant not found");
+                        Debug.LogWarning("implant not found: "+ Implant);
                         break;
                 }
 
@@ -327,10 +342,9 @@ public class GameStateSwitch : MonoBehaviour
 
         arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
-        curProfile.SetCheapestFAcost();
         feralartcheck.LoadedFeralArts = curProfile.FALoadout;
+        curProfile.SetCheapestFAcost();
         fainfowindow.WriteFAData();
-        fainfowindow.SetSI();
 
         playerstatusbar.GetValues(curProfile.MaxHitPoints, 100.0f, -685.0f, -290.0f, 0.0f, 0.0f);
         enemystatusbar.GetValues(curEnemy.MaxHitPoints, 100.0f, 685.0f, 290.0f, 0.0f, 0.0f);
@@ -339,6 +353,13 @@ public class GameStateSwitch : MonoBehaviour
         playerstatusbar.RPTick(0);
         enemystatusbar.HPTick(curEnemy.MaxHitPoints);
         enemystatusbar.RPTick(0);
+
+        if (Implant == eImplant.SuperFA)
+            feralartcheck.superFAused = false;
+
+        //TODO uncheck unleashed mode bool just in case
+        //if (Implant == eImplant.UnleashedMode)
+        //    feralartcheck.UnleashedModeused = false;
 
         firstSetupDone = true;
     }
@@ -369,8 +390,12 @@ public class GameStateSwitch : MonoBehaviour
         inputbarhandler.Reset();
         enemystatemachine.ClearInput();
 
-        //reset all special implants but keep choice
-        //keep fa list choice but do not re-initialize
+        if (Implant == eImplant.SuperFA)
+            feralartcheck.superFAused = false;
+
+        //TODO uncheck unleashed mode bool just in case
+        //if (Implant == eImplant.UnleashedMode)
+        //    feralartcheck.UnleashedModeused = false;
     }
 
     IEnumerator WaitForIntro(float waitingTime)

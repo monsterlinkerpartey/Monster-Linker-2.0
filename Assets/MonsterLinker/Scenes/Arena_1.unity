@@ -7169,7 +7169,7 @@ GameObject:
   - component: {fileID: 634620823}
   - component: {fileID: 634620822}
   m_Layer: 5
-  m_Name: SpecialImplant
+  m_Name: SuperFA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7445,7 +7445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &689958122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10456,6 +10456,8 @@ MonoBehaviour:
   curBAlist: []
   AttackList: []
   BAsToDelete: 
+  BAsToColor: 
+  superFAused: 0
   inputbarhandler: {fileID: 0}
   arenaui: {fileID: 0}
   baeffectshandler: {fileID: 0}
@@ -21366,6 +21368,7 @@ MonoBehaviour:
   enemyCreatureanimevents: {fileID: 1039573785}
   curProfile: {fileID: 11400000, guid: 50f46be133dcc0941935aaac9e32b8e2, type: 2}
   curEnemy: {fileID: 11400000, guid: b762a63ccaf259b4489ae7f097cee5f9, type: 2}
+  firstSetupDone: 0
 --- !u!4 &1389594454
 Transform:
   m_ObjectHideFlags: 0
@@ -23671,7 +23674,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 50, y: 50}
-  m_Spacing: {x: 10, y: 0}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!114 &1578710735

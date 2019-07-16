@@ -55,12 +55,21 @@ public class InputBarHandler : MonoBehaviour
         arenaui.SetConfirmButtonStatus(false);
         //arenaui.ConfirmBAsButton.enabled = false;
         arenaui.SetInputButtonsStatus(true);
+
+        if (feralartcheck.superFAused)
+            feralartcheck.superFAused = false;
     }
 
     public void ConfirmInput()
     {
         if (PlayerAttackInput.Count == maxBaseAttackInputSlots)
         {
+            if (feralartcheck.superFAused)
+            {
+                feralartcheck.LoadedFeralArts.RemoveAt(3);
+                GameStateSwitch.Instance.fainfowindow.SI.SetActive(false);
+            }
+
             initiativecheck.curPlayerInput = PlayerAttackInput;
             GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
         }

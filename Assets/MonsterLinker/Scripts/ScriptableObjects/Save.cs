@@ -12,6 +12,7 @@ public class Save : ScriptableObject
     public bool Used;
     public int maxBaseAttackInputSlots = 5;
     public List<FeralArt> FALoadout = new List<FeralArt>(3);
+    public FeralArt SuperDuperFA;
     public Implant curImplant;
     public int lowestFAcost;
     public string LinkerName;
