@@ -57,6 +57,7 @@ public class ArenaUIHandler : MonoBehaviour
             case eGameState.PlayerInput:
                 if (inputbarhandler.PlayerAttackInput.Count < inputbarhandler.maxBaseAttackInputSlots)
                     CheckForPlayerBAInput();
+                    CheckForPause();
                 break;
             default:
                 break;
@@ -81,6 +82,18 @@ public class ArenaUIHandler : MonoBehaviour
             EnemyHPtxt.text = "" + HP;
         
         EnemyRPtxt.text = "" + RP;
+    }
+
+    public void CheckForPause()
+    {
+        if (Input.GetButtonDown("start"))
+        {
+            //TODO: write pause screen stuff
+        }
+        if (Input.GetButtonDown("select"))
+        {
+
+        }
     }
 
     public void CheckForPlayerBAInput()

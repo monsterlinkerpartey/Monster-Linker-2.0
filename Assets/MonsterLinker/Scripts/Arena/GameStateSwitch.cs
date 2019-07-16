@@ -27,7 +27,8 @@ public class GameStateSwitch : MonoBehaviour
     public QTEAnimEvents qteanimevents;
     public LoadoutButtons loadoutbuttons;
     public FAInfoWindow fainfowindow;
-    //public StatusBarHandler statusbarhandler;
+    public StatusBarHandler enemystatusbar;
+    public StatusBarHandler playerstatusbar;
     public CreatureAnimEvents playerCreatureanimevents;
     public CreatureAnimEvents enemyCreatureanimevents;
 
@@ -71,7 +72,8 @@ public class GameStateSwitch : MonoBehaviour
         animationhandler = GetComponentInChildren<AnimationHandler>();    
         qteanimevents = FindObjectOfType<QTEAnimEvents>();        
         fainfowindow = FindObjectOfType<FAInfoWindow>();
-        //statusbarhandler = FindObjectOfType<StatusBarHandler>();
+        enemystatusbar = FindObjectOfType<EnemyStatusBar>();
+        playerstatusbar = FindObjectOfType<PlayerStatusBar>();
     }
 
     void ConnectScripts()
@@ -107,6 +109,8 @@ public class GameStateSwitch : MonoBehaviour
         enemyCreatureanimevents.qtehandler = qtehandler;
         qteanimevents.qtehandler = qtehandler;
         baeffectshandler.arenaui = arenaui;
+        baeffectshandler.enemystatusbar = enemystatusbar;
+        baeffectshandler.playerstatusbar = playerstatusbar;
     }
     
     //will be called by other scripts, update the arenastate and then run functions from the scripts
@@ -127,12 +131,6 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.FALoadout.SetActive(true);
                 arenaui.QTEPanel.SetActive(false);
                 enemystatemachine.GetEnemyValues();
-                attackslotspawn.Setup(curProfile.maxBaseAttackInputSlots, enemystatemachine.maxInputSlots);
-                attackslotspawn.SpawnPlayerSlots();
-                attackslotspawn.SpawnEnemySlots();
-                arenaui.GetAttackSlots();
-                //TODO alle states des player auslagern in playerprofile
-
                 baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0); 
                 inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
@@ -140,6 +138,7 @@ public class GameStateSwitch : MonoBehaviour
             ///Arena in cinematischer Cutscene vorstellen
             ///FA Loadout und alle scripts laden
             case eGameState.Intro:
+                arenaui.GetAttackSlots();
                 arenaui.StatusBars.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
@@ -158,6 +157,10 @@ public class GameStateSwitch : MonoBehaviour
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
+                //get player values for status bars
+                playerstatusbar.GetValues(curProfile.MaxHitPoints, 100.0f, -685.0f, -290.0f, 0.0f, 0.0f);
+                enemystatusbar.GetValues(curEnemy.MaxHitPoints, 100.0f, 685.0f, 290.0f, 0.0f, 0.0f);
+
                 baeffectshandler.PlayerRPatAttackStart = baeffectshandler.curPlayerRP;
                 arenaui.StatusBars.SetActive(true);
                 attackroundhandler.QTEfailed = false;
@@ -288,11 +291,10 @@ public class GameStateSwitch : MonoBehaviour
                 SwitchState(eGameState.PlayerInput);
                 break;
             case eGameState.Result:
-                arenaui.StatusBars.SetActive(true);
-
+                arenaui.StatusBars.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
-
+                               
                 switch (FightResult)
                 {
                     case eFightResult.None:
@@ -302,8 +304,7 @@ public class GameStateSwitch : MonoBehaviour
                         arenaui.NextButton.SetActive(true);
                         arenaui.RetryButton.SetActive(false);
                         arenaui.LoadoutButton.SetActive(false);
-
-                        arenaui.ResultText.text = "VICTORY";
+                        arenaui.ResultText.text = "WINNER";
 
                         break;
                     case eFightResult.Defeat:
@@ -311,7 +312,7 @@ public class GameStateSwitch : MonoBehaviour
                         arenaui.RetryButton.SetActive(true);
                         arenaui.LoadoutButton.SetActive(true);
 
-                        arenaui.ResultText.text = "DEFEAT";
+                        arenaui.ResultText.text = "LOSER";
                         break;
                 }
                 arenaui.ResultPanel.SetActive(true);

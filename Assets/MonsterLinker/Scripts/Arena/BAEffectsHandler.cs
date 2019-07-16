@@ -23,6 +23,8 @@ public class BAEffectsHandler : MonoBehaviour
     public float TotalDmgDealt;
 
     public ArenaUIHandler arenaui;
+    public StatusBarHandler enemystatusbar;
+    public StatusBarHandler playerstatusbar;
 
     [HideInInspector] public Attack curAttack;
 
@@ -71,7 +73,7 @@ public class BAEffectsHandler : MonoBehaviour
         curEnemyRP = enemyRP;
     }
 
-    public void DMGModification(float dmgModifier)
+    public void DMGModification(float dmgModifier, int RPgained)
     {
         DMGModifier = dmgModifier;
 
@@ -94,18 +96,34 @@ public class BAEffectsHandler : MonoBehaviour
                 break;
             case eGameState.QTEBlock:
                 curDMG = curAttack.DMG * DMGModifier;
-                PlayerTakesDmg(Mathf.Round(curDMG));
+                PlayerTakesDmg(Mathf.Round(curDMG), RPgained);
                 break;
             default:
                 break;
         }        
     }
 
-    public void PlayerTakesDmg(float curDMG)
+    public void PlayerPaysRP()
+    {
+        curPlayerRP -= curAttack.RPCost;
+        playerstatusbar.RPTick(Mathf.RoundToInt(curPlayerRP));
+    }
+
+    public void EnemyPaysRP()
+    {
+        curEnemyRP -= curAttack.RPCost;
+        enemystatusbar.RPTick(Mathf.RoundToInt(curEnemyRP));
+    }
+
+    public void PlayerTakesDmg(float curDMG, int RPgained)
     {
         print("dealing dmg to player");
         curPlayerHP -= curDMG;
+        curPlayerRP += RPgained;
         curEnemyHP += curAttack.HPGain;
+
+        if (Mathf.Round(curEnemyHP) >= Mathf.Round(maxEnemyHP))
+            curEnemyHP = Mathf.Round(maxEnemyHP);
 
         curEnemyRP += curAttack.RPGain;
         if (Mathf.RoundToInt(curEnemyRP) > (int)100)
@@ -118,18 +136,10 @@ public class BAEffectsHandler : MonoBehaviour
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
         arenaui.SetEnemyHPandRP(Mathf.RoundToInt(curEnemyHP), Mathf.RoundToInt(curEnemyRP));
 
-        print("Player takes " + (curDMG) + " DMG\n Enemy gains " + curAttack.RPGain + " RP");
-        print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
-    }
+        UpdateHPandRPbars();
 
-    public void PlayerPaysRP()
-    {
-        curPlayerRP -= curAttack.RPCost;
-    }
-
-    public void EnemyPaysRP()
-    {
-        curEnemyRP -= curAttack.RPCost;
+        //print("Player takes " + (curDMG) + " DMG\n Enemy gains " + curAttack.RPGain + " RP");
+        //print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP +", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
     }
 
     public void EnemyTakesDmg(float curDMG)
@@ -137,6 +147,8 @@ public class BAEffectsHandler : MonoBehaviour
         print("dealing dmg to enemy");
         curEnemyHP -= curDMG;
         curPlayerHP += curAttack.HPGain;
+        if (Mathf.Round(curPlayerHP) >= Mathf.Round(maxPlayerHP))
+            curPlayerHP = Mathf.Round(maxPlayerHP);
 
         curPlayerRP += curAttack.RPGain;
         if (Mathf.RoundToInt(curPlayerRP) > (int)100)
@@ -147,8 +159,18 @@ public class BAEffectsHandler : MonoBehaviour
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));
         arenaui.SetEnemyHPandRP(Mathf.RoundToInt(curEnemyHP), Mathf.RoundToInt(curEnemyRP));
 
+        UpdateHPandRPbars();
+
         print("Enemy takes " + (curDMG) + " DMG\n Player gains " + curAttack.RPGain + " RP");
         print("Player HP: " + curPlayerHP + ", Player RP: " + curPlayerRP + ", Enemy HP: " + curEnemyHP+", Enemy RP: " + curEnemyRP);
+    }
+
+    public void UpdateHPandRPbars()
+    {
+        playerstatusbar.HPTick(Mathf.Round(curPlayerHP));
+        playerstatusbar.RPTick(Mathf.RoundToInt(curPlayerRP));
+        enemystatusbar.HPTick(Mathf.Round(curEnemyHP));
+        enemystatusbar.RPTick(Mathf.RoundToInt(curEnemyRP));
     }
 
     public void ShowTotalDmg(float totaldmg)

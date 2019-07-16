@@ -2111,6 +2111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 213355186}
   - component: {fileID: 213355188}
+  - component: {fileID: 213355189}
   - component: {fileID: 213355187}
   m_Layer: 0
   m_Name: HPandRP_related
@@ -2142,13 +2143,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 213355185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f278308d8e712a74a95f3a6cfa89cdd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 862ec219f91e1094c93dab3658f9e279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  P_HPnormalTransform: {fileID: 125038230}
-  P_HPhurtTransform: {fileID: 2141508615}
-  minXValue: 0
-  maxXValue: -685
+  RPnormalTransform: {fileID: 84337392}
+  HPnormalTransform: {fileID: 125038230}
+  HPhurtTransform: {fileID: 2141508615}
+  minXValueHP: 0
+  maxXValueHP: 0
+  minXValueRP: 0
+  maxXValueRP: 0
+  cur_yPos: 0
+  cur_xPos: 0
+  desired_xPos: 0
+  LerpSpeed: 3
+  LerpTime: 3
+  maxHP: 0
+  maxRP: 0
+  curRP: 0
+  curHP: 0
+  futureHP: 0
+  futureRP: 0
+  lerping: 0
 --- !u!114 &213355188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,10 +2189,43 @@ MonoBehaviour:
   TotalDmgTaken: 0
   TotalDmgDealt: 0
   arenaui: {fileID: 0}
+  enemystatusbar: {fileID: 0}
+  playerstatusbar: {fileID: 0}
   curAttack: {fileID: 0}
   DMGModifier: 0
   EnduranceModifier: 0
   RRPercentage: 1
+--- !u!114 &213355189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213355185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e28e41d4edb8f4478e5fc8e397c7cdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RPnormalTransform: {fileID: 501902198}
+  HPnormalTransform: {fileID: 583685045}
+  HPhurtTransform: {fileID: 581100332}
+  minXValueHP: 0
+  maxXValueHP: 0
+  minXValueRP: 0
+  maxXValueRP: 0
+  cur_yPos: 0
+  cur_xPos: 0
+  desired_xPos: 0
+  LerpSpeed: 3
+  LerpTime: 3
+  maxHP: 0
+  maxRP: 0
+  curRP: 0
+  curHP: 0
+  futureHP: 0
+  futureRP: 0
+  lerping: 0
 --- !u!1 &225278574
 GameObject:
   m_ObjectHideFlags: 0
@@ -6486,7 +6535,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: deaee6b1d80938d48b7f9b49793464cb, type: 3}
-    m_FontSize: 120
+    m_FontSize: 100
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 1
@@ -12402,7 +12451,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1033392713}
-        m_MethodName: BackToHome
+        m_MethodName: RetryWithLoadout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21308,11 +21357,13 @@ MonoBehaviour:
   baeffectshandler: {fileID: 0}
   attackroundhandler: {fileID: 0}
   animationhandler: {fileID: 0}
-  playerCreatureanimevents: {fileID: 1351376618}
-  enemyCreatureanimevents: {fileID: 1039573785}
   qteanimevents: {fileID: 0}
   loadoutbuttons: {fileID: 0}
   fainfowindow: {fileID: 0}
+  enemystatusbar: {fileID: 0}
+  playerstatusbar: {fileID: 0}
+  playerCreatureanimevents: {fileID: 1351376618}
+  enemyCreatureanimevents: {fileID: 1039573785}
   curProfile: {fileID: 11400000, guid: 50f46be133dcc0941935aaac9e32b8e2, type: 2}
   curEnemy: {fileID: 11400000, guid: b762a63ccaf259b4489ae7f097cee5f9, type: 2}
 --- !u!4 &1389594454
@@ -33694,7 +33745,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: deaee6b1d80938d48b7f9b49793464cb, type: 3}
-    m_FontSize: 70
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 0
@@ -33705,7 +33756,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Blubbis
+  m_Text: Netherclaw
 --- !u!222 &1783481391
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -100,7 +100,7 @@ public class QTEHandler : MonoBehaviour
                     FA1Length = clip.length;
                     break;
                 default:
-                    print("not saving time of " + clip.name);
+                    //print("not saving time of " + clip.name);
                     break;
             }
         }
@@ -277,7 +277,7 @@ public class QTEHandler : MonoBehaviour
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTE.name + "_Fail");
                 attackroundhandler.QTEfailed = true;
-                baeffectshandler.DMGModification(curQTE.ModifierFail);
+                baeffectshandler.DMGModification(curQTE.ModifierFail, curQTE.RPGainFail);
                 print("fail QTE result");
                 break;
             case eQTEZone.Good:
@@ -285,7 +285,7 @@ public class QTEHandler : MonoBehaviour
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTE.name + "_Good");
-                baeffectshandler.DMGModification(curQTE.ModifierGood);
+                baeffectshandler.DMGModification(curQTE.ModifierGood, curQTE.RPGainGood);
                 print("good QTE result");
                 break;
             case eQTEZone.Perfect:
@@ -293,12 +293,12 @@ public class QTEHandler : MonoBehaviour
                 //do dmg stuff etc
                 curQTEAnim.speed = 1.0f;
                 curQTEAnim.Play(curQTE.name + "_Perfect");
-                baeffectshandler.DMGModification(curQTE.ModifierPerfect);
+                baeffectshandler.DMGModification(curQTE.ModifierPerfect, curQTE.RPGainPerfect);
                 print("perfect QTE result");
                 break;
             default:
                 print("ERROR: Could not find QTEZone, check QTEHandler");
-                baeffectshandler.DMGModification(curQTE.ModifierFail);
+                baeffectshandler.DMGModification(curQTE.ModifierFail, curQTE.RPGainFail);
                 break;
         }
         //wait for result animation to play

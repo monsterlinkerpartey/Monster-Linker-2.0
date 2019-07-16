@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187ffa8210cdc4c4d836799ae5eee7c6, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  QTEAnimationLength1: 2.01
-  QTEAnimationLength2: 1.8
-  QTEAnimationLength3: 1.6
-  QTEAnimationLength4: 1.4
-  QTEAnimationLength5: 1.2
-  QTEAnimationLength6: 1.01
-  Type: Block
   ModifierFail: 1.5
   ModifierGood: 1
   ModifierPerfect: 0.5
+  RPGainFail: 2
+  RPGainGood: 3
+  RPGainPerfect: 4
+  Type: Block
