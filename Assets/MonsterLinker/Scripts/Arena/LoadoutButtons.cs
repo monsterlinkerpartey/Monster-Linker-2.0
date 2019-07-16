@@ -78,9 +78,6 @@ public class LoadoutButtons : MonoBehaviour
             GameStateSwitch.Instance.Implant = GameStateSwitch.Instance.curProfile.curImplant.ImplantType;
             GameStateSwitch.Instance.arenaui.FALoadout.SetActive(false);
             GameStateSwitch.Instance.curProfile.FALoadout = LoadedFAs;
-            GameStateSwitch.Instance.attackslotspawn.Setup(GameStateSwitch.Instance.curProfile.maxBaseAttackInputSlots, GameStateSwitch.Instance.enemystatemachine.maxInputSlots);
-            GameStateSwitch.Instance.attackslotspawn.SpawnPlayerSlots();
-            GameStateSwitch.Instance.attackslotspawn.SpawnEnemySlots();
             GameStateSwitch.Instance.SwitchState(eGameState.Intro);
         }
         else

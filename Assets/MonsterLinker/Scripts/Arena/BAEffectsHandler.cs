@@ -129,6 +129,9 @@ public class BAEffectsHandler : MonoBehaviour
         if (Mathf.RoundToInt(curEnemyRP) >= (int)100)
             curEnemyRP = 100.0f;
 
+        if (Mathf.RoundToInt(curPlayerRP) >= (int)100)
+            curPlayerRP = 100.0f;
+
         TotalDmgTaken += curDMG;
 
         //GameStateSwitch.Instance.statusbarhandler.LerpPlayerHP();

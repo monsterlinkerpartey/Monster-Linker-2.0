@@ -34,8 +34,8 @@ public class GameStateSwitch : MonoBehaviour
 
     public Save curProfile; 
     public Enemy curEnemy;
+    public bool firstSetupDone;
 
-    
     void Start()
     {
         #region Singleton
@@ -131,47 +131,39 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.FALoadout.SetActive(true);
                 arenaui.QTEPanel.SetActive(false);
                 enemystatemachine.GetEnemyValues();
-                baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0); 
-                inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
                 //enemystatemachine.SetEnemyType(curEnemy);
                 break;
             ///Arena in cinematischer Cutscene vorstellen
             ///FA Loadout und alle scripts laden
             case eGameState.Intro:
-                arenaui.GetAttackSlots();
                 arenaui.StatusBars.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.FALoadout.SetActive(false);
-                arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
-                arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
-                curProfile.SetCheapestFAcost();
-                feralartcheck.LoadedFeralArts = curProfile.FALoadout;
-                fainfowindow.WriteFAData();
-                fainfowindow.SetSI();
-                //feralartcheck.FeralArtLoadout(curProfile.FALoadout);
-                attackroundhandler.QTEfailed = false;
+
+                if (!firstSetupDone)
+                    FirstSetup();
+
                 StartCoroutine(WaitForIntro(IntroTime));
                 break;
             ///Player Input enablen
             ///Enemy Input laden
             ///FA Check
             case eGameState.PlayerInput:
-                //get player values for status bars
-                playerstatusbar.GetValues(curProfile.MaxHitPoints, 100.0f, -685.0f, -290.0f, 0.0f, 0.0f);
-                enemystatusbar.GetValues(curEnemy.MaxHitPoints, 100.0f, 685.0f, 290.0f, 0.0f, 0.0f);
-
-                baeffectshandler.PlayerRPatAttackStart = baeffectshandler.curPlayerRP;
-                arenaui.StatusBars.SetActive(true);
                 attackroundhandler.QTEfailed = false;
+                baeffectshandler.PlayerRPatAttackStart = baeffectshandler.curPlayerRP;
+
+                arenaui.StatusBars.SetActive(true);
                 arenaui.ResultPanel.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.InputPanel.SetActive(true);
                 arenaui.SetConfirmButtonStatus(false);
                 arenaui.SetInputButtonsStatus(true);
                 arenaui.PlayerInputBar.SetActive(true);
+
                 enemystatemachine.CheckEnemyState();
                 enemystatemachine.SetInput();
+
                 //-> Input Slot voll: nach FAs checken
                 //-> Input Slot voll: Confirm enablen
                 break;
@@ -240,8 +232,8 @@ public class GameStateSwitch : MonoBehaviour
                 //Reset DMG counters for the end of each turn
                 baeffectshandler.ResetDmgCount();
 
-                //HACK: zum Test von Temp Input Slot
-                //attackroundhandler.QTEfailed = false;
+        //HACK: zum Test von Temp Input Slot
+            attackroundhandler.QTEfailed = false;
 
                 //check which implant is active
                 switch (Implant)
@@ -294,7 +286,9 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.StatusBars.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
-                               
+
+                ResetFight();
+
                 switch (FightResult)
                 {
                     case eFightResult.None:
@@ -320,21 +314,64 @@ public class GameStateSwitch : MonoBehaviour
         }
     }
 
+    public void FirstSetup()
+    {
+        print("first setup of values n shit");
+        baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0);
+        inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
+
+        attackslotspawn.Setup(GameStateSwitch.Instance.curProfile.maxBaseAttackInputSlots, GameStateSwitch.Instance.enemystatemachine.maxInputSlots);
+        attackslotspawn.SpawnPlayerSlots();
+        attackslotspawn.SpawnEnemySlots();
+        arenaui.GetAttackSlots();
+
+        arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
+        arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
+        curProfile.SetCheapestFAcost();
+        feralartcheck.LoadedFeralArts = curProfile.FALoadout;
+        fainfowindow.WriteFAData();
+        fainfowindow.SetSI();
+
+        playerstatusbar.GetValues(curProfile.MaxHitPoints, 100.0f, -685.0f, -290.0f, 0.0f, 0.0f);
+        enemystatusbar.GetValues(curEnemy.MaxHitPoints, 100.0f, 685.0f, 290.0f, 0.0f, 0.0f);
+
+        playerstatusbar.HPTick(curProfile.MaxHitPoints);
+        playerstatusbar.RPTick(0);
+        enemystatusbar.HPTick(curEnemy.MaxHitPoints);
+        enemystatusbar.RPTick(0);
+
+        firstSetupDone = true;
+    }
+
     public void ResetFight()
     {
-        baeffectshandler.curEnemyHP = enemystatemachine.maxHitPoints;
+        inputbarhandler.maxBaseAttackInputSlots = curProfile.maxBaseAttackInputSlots;
+
+        print("resetting fight values n shit");
+        baeffectshandler.curEnemyHP = curEnemy.MaxHitPoints;
         baeffectshandler.curPlayerHP = curProfile.MaxHitPoints;
         baeffectshandler.curEnemyRP = 0;
         baeffectshandler.curPlayerRP = 0;
+
+        baeffectshandler.StartHpandRPValues(curProfile.MaxHitPoints, 0, curEnemy.MaxHitPoints, 0);
+
+        playerstatusbar.GetValues(curProfile.MaxHitPoints, 100.0f, -685.0f, -290.0f, 0.0f, 0.0f);
+        enemystatusbar.GetValues(curEnemy.MaxHitPoints, 100.0f, 685.0f, 290.0f, 0.0f, 0.0f);
+        playerstatusbar.HPTick(curProfile.MaxHitPoints);
+        playerstatusbar.RPTick(0);
+        enemystatusbar.HPTick(curEnemy.MaxHitPoints);
+        enemystatusbar.RPTick(0);
+
+        arenaui.SetPlayerHPandRP(Mathf.RoundToInt(baeffectshandler.curPlayerHP), Mathf.RoundToInt(baeffectshandler.curPlayerRP));
+        arenaui.SetEnemyHPandRP(Mathf.RoundToInt(baeffectshandler.curEnemyHP), Mathf.RoundToInt(baeffectshandler.curEnemyRP));
 
         //reset player and enemy inputs
         inputbarhandler.Reset();
         enemystatemachine.ClearInput();
 
         //reset all special implants but keep choice
-        //keep fa list choice
+        //keep fa list choice but do not re-initialize
     }
-
 
     IEnumerator WaitForIntro(float waitingTime)
     {

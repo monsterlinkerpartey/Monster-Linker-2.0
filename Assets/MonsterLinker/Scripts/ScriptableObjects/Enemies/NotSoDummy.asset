@@ -15,7 +15,7 @@ MonoBehaviour:
   MonsterPic: {fileID: 21300000, guid: 0b0aa5fcead015041b22ee73e5a9ce90, type: 3}
   LinkerPic: {fileID: 21300000, guid: e0323c68d52cf9642a9c243dc2b730ad, type: 3}
   MonsterName: Smartass
-  MaxHitPoints: 0
+  MaxHitPoints: 500
   MaxInputSlots: 5
   DmgModifier: 0
   FAs:

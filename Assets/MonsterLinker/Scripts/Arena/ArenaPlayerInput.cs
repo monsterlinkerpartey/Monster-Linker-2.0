@@ -25,7 +25,6 @@ public class ArenaPlayerInput : MonoBehaviour
 
     public void RetryFight()
     {
-        GameStateSwitch.Instance.ResetFight();
         GameStateSwitch.Instance.SwitchState(eGameState.PlayerInput);
         //Scene curScene = SceneManager.GetActiveScene();
         //SceneManager.LoadScene(curScene.name);
@@ -33,7 +32,6 @@ public class ArenaPlayerInput : MonoBehaviour
 
     public void RetryWithLoadout()
     {
-        GameStateSwitch.Instance.ResetFight();
         GameStateSwitch.Instance.SwitchState(eGameState.Loadout);
         //Scene curScene = SceneManager.GetActiveScene();
         //SceneManager.LoadScene(curScene.name);

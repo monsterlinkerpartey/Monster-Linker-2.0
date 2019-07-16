@@ -21,6 +21,7 @@ public class FeralArtCheck : MonoBehaviour
     public List<Attack> AttackList;
 
     public List<int> BAsToDelete;
+    public List<int> BAsToColor;
 
     public InputBarHandler inputbarhandler;
     public ArenaUIHandler arenaui;
@@ -51,6 +52,7 @@ public class FeralArtCheck : MonoBehaviour
         AttackList.Add(attack);
     }
 
+    //Checking for chained FAs
     public void CheckForChain()
     {
         //if player has not enough RP for the cheapest FA
@@ -91,10 +93,11 @@ public class FeralArtCheck : MonoBehaviour
                     }
                     else
                     {
-                        print("no chainable FAs equal");
-                        CompareLists();
+                        print("not a chain, checking next");
                     }
                 }
+                print("no chains found");
+                CompareLists();
 
                 break;
             case 6:
@@ -171,11 +174,11 @@ public class FeralArtCheck : MonoBehaviour
                             }
                             else
                             {
-                                print("no chainable FAs equal");
-                                CompareLists();
+                                print("not a chain, checking next");
                             }
-
                         }
+                        print("no chains found");
+                        CompareLists();
                     }
                 }
                 
@@ -187,6 +190,7 @@ public class FeralArtCheck : MonoBehaviour
         }
     }
 
+    //Checking for unchained FA
     public void CompareLists()
     {
     startFAloop:
@@ -195,7 +199,7 @@ public class FeralArtCheck : MonoBehaviour
             print("cur FA: " + LoadedFeralArts[FANo].name);
 
             //skip FA if there is not enough slots for it to happen
-            if (LoadedFeralArts[FANo].FeralArtInput.Count > (inputbarhandler.maxBaseAttackInputSlots - Pos))
+            if (LoadedFeralArts[FANo].FeralArtInput.Count > (AttackList.Count - Pos)) //inputbarhandler.maxBaseAttackInputSlots - Pos
             {
                 FANo += 1;
                 goto startFAloop;
@@ -203,9 +207,9 @@ public class FeralArtCheck : MonoBehaviour
 
             for (InputNo = 0; InputNo < LoadedFeralArts[FANo].FeralArtInput.Count; InputNo++)
             {
-                print("looping through curFA, cur at Input no: " + InputNo);
+                print("checking fa "+ LoadedFeralArts[FANo]);
 
-                if (LoadedFeralArts[FANo].FeralArtInput[InputNo] == curBAlist[InputNo + Pos])
+                if (LoadedFeralArts[FANo].FeralArtInput[InputNo] == AttackList[InputNo + Pos]) //curBAlist[InputNo + Pos])
                 {
                     //check next input
                     print("positive, checking next input");
@@ -231,13 +235,30 @@ public class FeralArtCheck : MonoBehaviour
                 if (baeffectshandler.curPlayerRP >= LoadedFeralArts[FANo].RPCost)
                 {
                     print("FA found, adding " + LoadedFeralArts[FANo].name + " to list");
+                    print("BAs to delete: " + BAsToDelete[0] +BAsToDelete[1] +BAsToDelete[2]);
 
                     for (int i = BAsToDelete.Count; i > 0; i--)
                         AttackList.RemoveAt(BAsToDelete[i - 1]);
 
                     AttackList.Insert(BAsToDelete[0], LoadedFeralArts[FANo]);
-                    arenaui.VisializeFAs(BAsToDelete, Color.magenta);
-                    Pos += BAsToDelete.Count;
+
+                    //horrible hack um bei 2 3er FAs und 6 Input Slots beide farblich korrekt zu markieren
+                    if (AttackList.Count <= 2)
+                    {
+                        BAsToDelete.Clear();
+                        BAsToDelete.Add(0);
+                        BAsToDelete.Add(1);
+                        BAsToDelete.Add(2);
+                        BAsToDelete.Add(3);
+                        BAsToDelete.Add(4);
+                        BAsToDelete.Add(5);
+
+                        arenaui.VisializeFAs(BAsToDelete, Color.magenta);
+                    }
+                    else
+                        arenaui.VisializeFAs(BAsToDelete, Color.magenta); 
+
+                    Pos += 1;   //BAsToDelete.Count;
                     FANo = 0;
                 }
                 else
@@ -255,9 +276,9 @@ public class FeralArtCheck : MonoBehaviour
             }
         }
 
-        if (inputbarhandler.maxBaseAttackInputSlots == 5 && Pos < 2 || inputbarhandler.maxBaseAttackInputSlots == 6 && Pos < 3) // && FANo < LoadedFeralArts.Count
+        if (inputbarhandler.maxBaseAttackInputSlots == 5 && Pos < 3 || inputbarhandler.maxBaseAttackInputSlots == 6 && Pos < 4) // && FANo < LoadedFeralArts.Count
         {
-            print("5 slots, pos = " + Pos + " , keep running FA check");
+            print("5 slots, pos = " + Pos + " , keep running FA check");            
             FANo = 0;
             Pos += 1;
             goto startFAloop;

@@ -7,7 +7,7 @@ public class InputBarHandler : MonoBehaviour
 {
     //List of base attacks the player has chosen in via button press
     public List<BaseAttack> PlayerAttackInput = new List<BaseAttack>();
-    public int maxBaseAttackInputSlots = 5; //TODO abfragen vom profil des spielers?
+    public int maxBaseAttackInputSlots;
     public FeralArtCheck feralartcheck;
     public InitiativeCheck initiativecheck;
     public ArenaUIHandler arenaui;
@@ -32,11 +32,10 @@ public class InputBarHandler : MonoBehaviour
                                 ", " + PlayerAttackInput[3].name +
                                 ", " + PlayerAttackInput[4].name);    
             
-            arenaui.SetConfirmButtonStatus(true);
             //arenaui.ConfirmBAsButton.enabled = true;
-            arenaui.SetInputButtonsStatus(false);
             //TODO disable BA input and enable confirm button
-
+            arenaui.SetConfirmButtonStatus(true);
+            arenaui.SetInputButtonsStatus(false);
             feralartcheck.CheckForChain();
         }
     }

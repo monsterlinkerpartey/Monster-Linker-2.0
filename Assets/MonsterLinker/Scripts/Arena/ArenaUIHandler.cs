@@ -98,19 +98,19 @@ public class ArenaUIHandler : MonoBehaviour
 
     public void CheckForPlayerBAInput()
     {             
-        if (DPadButtons.Down)
+        if (DPadButtons.Down || Input.GetKeyDown(KeyCode.DownArrow))
         {
             LightAttack.animator.SetTrigger("Pressed");
             LightAttack.onClick.Invoke();
         }
 
-        if (DPadButtons.Right)
+        if (DPadButtons.Right || Input.GetKeyDown(KeyCode.RightArrow))
         {
             NormalAttack.animator.SetTrigger("Pressed");
             NormalAttack.onClick.Invoke();
         }
 
-        if (DPadButtons.Up)
+        if (DPadButtons.Up || Input.GetKeyDown(KeyCode.UpArrow))
         {
             HeavyAttack.animator.SetTrigger("Pressed");
             HeavyAttack.onClick.Invoke();
