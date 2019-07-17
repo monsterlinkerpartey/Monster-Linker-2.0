@@ -13,7 +13,7 @@ public class InitiativeCheck : MonoBehaviour
     public ArenaUIHandler arenaui;
     public TurnChanger turnchanger;
 
-    [SerializeField] float ShowIniCheckSecs = 1.5f;
+    [SerializeField] float ShowIniCheckSecs;
 
     public void GetSpeedValues()
     {
@@ -58,6 +58,7 @@ public class InitiativeCheck : MonoBehaviour
                 turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
         }
+        GameStateSwitch.Instance.animationhandler.MoveToMiddle();
     }
 
     public void ResetSpeedValues()

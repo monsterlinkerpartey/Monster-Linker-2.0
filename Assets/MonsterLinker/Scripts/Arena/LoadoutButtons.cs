@@ -193,12 +193,15 @@ public class LoadoutButtons : MonoBehaviour
         switch (Window)
         {
             case eLoadout.LoadoutOnly:
+                curLeftButton.GetComponentInChildren<Animator>().SetBool("Cursor", false);
                 CloseWindows();
                 break;
             case eLoadout.FeralArtChoice:
+                curLeftButton.GetComponentInChildren<Animator>().SetBool("Cursor", true);
                 FeralArtChoice.SetActive(true);
                 break;
             case eLoadout.ImplantChoice:
+                curLeftButton.GetComponentInChildren<Animator>().SetBool("Cursor", true);
                 ImplantChoice.SetActive(true);
                 break;
         }

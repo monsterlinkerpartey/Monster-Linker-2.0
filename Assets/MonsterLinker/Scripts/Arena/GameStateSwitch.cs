@@ -184,7 +184,6 @@ public class GameStateSwitch : MonoBehaviour
                 StartCoroutine(initiativecheck.CompareSpeed());
                 arenaui.QTEPanel.SetActive(true);
 
-                animationhandler.MoveToMiddle();
                 //Enemy Input einblenden
                 //Vergleichen der Speedwerte, Turn anzeigen
                 //Int Turn += 1; Bei Turn 2 zu NextRound wechseln
