@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class ArenaUIHandler : MonoBehaviour
 {
-    [Tooltip("Temporary image to show Initiative")]
-    public Image PlayerInitiativeArrow;
-    public Image EnemyInitiativeArrow;
+    [Header("Initiative UI")]
+    public GameObject IniArrow;
+    public Text EnemySpeed;
+    public Text PlayerSpeed;
 
     [Header("Drag n Drop")]
     public GameObject FALoadout;
@@ -62,6 +63,21 @@ public class ArenaUIHandler : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void SetSpeedValues(int eSpeed, int pSpeed)
+    {
+        EnemySpeed.text = ""+eSpeed;
+        PlayerSpeed.text = ""+pSpeed;
+    }
+
+    public void SetIniArrow(string who)
+    {
+        //float z = rotation;
+        //Vector3 newPos = new Vector3(0, 0, z);
+        //IniArrow.transform.Rotate(newPos);
+
+        IniArrow.GetComponentInChildren<Animator>().Play("play"+who);
     }
 
     public void SetPlayerHPandRP(int HP, int RP)

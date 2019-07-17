@@ -75,13 +75,19 @@ public class LoadoutButtons : MonoBehaviour
     {
         if (LoadedFAs[0] != null && LoadedFAs[1] != null && LoadedFAs[2] != null && GameStateSwitch.Instance.curProfile.curImplant != null)
         {
-            GameStateSwitch.Instance.Implant = GameStateSwitch.Instance.curProfile.curImplant.ImplantType;
-            GameStateSwitch.Instance.arenaui.FALoadout.SetActive(false);
-            GameStateSwitch.Instance.curProfile.FALoadout = LoadedFAs;
-            GameStateSwitch.Instance.SwitchState(eGameState.Intro);
+            StartCoroutine(WaitForButtonAnim());
         }
         else
             print("not enough FAs chosen");
+    }
+
+    public IEnumerator WaitForButtonAnim()
+    {
+        GameStateSwitch.Instance.Implant = GameStateSwitch.Instance.curProfile.curImplant.ImplantType;
+        GameStateSwitch.Instance.curProfile.FALoadout = LoadedFAs;
+        yield return new WaitForSeconds(0.5f);
+        GameStateSwitch.Instance.arenaui.FALoadout.SetActive(false);
+        GameStateSwitch.Instance.SwitchState(eGameState.Intro);
     }
 
     public void OpenFAChoice(Button thisButton)

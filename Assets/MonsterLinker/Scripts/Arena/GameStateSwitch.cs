@@ -221,8 +221,8 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.QTEPanel.SetActive(false);
                 //Disable both Initiative Arrows
                 arenaui.StatusBars.SetActive(false);
-                arenaui.PlayerInitiativeArrow.enabled = false;
-                arenaui.EnemyInitiativeArrow.enabled = false;
+                //arenaui.PlayerInitiativeArrow.enabled = false;
+                //arenaui.EnemyInitiativeArrow.enabled = false;
                 initiativecheck.ResetSpeedValues();
                 //Reset Player Input und Enemy Input
                 inputbarhandler.Reset();

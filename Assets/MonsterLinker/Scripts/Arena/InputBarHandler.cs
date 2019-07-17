@@ -69,9 +69,9 @@ public class InputBarHandler : MonoBehaviour
                 feralartcheck.LoadedFeralArts.RemoveAt(3);
                 GameStateSwitch.Instance.fainfowindow.SI.SetActive(false);
             }
-
             initiativecheck.curPlayerInput = PlayerAttackInput;
-            GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
+            StartCoroutine(WaitForButtonAnim());
+
         }
         else
         {
@@ -81,5 +81,10 @@ public class InputBarHandler : MonoBehaviour
         }
     }   
 
+    public IEnumerator WaitForButtonAnim()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameStateSwitch.Instance.SwitchState(eGameState.InitiativeCheck);
+    }
 }
 

@@ -13,7 +13,7 @@ public class InitiativeCheck : MonoBehaviour
     public ArenaUIHandler arenaui;
     public TurnChanger turnchanger;
 
-    [SerializeField] float waitForSecs = 1f;
+    [SerializeField] float ShowIniCheckSecs = 1.5f;
 
     public void GetSpeedValues()
     {
@@ -36,22 +36,25 @@ public class InitiativeCheck : MonoBehaviour
             if (PlayerSpeed > EnemySpeed)
             {
                 print("players turn");
-                arenaui.PlayerInitiativeArrow.enabled = true;
-                yield return new WaitForSeconds(waitForSecs);
+                arenaui.SetSpeedValues(EnemySpeed, PlayerSpeed);
+                arenaui.SetIniArrow("p");
+                yield return new WaitForSeconds(ShowIniCheckSecs);
                 turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
             else if (EnemySpeed > PlayerSpeed)
             {
                 print("enemys turn");
-                arenaui.EnemyInitiativeArrow.enabled = true;
-                yield return new WaitForSeconds(waitForSecs);
+                arenaui.SetSpeedValues(EnemySpeed, PlayerSpeed);
+                arenaui.SetIniArrow("e");
+                yield return new WaitForSeconds(ShowIniCheckSecs);
                 turnchanger.SwitchTurn(eTurn.EnemyFirst);
             }
             else
             {
                 print("players turn");
-                arenaui.PlayerInitiativeArrow.enabled = true;
-                yield return new WaitForSeconds(waitForSecs);
+                arenaui.SetSpeedValues(EnemySpeed-1, PlayerSpeed);
+                arenaui.SetIniArrow("p");
+                yield return new WaitForSeconds(ShowIniCheckSecs);
                 turnchanger.SwitchTurn(eTurn.PlayerFirst);
             }
         }
