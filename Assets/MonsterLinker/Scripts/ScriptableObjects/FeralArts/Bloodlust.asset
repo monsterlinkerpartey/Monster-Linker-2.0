@@ -17,7 +17,7 @@ MonoBehaviour:
   RPGain: 0
   HPGain: 0
   Speed: 0
-  AnimationName: FA1
+  AnimationName: FA2
   AttackType: 0
   FAName: Bloodlust
   FeralArtInput:

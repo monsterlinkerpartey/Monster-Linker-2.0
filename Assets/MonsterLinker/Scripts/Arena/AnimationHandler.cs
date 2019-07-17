@@ -7,6 +7,12 @@ public class AnimationHandler : MonoBehaviour
     public Animator EnemyAnim;
     public Animator PlayerAnim;
 
+    public void MoveToMiddle()
+    {
+        PlayerAnim.SetTrigger("walk");
+        EnemyAnim.SetTrigger("walk");
+    }
+
     public void PlayerAttack(string animString)
     {
         print("starting player attack: " + animString);
@@ -32,21 +38,6 @@ public class AnimationHandler : MonoBehaviour
                 break;
         }
     }
-
-    //public void BlockTrigger()
-    //{
-    //    switch (GameStateSwitch.Instance.GameState)
-    //    {
-    //        case eGameState.QTEAttack:
-    //            print("enemy blocking");
-    //            EnemyAnim.SetBool("block", true);
-    //            break;
-    //        case eGameState.QTEBlock:
-    //            print("player blocking");
-    //            PlayerAnim.SetBool("block", true);
-    //            break;
-    //    }
-    //}
 
     public void ResetToIdle()
     {

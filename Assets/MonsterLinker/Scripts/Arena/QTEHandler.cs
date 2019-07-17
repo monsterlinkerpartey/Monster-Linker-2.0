@@ -196,10 +196,10 @@ public class QTEHandler : MonoBehaviour
             GetAnimClipTimes();
             QTEStateSwitch(eQTEState.Waiting);
         }
-        else
-        {
-            StartCoroutine(ButtonMash());
-        }
+        //else
+        //{
+        //    StartCoroutine(ButtonMash());
+        //}
     }
 
     public IEnumerator ButtonMash()

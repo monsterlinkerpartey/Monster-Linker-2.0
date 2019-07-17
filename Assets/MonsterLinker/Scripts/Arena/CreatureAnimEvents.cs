@@ -21,6 +21,12 @@ public class CreatureAnimEvents : MonoBehaviour
         StartCoroutine(qtehandler.WaitForStart());
     }
 
+    public void EnduranceStart()
+    {
+        print("start endurance button mash now");
+        StartCoroutine(qtehandler.ButtonMash());
+    }
+
     public void HitImpact()
     {
         print("impact, calling animation");

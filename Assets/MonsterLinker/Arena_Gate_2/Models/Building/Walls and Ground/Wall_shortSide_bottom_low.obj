@@ -1,0 +1,31 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 20.06.2019 16:07:52
+
+#
+# object Wall_shortSide_bottom_low
+#
+
+v  900.0000 -0.0000 -649.9999
+v  900.0000 350.0000 -649.9999
+v  1300.0000 0.0000 -649.9999
+v  1300.0000 350.0000 -649.9999
+# 4 vertices
+
+vn 0.0000 0.0000 -1.0000
+vn 0.0000 0.0000 -1.0000
+vn 0.0000 0.0000 -1.0000
+vn 0.0000 0.0000 -1.0000
+# 4 vertex normals
+
+vt 0.0005 0.9995 0.0000
+vt 0.0005 0.0005 0.0000
+vt 0.8746 0.0005 0.0000
+vt 0.8746 0.9995 0.0000
+# 4 texture coords
+
+o Wall_shortSide_bottom_low
+g Wall_shortSide_bottom_low
+s 1
+f 3/1/1 1/2/2 2/3/3 4/4/4 
+# 1 polygons
+

@@ -124,6 +124,9 @@ public class GameStateSwitch : MonoBehaviour
             ///Blacklist und FA Loadout für Spieler
             ///Enemy Values laden und Attack Slot Setup für Enemy und Spieler
             case eGameState.Loadout:
+                if (!firstSetupDone)
+                    loadoutbuttons.WriteFAList();
+
                 loadoutbuttons.WindowSwitch(eLoadout.LoadoutOnly);
                 loadoutbuttons.SetInitialTexts();
                 arenaui.StatusBars.SetActive(false);
@@ -169,9 +172,10 @@ public class GameStateSwitch : MonoBehaviour
                 break;
             ///Speedwerte vergleichen um Ini festzulegen
             case eGameState.InitiativeCheck:
-
                 //baeffectshandler.GetAttackLists(feralartcheck.AttackList, enemystatemachine.curAttackInput);
                 //baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
+                animationhandler.MoveToMiddle();
+
                 arenaui.InputPanel.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -186,14 +190,14 @@ public class GameStateSwitch : MonoBehaviour
             case eGameState.QTEAttack:
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
-                arenaui.PlayerInputBar.SetActive(true);
-                                
+                arenaui.PlayerInputBar.SetActive(true);                                
+                baeffectshandler.SetMashValue(0);
                 attackroundhandler.GetAttackList(feralartcheck.AttackList);
+
 
 
                 //qtehandler.SetType(eQTEType.Attack, attackslotspawn.NumberOfAttackSlotsPlayer);
                 //qtehandler.QTEStateSwitch(eQTEState.Waiting);
-
                 //Animation der Attacke des Spielers sowie Reaktion des Gegners triggern
                 //QTE zu den Attacken
                 //DMG bei Hit austeilen
@@ -205,12 +209,12 @@ public class GameStateSwitch : MonoBehaviour
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
-
                 baeffectshandler.SetMashValue(0);
                 attackroundhandler.GetAttackList(enemystatemachine.curAttackInput);
+
+
                 //attackroundhandler.SetEffectValues();
                 //attackroundhandler.StartAttack();
-
                 //Animation der Attacke des Gegners sowie Reaktion des Spielers triggern
                 //QTE zum Blocken & für RP Gain
                 //DMG bei Hit austeilen

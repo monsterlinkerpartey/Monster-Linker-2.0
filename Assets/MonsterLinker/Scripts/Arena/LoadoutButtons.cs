@@ -9,6 +9,14 @@ public class LoadoutButtons : MonoBehaviour
     [Header("Drag n drop")]
     public eLoadout Window;
 
+    public List<FeralArt> AllFAs;
+    [Header("FA Field Prefab")]
+    public GameObject FAField;
+    [Tooltip("Icon Prefab, same as used for FA Info Window")]
+    public GameObject Icon;
+    [Tooltip("Object FA_Grid")]
+    public GameObject FAFieldParent;
+
     public GameObject FeralArtChoice;
     public GameObject ImplantChoice;
     public Animator FeralArtChoiceAnim;
@@ -32,7 +40,7 @@ public class LoadoutButtons : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && GameStateSwitch.Instance.GameState == eGameState.Loadout)
         {
             switch (Window)
             {
@@ -40,11 +48,46 @@ public class LoadoutButtons : MonoBehaviour
                     print("all good, nothing to cancel here");
                     break;
                 case eLoadout.FeralArtChoice:
+                    //disable back button
                     WindowSwitch(eLoadout.LoadoutOnly);
                     break;
                 case eLoadout.ImplantChoice:
+                    //disable back button
                     WindowSwitch(eLoadout.LoadoutOnly);
                     break;
+            }
+        }
+    }
+
+    public void WriteFAList()
+    {
+        foreach (FeralArt feralart in AllFAs)
+        {
+            GameObject FAfield = GameObject.Instantiate(FAField, transform.position, transform.rotation) as GameObject;
+            FAfield.transform.parent = FAFieldParent.transform;
+            FAfield.transform.localScale = new Vector3(1, 1, 1);
+
+            Text Name = FAfield.GetComponentInChildren<FaNameField>().GetComponent<Text>();
+            Text Cost = FAfield.GetComponentInChildren<FaCostField>().GetComponent<Text>();
+            Name.text = feralart.FAName;
+            Cost.text = "" + feralart.RPCost;
+
+            if (Name.text == AllFAs[0].FAName)
+            {
+                FAChoiceButton1 = FAfield.GetComponentInChildren<Button>();
+            }
+
+            int n = 0;
+            while (n < feralart.FeralArtInput.Count)
+            {
+                GameObject icon = GameObject.Instantiate(Icon, transform.position, transform.rotation) as GameObject;
+
+                icon.transform.parent = FAfield.transform;
+                icon.transform.localScale = new Vector3(1, 1, 1);
+
+                Image iconImg = icon.GetComponent<Image>();
+                iconImg.sprite = feralart.FeralArtInput[n].InfoPanelIcon;
+                n += 1;
             }
         }
     }
