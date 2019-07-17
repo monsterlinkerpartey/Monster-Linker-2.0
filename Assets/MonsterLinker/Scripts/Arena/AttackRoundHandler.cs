@@ -74,7 +74,6 @@ public class AttackRoundHandler : MonoBehaviour
         switch (GameStateSwitch.Instance.GameState)
         {
             case eGameState.QTEAttack:
-                animationhandler.EnemyAnim.SetBool("block", true);
                 baeffectshandler.Playerturn = true;
 
                 switch (curAttack.AttackType)

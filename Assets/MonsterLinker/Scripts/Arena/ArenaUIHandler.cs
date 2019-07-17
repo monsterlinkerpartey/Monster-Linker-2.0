@@ -76,12 +76,12 @@ public class ArenaUIHandler : MonoBehaviour
     {
         if (GameStateSwitch.Instance.GameState == eGameState.QTEAttack)
         {
-            EnemyDmgTaken.text = "" + DmgTaken;
+            EnemyDmgTaken.text = "-" + DmgTaken;
             PlayerDmgTaken.text = "";
         }
         else if (GameStateSwitch.Instance.GameState == eGameState.QTEBlock)
         {
-            PlayerDmgTaken.text = "" + DmgTaken;
+            PlayerDmgTaken.text = "-" + DmgTaken;
             EnemyDmgTaken.text = "";
         }
 

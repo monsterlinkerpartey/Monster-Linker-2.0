@@ -25,6 +25,8 @@ public class ArenaPlayerInput : MonoBehaviour
 
     public void RetryFight()
     {
+        GameStateSwitch.Instance.animationhandler.EnemyAnim.SetTrigger("jump");
+        GameStateSwitch.Instance.animationhandler.PlayerAnim.SetTrigger("jump");
         GameStateSwitch.Instance.SwitchState(eGameState.PlayerInput);
         //Scene curScene = SceneManager.GetActiveScene();
         //SceneManager.LoadScene(curScene.name);
@@ -32,6 +34,8 @@ public class ArenaPlayerInput : MonoBehaviour
 
     public void RetryWithLoadout()
     {
+        GameStateSwitch.Instance.animationhandler.EnemyAnim.SetTrigger("jump");
+        GameStateSwitch.Instance.animationhandler.PlayerAnim.SetTrigger("jump");
         GameStateSwitch.Instance.SwitchState(eGameState.Loadout);
         //Scene curScene = SceneManager.GetActiveScene();
         //SceneManager.LoadScene(curScene.name);

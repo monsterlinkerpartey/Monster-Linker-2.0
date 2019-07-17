@@ -13,6 +13,12 @@ public class AnimationHandler : MonoBehaviour
         EnemyAnim.SetTrigger("walk");
     }
 
+    public void JumpBack()
+    {
+        PlayerAnim.SetTrigger("jump");
+        EnemyAnim.SetTrigger("jump");
+    }
+
     public void PlayerAttack(string animString)
     {
         print("starting player attack: " + animString);
@@ -41,16 +47,7 @@ public class AnimationHandler : MonoBehaviour
 
     public void ResetToIdle()
     {
-        switch (GameStateSwitch.Instance.GameState)
-        {
-            case eGameState.QTEAttack:
-                print("enemy stops blocking, back to idle");
-                EnemyAnim.SetBool("block", false);
-                break;
-            case eGameState.QTEBlock:
-                print("player stops blocking, back to idle");
-                PlayerAnim.SetBool("block", false);
-                break;
-        }
+        EnemyAnim.SetBool("block", false);
+        PlayerAnim.SetBool("block", false);
     }
 }

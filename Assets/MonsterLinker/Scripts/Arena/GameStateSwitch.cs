@@ -176,8 +176,6 @@ public class GameStateSwitch : MonoBehaviour
             case eGameState.InitiativeCheck:
                 //baeffectshandler.GetAttackLists(feralartcheck.AttackList, enemystatemachine.curAttackInput);
                 //baeffectshandler.GetAttackLists(inputbarhandler.PlayerAttackInput, enemystatemachine.curAttackInput);
-                animationhandler.MoveToMiddle();
-
                 arenaui.InputPanel.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -185,12 +183,15 @@ public class GameStateSwitch : MonoBehaviour
                 initiativecheck.GetSpeedValues();
                 StartCoroutine(initiativecheck.CompareSpeed());
                 arenaui.QTEPanel.SetActive(true);
+
+                animationhandler.MoveToMiddle();
                 //Enemy Input einblenden
                 //Vergleichen der Speedwerte, Turn anzeigen
                 //Int Turn += 1; Bei Turn 2 zu NextRound wechseln
                 break;
             case eGameState.QTEAttack:
-                animationhandler.EnemyAnim.SetBool("block", false);
+                animationhandler.PlayerAnim.SetBool("block", false);
+                animationhandler.EnemyAnim.SetBool("block", true);
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);                                
@@ -209,7 +210,8 @@ public class GameStateSwitch : MonoBehaviour
                 //Am Ende des Turns: RP Gain Summe, Total DMG Dealt Count -> Check for Death
                 break;
             case eGameState.QTEBlock:
-                animationhandler.PlayerAnim.SetBool("block", false);
+                animationhandler.EnemyAnim.SetBool("block", false);
+                animationhandler.PlayerAnim.SetBool("block", true);
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -226,11 +228,9 @@ public class GameStateSwitch : MonoBehaviour
                 //Am Ende des Turns: RP Gain Summe, Total DMG Taken Count -> Check for Death
                 break;
             case eGameState.NextRound:
-                animationhandler.PlayerAnim.SetBool("block", false);
-                animationhandler.EnemyAnim.SetBool("block", false);
+                animationhandler.ResetToIdle();
+                animationhandler.JumpBack();
 
-                animationhandler.PlayerAnim.SetTrigger("jump");
-                animationhandler.EnemyAnim.SetTrigger("jump");
                 arenaui.QTEPanel.SetActive(false);
                 //Disable both Initiative Arrows
                 arenaui.StatusBars.SetActive(false);

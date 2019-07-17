@@ -46,6 +46,6 @@ public class CreatureAnimEvents : MonoBehaviour
     {
         print("animation end");
         attackroundhandler.NextAttack();
-        animationhandler.ResetToIdle();
+        //animationhandler.ResetToIdle();
     }
 }
