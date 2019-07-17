@@ -72,17 +72,23 @@ public class LoadoutButtons : MonoBehaviour
             Name.text = feralart.FAName;
             Cost.text = "" + feralart.RPCost;
 
+            //adding the button function
+            FAfield.GetComponent<Button>().onClick.AddListener(delegate { ChooseFA(feralart); });
+
             if (Name.text == AllFAs[0].FAName)
             {
                 FAChoiceButton1 = FAfield.GetComponentInChildren<Button>();
             }
 
+            GameObject IconParent = FAfield.GetComponentInChildren<FaInputField>().gameObject;
+
+            //Spawn input icons
             int n = 0;
             while (n < feralart.FeralArtInput.Count)
             {
                 GameObject icon = GameObject.Instantiate(Icon, transform.position, transform.rotation) as GameObject;
 
-                icon.transform.parent = FAfield.transform;
+                icon.transform.parent = IconParent.transform;
                 icon.transform.localScale = new Vector3(1, 1, 1);
 
                 Image iconImg = icon.GetComponent<Image>();

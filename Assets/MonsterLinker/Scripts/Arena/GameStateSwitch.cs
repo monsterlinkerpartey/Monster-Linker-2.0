@@ -190,6 +190,7 @@ public class GameStateSwitch : MonoBehaviour
                 //Int Turn += 1; Bei Turn 2 zu NextRound wechseln
                 break;
             case eGameState.QTEAttack:
+                animationhandler.EnemyAnim.SetBool("block", false);
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(true);                                
@@ -208,6 +209,7 @@ public class GameStateSwitch : MonoBehaviour
                 //Am Ende des Turns: RP Gain Summe, Total DMG Dealt Count -> Check for Death
                 break;
             case eGameState.QTEBlock:
+                animationhandler.PlayerAnim.SetBool("block", false);
                 arenaui.InitiativeCheck.SetActive(false);
                 arenaui.PlayerInputBar.SetActive(false);
                 arenaui.EnemyInputBar.SetActive(true);
@@ -226,6 +228,9 @@ public class GameStateSwitch : MonoBehaviour
             case eGameState.NextRound:
                 animationhandler.PlayerAnim.SetBool("block", false);
                 animationhandler.EnemyAnim.SetBool("block", false);
+
+                animationhandler.PlayerAnim.SetTrigger("jump");
+                animationhandler.EnemyAnim.SetTrigger("jump");
                 arenaui.QTEPanel.SetActive(false);
                 //Disable both Initiative Arrows
                 arenaui.StatusBars.SetActive(false);
