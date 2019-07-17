@@ -31,7 +31,9 @@ public class QTEHandler : MonoBehaviour
 
     [Header("For the Button Input Randomizer")]
     public List<ButtonInput> Buttons = new List<ButtonInput>();
+    public List<Vector2> ButtonPosVectors;
     public GameObject QTEButton;
+    public RectTransform QTEButtonTransform;
     public Animator ButtonAnim;
     public Image ButtonImage;
 
@@ -225,6 +227,25 @@ public class QTEHandler : MonoBehaviour
         }
         else
         {
+            //set QTE Button position
+            switch (curQTEType)
+            {
+                case eQTEType.Attack:
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[1];
+                    break;
+                case eQTEType.Block:
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[2];
+                    break;
+                case eQTEType.FAEndurance:
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];
+                    break;
+                case eQTEType.FA:
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];
+                    break;
+                default:
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];
+                    break;
+            }
             ButtonImage.sprite = Buttons[ran].buttonSprite;
         }
     }

@@ -29,7 +29,11 @@ public class CreatureAnimEvents : MonoBehaviour
 
     public void HitImpact()
     {
+        float duration = Random.Range(0.1f, 0.2f);
+        float magnitude = Random.Range(1.5f, 2.25f);
+
         print("impact, calling animation");
+        StartCoroutine(GameStateSwitch.Instance.camshake.Shake(duration, magnitude));
         animationhandler.HurtCheck();
     }
 

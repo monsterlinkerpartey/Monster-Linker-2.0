@@ -21,6 +21,7 @@ public class ArenaUIHandler : MonoBehaviour
     public GameObject AttackQTE;
     public Button ConfirmBAsButton;
     public GameObject ResultPanel;
+    public GameObject DmgCounter;
 
     public List<Button> BAInputButtons = new List<Button>(3);
 
@@ -29,6 +30,12 @@ public class ArenaUIHandler : MonoBehaviour
     public Text PlayerRPtxt;
     public Text EnemyHPtxt;
     public Text EnemyRPtxt;
+
+    public Text EnemyName;
+    public Text PlayerName;
+
+    public Text PlayerDmgTaken;
+    public Text EnemyDmgTaken;
 
     [Header("Buttons for BA Input")]
     public Button HeavyAttack;
@@ -63,6 +70,24 @@ public class ArenaUIHandler : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public IEnumerator ShowDmgCounters(int DmgTaken)
+    {
+        if (GameStateSwitch.Instance.GameState == eGameState.QTEAttack)
+        {
+            EnemyDmgTaken.text = "" + DmgTaken;
+            PlayerDmgTaken.text = "";
+        }
+        else if (GameStateSwitch.Instance.GameState == eGameState.QTEBlock)
+        {
+            PlayerDmgTaken.text = "" + DmgTaken;
+            EnemyDmgTaken.text = "";
+        }
+
+        DmgCounter.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        DmgCounter.SetActive(false);
     }
 
     public void SetSpeedValues(int eSpeed, int pSpeed)

@@ -31,6 +31,7 @@ public class GameStateSwitch : MonoBehaviour
     public StatusBarHandler playerstatusbar;
     public CreatureAnimEvents playerCreatureanimevents;
     public CreatureAnimEvents enemyCreatureanimevents;
+    public CamShake camshake;
 
     public Save curProfile; 
     public Enemy curEnemy;
@@ -74,6 +75,7 @@ public class GameStateSwitch : MonoBehaviour
         fainfowindow = FindObjectOfType<FAInfoWindow>();
         enemystatusbar = FindObjectOfType<EnemyStatusBar>();
         playerstatusbar = FindObjectOfType<PlayerStatusBar>();
+        camshake = FindObjectOfType<CamShake>();
     }
 
     void ConnectScripts()
@@ -358,13 +360,16 @@ public class GameStateSwitch : MonoBehaviour
         enemystatusbar.HPTick(curEnemy.MaxHitPoints);
         enemystatusbar.RPTick(0);
 
+        arenaui.PlayerName.text = curProfile.MonsterName;
+        arenaui.EnemyName.text = curEnemy.MonsterName;
+
         if (Implant == eImplant.SuperFA)
             feralartcheck.superFAused = false;
 
         //TODO uncheck unleashed mode bool just in case
         //if (Implant == eImplant.UnleashedMode)
         //    feralartcheck.UnleashedModeused = false;
-
+               
         firstSetupDone = true;
     }
 

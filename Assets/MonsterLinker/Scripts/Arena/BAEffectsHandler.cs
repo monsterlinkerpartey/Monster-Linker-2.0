@@ -132,6 +132,7 @@ public class BAEffectsHandler : MonoBehaviour
         if (Mathf.RoundToInt(curPlayerRP) >= (int)100)
             curPlayerRP = 100.0f;
 
+        StartCoroutine(arenaui.ShowDmgCounters(Mathf.RoundToInt(curDMG)));
         TotalDmgTaken += curDMG;
 
         //GameStateSwitch.Instance.statusbarhandler.LerpPlayerHP();
@@ -157,6 +158,7 @@ public class BAEffectsHandler : MonoBehaviour
         if (Mathf.RoundToInt(curPlayerRP) >= (int)100)
             curPlayerRP = 100.0f;
 
+        StartCoroutine(arenaui.ShowDmgCounters(Mathf.RoundToInt(curDMG)));
         TotalDmgDealt += curDMG;
 
         arenaui.SetPlayerHPandRP(Mathf.RoundToInt(curPlayerHP), Mathf.RoundToInt(curPlayerRP));

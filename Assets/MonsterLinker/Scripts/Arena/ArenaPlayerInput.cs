@@ -49,11 +49,11 @@ public class ArenaPlayerInput : MonoBehaviour
 
     public void Test()
     {
-        arenaui.FALoadout.SetActive(false);
-        GameStateSwitch.Instance.FightResult = eFightResult.Defeat;
-        GameStateSwitch.Instance.SwitchState(eGameState.Result);
-    }
+        float duration = Random.Range(0.1f, 0.2f);
+        float magnitude = Random.Range(1.5f, 2.25f);
 
+        StartCoroutine(GameStateSwitch.Instance.camshake.Shake(duration, magnitude));
+    }
     //public void ChooseProfile(Save saveSlot)
     //{
     //    if (saveSlot.Used)
