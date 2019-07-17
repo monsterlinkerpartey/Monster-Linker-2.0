@@ -21317,7 +21317,7 @@ MonoBehaviour:
   ButtonPosVectors:
   - {x: 0, y: 0}
   - {x: 500, y: 0}
-  - {x: 0, y: -500}
+  - {x: -500, y: 0}
   QTEButton: {fileID: 1573112618}
   QTEButtonTransform: {fileID: 1573112619}
   ButtonAnim: {fileID: 1573112620}

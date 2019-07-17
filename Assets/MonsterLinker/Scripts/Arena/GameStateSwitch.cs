@@ -224,6 +224,8 @@ public class GameStateSwitch : MonoBehaviour
                 //Am Ende des Turns: RP Gain Summe, Total DMG Taken Count -> Check for Death
                 break;
             case eGameState.NextRound:
+                animationhandler.PlayerAnim.SetBool("block", false);
+                animationhandler.EnemyAnim.SetBool("block", false);
                 arenaui.QTEPanel.SetActive(false);
                 //Disable both Initiative Arrows
                 arenaui.StatusBars.SetActive(false);

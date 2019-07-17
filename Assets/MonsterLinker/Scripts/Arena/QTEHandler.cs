@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// 
 public class QTEHandler : MonoBehaviour
 {
-
     [Header("The different Types of QTE")]
     public Animator AttackQTEAnim;
     public Animator BlockQTEAnim;
@@ -59,7 +58,7 @@ public class QTEHandler : MonoBehaviour
     public float AnimStartup = 1.5f;
     //TODO get animation events for monster animations to check when they end/start
     [Tooltip("Time til QTE starts")]
-    [SerializeField] float WaitingTime;
+    public float WaitingTime;
     //[SerializeField] float QTETimer;
     //[SerializeField] float QTEGood;
     //[SerializeField] float QTEPerfect;
@@ -80,7 +79,7 @@ public class QTEHandler : MonoBehaviour
     [SerializeField] int mashCounter = 0;
     [Tooltip("How long the Endurance QTE lasts")]
     [SerializeField] float EnduranceTime;
-    [SerializeField] string AnimString;
+    public string AnimString;
 
     public bool EnduranceDone;
 
@@ -240,7 +239,7 @@ public class QTEHandler : MonoBehaviour
                     QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];
                     break;
                 case eQTEType.FA:
-                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];
+                    QTEButtonTransform.anchoredPosition = ButtonPosVectors[1];
                     break;
                 default:
                     QTEButtonTransform.anchoredPosition = ButtonPosVectors[0];

@@ -12,12 +12,17 @@ public class CreatureAnimEvents : MonoBehaviour
 
     public void AttackAnimStart()
     {
-        print("animation starts, call qte");
-        StartCoroutine(qtehandler.WaitForStart());
+        print("animation starts");
+        if (qtehandler.curQTEType != eQTEType.FA)
+        {
+            StartCoroutine(qtehandler.WaitForStart());
+        }
     }
 
-    public void FAQTEcall()
+    public void FAQTEcall(int FAnumber)
     {
+        qtehandler.AnimString = ("FA" + FAnumber);
+        qtehandler.WaitingTime = 0.0f;
         StartCoroutine(qtehandler.WaitForStart());
     }
 
